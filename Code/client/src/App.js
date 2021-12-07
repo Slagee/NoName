@@ -2,12 +2,12 @@ import Login from './components/login/Login';
 import './App.css';
 import React from 'react';
 import useToken from './components/login/useToken';
+import 'antd/dist/antd.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './components/home/Home';
 
 function App() {
   const { token, setToken } = useToken();
-  var user = JSON.parse(localStorage.getItem('user'));
-  const {username: email} = user;
-
   if(!token)
   {
     return <Login setToken={setToken} />
@@ -15,7 +15,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Welcome user {email}</h1>
+      <main>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/login" element={<Login setToken={setToken} />} />
+          </Routes>
+        </BrowserRouter>
+      </main>
     </div>
   );
 }

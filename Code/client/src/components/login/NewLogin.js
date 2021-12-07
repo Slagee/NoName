@@ -1,42 +1,22 @@
-import './Login.css';
-import { Input, Form, Button, Card } from "antd";
 import React, { useState } from "react";
-import PropTypes from 'prop-types';
+import authenticationService from "../../services/authentication/authentication.service";
+import { Input, Form, Button, Card } from "antd";
 
-async function loginUser(credentials)
-{
-    return fetch('login',
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-    .then(res => res)
-    .catch((err) => {
-        console.log(err);
-    });
-}
-
-export default function Login({ setToken })
-{
+export default function NewLogin() {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
 
     const onFinish = async () => {
-        await loginUser({
+        await authenticationService.login(
             username,
             password
-        }).then(res => {
-            if (res.ok) {
-                setToken(res);
-                localStorage.setItem('user', username);
-                console.log(res);
-            } else {
-                console.log(res);
-            }
-        });
+        ).then( () => {
+            this.props.history.push('/home');
+            window.location.reload();
+        },
+        error => {
+            console.log(error)
+        })
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -69,7 +49,7 @@ export default function Login({ setToken })
                         <Input.Password onChange={e => setPassword(e.target.value)}/>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8 }}>
+                    <Form.Item wrapperCol={{ offset: 16 }}>
                         <Button type="primary" htmlType="submit">
                             Přihlásit se
                         </Button>
@@ -78,8 +58,4 @@ export default function Login({ setToken })
             </Card>
         </div>
     )
-}
-
-Login.propTypes = {
-    setToken: PropTypes.func.isRequired
 }
