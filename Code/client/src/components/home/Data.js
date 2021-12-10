@@ -1,6 +1,3 @@
-import "antd/dist/antd.css";
-import { Col, Layout, Row, Button, Table, Space, Tag} from 'antd';
-
 const columns = [
     { title: 'Jméno', dataIndex: 'name', key: 'name', width: 300 },
     { title: 'Datum narození', dataIndex: 'dob', key: 'dob', align: 'center' },
