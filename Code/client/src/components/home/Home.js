@@ -1,6 +1,6 @@
 import { Button } from "antd"
 import { Navigate } from "react-router-dom";
-import authenticationService from "../../services/authentication/authentication.service";
+import authenticationService from "../../services/authentication/authentication";
 
 export default function Home() {    
     var user = localStorage.getItem('user')

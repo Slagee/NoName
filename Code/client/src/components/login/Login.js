@@ -3,7 +3,7 @@ import { Input, Form, Button, Card } from "antd";
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
-import authenticationService from '../../services/authentication/authentication.service';
+import authenticationService from '../../services/authentication/authentication';
 
 export default function Login({ setToken })
 {
