@@ -1,9 +1,25 @@
-export default function Home() {
-    
+import { Button } from "antd"
+import { Navigate } from "react-router-dom";
+import authenticationService from "../../services/authentication/authentication.service";
+
+export default function Home() {    
     var user = localStorage.getItem('user')
+
+    function logout()  {
+        authenticationService.logout();
+        return (
+            <Navigate to="/login" />
+        )
+    }
+
     return (
-        <h1>
-            Hello {user}
-        </h1>
+        <div>
+            <h1>
+                Hello {user}
+            </h1>
+            <div>
+                <Button onClick={() => logout()}>Logout</Button>
+            </div>
+        </div>
     )
 }

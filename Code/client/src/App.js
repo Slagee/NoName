@@ -8,10 +8,6 @@ import Home from './components/home/Home';
 
 function App() {
   const { token, setToken } = useToken();
-  if(!token)
-  {
-    return <Login setToken={setToken} />
-  }
 
   return (
     <div className="App">

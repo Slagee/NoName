@@ -2,40 +2,28 @@ import './Login.css';
 import { Input, Form, Button, Card } from "antd";
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
-
-async function loginUser(credentials)
-{
-    return fetch('login',
-    {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
-    .then(res => res)
-    .catch((err) => {
-        console.log(err);
-    });
-}
+import { Navigate } from 'react-router-dom';
+import authenticationService from '../../services/authentication/authentication.service';
 
 export default function Login({ setToken })
 {
     const [username, setUserName] = useState();
     const [password, setPassword] = useState();
+    const [redirect, setRedirect] = useState(false);
 
     const onFinish = async () => {
-        await loginUser({
+        await authenticationService.login({
             username,
             password
-        }).then(res => {
-            if (res.ok) {
-                setToken(res);
-                localStorage.setItem('user', username);
-                console.log(res);
+        }).then((res) => {
+            if (res === "") {
+                setRedirect(false)
             } else {
-                console.log(res);
+                setRedirect(true)
             }
+            setToken(res);
+        }).catch((error) => {
+            console.log(error);
         });
     }
 
@@ -43,6 +31,9 @@ export default function Login({ setToken })
         console.log("Failed: ", errorInfo);
     }
 
+    if (redirect === true) {
+        return <Navigate to="/home" />
+    }
     return(
         <div className="login-wrapper">
            <Card title="Přihlášení">

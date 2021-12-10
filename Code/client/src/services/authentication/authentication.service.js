@@ -1,34 +1,42 @@
-import axios from "axios";
+import { message } from 'antd';
 
 class AuthService {
-    login(username, password) {
-        let axiosConfig = {
+    async login(credentials) {
+        return fetch("login",
+        {
+            method: 'POST',
             headers: {
-                'Content-Type':'application/json',
-                'Access-Control-Request-Headers': 'Authorization'
+                'Content-Type': 'text/plain'
             },
-            
-        }
-        console.log(username)
-        return axios
-            .post(process.env.REACT_APP_API_URL + '/login', {
-                username,
-                password
-            },
-            axiosConfig,
-            {withCredentials: true})
-            .then(response => {
-                console.log(response.data);
-                if (response.data.token) {
-                    localStorage.setItem('user', JSON.stringify(response.data));
-                }
-                return response.data;
-            })
-        
+            body: JSON.stringify(credentials)
+        })
+        .then((res) => {
+            if (res.ok) {
+                message.success("Přihlášení úspěšné!");
+                return res.text()
+            }
+            else {
+                message.error("Zadali jste špatné přihlašovací údaje!");
+                return ""
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
     }
 
     logout() {
-        localStorage.removeItem('user');
+        /*fetch("logout",
+        {
+            method: 'GET',
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then((res) => {
+            console.log(res);
+        })*/
+        localStorage.removeItem('token');
+        message.warning("Úspěšně jste se odhlásili!")
     }
 
     getCurrentUser() {
