@@ -1,3 +1,5 @@
+import { Button } from "antd";
+
 const columns = [
     { title: 'Jméno', dataIndex: 'name', key: 'name', width: 300 },
     { title: 'Datum narození', dataIndex: 'dob', key: 'dob', align: 'center' },
@@ -6,7 +8,7 @@ const columns = [
       title: '',
       dataIndex: '',
       key: 'x',
-      render: () => <a>Zobrazit</a>,
+      render: () => <Button type="primary">Zobrazit</Button>,
       align: 'center'
     },
     
