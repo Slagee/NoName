@@ -1,5 +1,5 @@
 import './Login.css';
-import { Input, Form, Button, Card } from "antd";
+import { Input, Form, Button, Card, message } from "antd";
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
@@ -19,9 +19,11 @@ export default function Login({ setToken })
             if (res === "") {
                 setRedirect(false)
             } else {
+                localStorage.setItem("username", username)
+                setToken(res);
                 setRedirect(true)
             }
-            setToken(res);
+            
         }).catch((error) => {
             console.log(error);
         });
@@ -35,7 +37,7 @@ export default function Login({ setToken })
         return <Navigate to="/home" />
     }
     return(
-        <div className="login-wrapper" style={{ padding: '25px 100px' }}>
+        <div className="login-wrapper">
            <Card title="Přihlášení">
                 <Form
                     name="login"
@@ -60,7 +62,7 @@ export default function Login({ setToken })
                         <Input.Password onChange={e => setPassword(e.target.value)}/>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8 }}>
+                    <Form.Item>
                         <Button type="primary" htmlType="submit">
                             Přihlásit se
                         </Button>
