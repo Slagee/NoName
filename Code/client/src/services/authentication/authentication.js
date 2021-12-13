@@ -26,17 +26,8 @@ class AuthService {
     }
 
     logout() {
-        /*fetch("logout",
-        {
-            method: 'GET',
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        }).then((res) => {
-            console.log(res);
-        })*/
+        localStorage.removeItem("username");
         localStorage.removeItem('token');
-        message.warning("Úspěšně jste se odhlásili!")
     }
 
     getCurrentUser() {
