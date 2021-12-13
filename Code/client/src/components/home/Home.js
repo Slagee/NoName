@@ -8,9 +8,6 @@ const onSearch = value => console.log(value);
 export default function Home() {
 
     return(
-        <Layout>
-            <Space direction="vertical">
-
                 <Content style={{ padding: '25px 100px' }}>
                     <Search placeholder="Vyhledej záznam" onSearch={onSearch} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
                     <Table
@@ -19,7 +16,5 @@ export default function Home() {
                         title={() => 'Seznam profilů'}
                     />
                 </Content>
-            </Space>
-        </Layout>
     )
 }

@@ -35,7 +35,7 @@ export default function Login({ setToken })
         return <Navigate to="/home" />
     }
     return(
-        <div className="login-wrapper">
+        <div className="login-wrapper" style={{ padding: '25px 100px' }}>
            <Card title="Přihlášení">
                 <Form
                     name="login"
