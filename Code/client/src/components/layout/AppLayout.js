@@ -1,5 +1,5 @@
 import './AppLayout.css'
-import { Button, Col, Menu, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import companyLogo from '../../SD_logo2.png';
 import { Header } from 'antd/lib/layout/layout';
 import authentication from '../../services/authentication/authentication';
@@ -38,7 +38,6 @@ export function AppLayout({ token }) {
                     {button}
                 </Col>
             </Row>
-
         </Header>
     )
 }

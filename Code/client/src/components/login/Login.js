@@ -1,5 +1,5 @@
 import './Login.css';
-import { Input, Form, Button, Card, message } from "antd";
+import { Input, Form, Button, Card } from "antd";
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
