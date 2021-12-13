@@ -33,7 +33,7 @@ public class UserController {
         return userService.list();
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @GetMapping("/user/page")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", dataTypeClass = String.class, paramType = "query"),
