@@ -3,11 +3,11 @@ import Login from './components/login/Login';
 import './App.css';
 import React from 'react';
 import useToken from './services/authentication/useToken';
-import 'antd/dist/antd.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './components/home/Home';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
+import CreateEmployee from './components/createEmployee/CreateEmployee';
 
 function App() {
   const { token, setToken } = useToken();
@@ -16,11 +16,12 @@ function App() {
     <div className="App">
       <Layout>
         <AppLayout token={token} />
-        <Content>
+        <Content className='Content'>
         <BrowserRouter>
-          <Routes>
-            <Route path="/home" element={<Home />} />
+          <Routes>            
             <Route path="/" element={<Login setToken={setToken} />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/createEmployee" element={<CreateEmployee />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>

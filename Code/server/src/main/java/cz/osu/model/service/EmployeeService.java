@@ -2,8 +2,6 @@ package cz.osu.model.service;
 
 import cz.osu.model.entity.Employee;
 import cz.osu.model.entity.EmployeeCreateDto;
-import cz.osu.model.entity.Permission;
-import cz.osu.model.entity.User;
 import cz.osu.model.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +33,7 @@ public class EmployeeService {
         boolean employeeExists = employeeRepository.findByBirthNumber(employeeCreate.getBirthNumber()).isPresent();
 
         if(employeeExists){
-            throw new IllegalStateException("Employee s tímto rodným číslem již existuje");
+            throw new IllegalStateException("Zaměstnanec s tímto rodným číslem již existuje");
         }
 
         Employee employee = new Employee();

@@ -1,8 +1,8 @@
-import { Layout, Table, Input} from 'antd';
+import './Home.css';
+import { Table, Input, Button} from 'antd';
 import { data, columns } from './Data.js';
 import { Navigate } from 'react-router-dom';
 
-const { Content } = Layout;
 const { Search } = Input;
 const onSearch = value => console.log(value);
 
@@ -12,14 +12,19 @@ export default function Home() {
         return <Navigate to="/" />
     }
 
+    function goCreateEmployee() {
+        window.location.href = "/createEmployee";
+    }
+
     return (
-        <Content style={{ padding: '25px 100px' }}>
+        <div>
             <Search placeholder="Vyhledej záznam" onSearch={onSearch} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
             <Table
                 columns={columns}
                 dataSource={data}
                 title={() => 'Seznam profilů'}
             />
-        </Content>
+            <Button type='primary' className='btnCreateEmployee' onClick={goCreateEmployee}>Přidat zaměstnance</Button>
+        </div>
     )
 }

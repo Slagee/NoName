@@ -1,25 +1,23 @@
-import './Login.css';
-import { Input, Form, Button, Card } from "antd";
+import { Input, Form, Button, Card, Row } from "antd";
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import authenticationService from '../../services/authentication/authentication';
+import './Login.css';
+import { LockOutlined, UserOutlined } from "@ant-design/icons/lib/icons";
+import { useForm } from "antd/lib/form/Form";
 
 export default function Login({ setToken })
 {
-    const [username, setUserName] = useState();
-    const [password, setPassword] = useState();
+    const [form] = useForm();
     const [redirect, setRedirect] = useState(false);
 
-    const onFinish = async () => {
-        await authenticationService.login({
-            username,
-            password
-        }).then((res) => {
+    const onFinish = async (values) => {
+        await authenticationService.login(values).then((res) => {
             if (res === "") {
                 setRedirect(false)
             } else {
-                localStorage.setItem("username", username)
+                localStorage.setItem("username", form.getFieldValue("username"))
                 setToken(res);
                 setRedirect(true)
             }
@@ -29,10 +27,6 @@ export default function Login({ setToken })
         });
     }
 
-    const onFinishFailed = (errorInfo) => {
-        console.log("Failed: ", errorInfo);
-    }
-
     if (redirect === true) {
         return <Navigate to="/home" />
     }
@@ -40,10 +34,10 @@ export default function Login({ setToken })
         <div className="login-wrapper">
            <Card title="Přihlášení">
                 <Form
+                    form={form}
                     name="login"
                     labelCol={{ span: 10 }}
                     onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
                     autoComplete="off"
                 >
                     <Form.Item
@@ -51,21 +45,23 @@ export default function Login({ setToken })
                         name="username"
                         rules={[{ required: true, message: 'Vyplňte uživatelské jméno!' }]}
                     >
-                        <Input onChange={e => setUserName(e.target.value)}/>
+                        <Input onChange={e => form.setFieldsValue(e.target.value)} prefix={<UserOutlined className="site-form-item-icon" />}/>
                     </Form.Item>
 
                     <Form.Item
                         label="Heslo"
-                        name="heslo"
+                        name="password"
                         rules={[{ required: true, message: 'Vyplňte heslo!' }]}
                     >
-                        <Input.Password onChange={e => setPassword(e.target.value)}/>
+                        <Input.Password onChange={e => form.setFieldsValue(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}/>
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Přihlásit se
-                        </Button>
+                        <Row justify="space-around" align="middle">
+                            <Button type="primary" htmlType="submit">
+                                Přihlásit se
+                            </Button>
+                        </Row>
                     </Form.Item>
                 </Form>
             </Card>

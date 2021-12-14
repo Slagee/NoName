@@ -16,3 +16,8 @@ code {
   height: 100%;
   background-color: rgba(240,242,245,255);
 }
+
+.ant-btn-primary {
+  background-color: #00AEEF;
+  border-color: #00AEEF;
+}
