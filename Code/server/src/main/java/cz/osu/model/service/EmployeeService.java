@@ -1,6 +1,9 @@
 package cz.osu.model.service;
 
 import cz.osu.model.entity.Employee;
+import cz.osu.model.entity.EmployeeCreateDto;
+import cz.osu.model.entity.Permission;
+import cz.osu.model.entity.User;
 import cz.osu.model.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,5 +29,20 @@ public class EmployeeService {
 
     public Page<Employee> loadPage(Specification<Employee> employeeSpec, Pageable pageable){
         return employeeRepository.findAll(employeeSpec, pageable);
+    }
+
+    public Employee addEmployee(EmployeeCreateDto employeeCreate) {
+        boolean employeeExists = employeeRepository.findByBirthNumber(employeeCreate.getBirthNumber()).isPresent();
+
+        if(employeeExists){
+            throw new IllegalStateException("Employee s tímto rodným číslem již existuje");
+        }
+
+        Employee employee = new Employee();
+        employee.setName(employeeCreate.getName());
+        employee.setSurname(employeeCreate.getSurname());
+        employee.setBirthNumber(employeeCreate.getBirthNumber());
+
+        return employeeRepository.save(employee);
     }
 }
