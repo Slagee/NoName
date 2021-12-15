@@ -9,7 +9,7 @@ const onSearch = value => console.log(value);
 export default function Home() {
     let user = localStorage.getItem("username");
     if (!user) {
-        return <Navigate to="/" />
+        return <Navigate to="/login" />
     }
 
     function goCreateEmployee() {

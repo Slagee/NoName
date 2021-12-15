@@ -37,7 +37,7 @@ public class EmployeeController {
         return employeeService.getById(id);
     }
 
-    @Secured({"ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping(value = "/employee/page")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", dataTypeClass = String.class, paramType = "query"),

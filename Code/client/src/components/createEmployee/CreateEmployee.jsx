@@ -1,13 +1,15 @@
-import { Select, Form, Input, Button, message } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
+import { Select, Form, Input, Button, message, PageHeader, Row } from "antd";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
+import AddDocument from "../addDocument/AddDocument";
 import './CreateEmployee.css'
 
 export default function CreateEmployee() {
     const [form] = Form.useForm();
     let user = localStorage.getItem("username");
     if (!user) {
-        return <Navigate to="/" />
+        return <Navigate to="/login" />
     }
 
     const onFinish = (values) => {
@@ -24,6 +26,9 @@ export default function CreateEmployee() {
 
     return (
         <div className="employeeContent">
+            <Row style={{'marginBottom': "2rem"}}>
+                <ArrowLeftOutlined className="backArrow" style={{fontSize: '2rem'}} onClick={() => window.history.back()}/>
+            </Row>            
             <Form
                 form={form}
                 labelCol={{ span: 4 }}
@@ -50,6 +55,7 @@ export default function CreateEmployee() {
                     <Button className="createEmployeeBtn" type="primary" htmlType="submit" size="large">Uložit</Button>
                 </Form.Item>
             </Form>
+            <AddDocument />
             
         </div>
         
