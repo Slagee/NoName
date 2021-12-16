@@ -1,14 +1,18 @@
 import './Home.css';
-import { Table, Input, Button, Spin, Space} from 'antd';
-import { columns, dataHard } from './Data.js';
+import { Table, Input, Button } from 'antd';
+import { columns } from './Data.js';
 import { Navigate } from 'react-router-dom';
-import employees from "../../services/employees/employees";
+import { GetEmployeesList } from './GetEmployeesList';
+import { useState } from 'react/cjs/react.development';
+import { LoadingOutlined } from '@ant-design/icons/lib/icons';
 
 
 const { Search } = Input;
-const onSearch = value => console.log(value);
 
-export default function Home() {
+const Home = () => {
+    const [searchName, setSearchName] = useState(null);
+    const [employeesList, isLoading] = GetEmployeesList(searchName);
+
     let user = localStorage.getItem("username");
     
     if (!user) {
@@ -19,44 +23,24 @@ export default function Home() {
         window.location.href = "/createEmployee";
     }
 
-    console.log(dataHard);
-    
-    var data = employees.getEmployeesPaged()
-        .then((res) => {
-            var dataObject = {employeeArray: []};
-
-            for(var i in res.content) {    
-                var item = res.content[i];   
-                dataObject.employeeArray.push({
-                    "key" : item.id, 
-                    "name" : item.name + " " + item.surname,
-                    "birthNumber" : item.birthNumber
-                });
-            }
-            console.log(dataObject.employeeArray);
-            return dataObject.employeeArray;
-        });
-
-    if (data === null && !Array.isArray(data)){
-        return (
-            <div>
-                <Space size="middle">
-                    <Spin size="large" />
-                </Space>
+    return (
+        <div>
+            <Search placeholder="Vyhledej záznam" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
+            {isLoading ? (
+            <div className='loading'>
+                <LoadingOutlined style={{fontSize: '5rem'}} />
+                <p>Načítám data...</p>
             </div>
-        )
-    }
-    else if (data !== null && Array.isArray(data)){
-        return (
-            <div>
-                <Search placeholder="Vyhledej záznam" onSearch={onSearch} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    title={() => 'Seznam profilů'}
-                />
-                <Button type='primary' className='btnCreateEmployee' onClick={goCreateEmployee}>Přidat zaměstnance</Button>
-            </div>
-        )
-    }    
+            ) : (
+            <Table
+                columns={columns}
+                dataSource={employeesList}
+            />
+            )}
+            
+            <Button type='primary' className='btnCreateEmployee' onClick={goCreateEmployee}>Přidat zaměstnance</Button>
+        </div>
+    );
 }
+
+export default Home;

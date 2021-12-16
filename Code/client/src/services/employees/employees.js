@@ -43,8 +43,15 @@ class Employees {
         });
     }
 
-    async getEmployeesPaged() {
-        return fetch("employee/page",
+    async getEmployeesByName(name) {
+        var url = "employee/page"
+        if (name !== null) {
+            
+            url = "employee/page?name=" +name
+            console.log("call" + url);
+        }
+        console.log("call outside if" + url);
+        return await fetch(url,
         {
             method: 'GET',
             headers: {
@@ -56,7 +63,28 @@ class Employees {
                 return res.json();
             }
             else {
-                return res.status;
+                return null;
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
+
+    async getEmployeesPaged() {
+        return await fetch("employee/page",
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            else {
+                return null;
             }
         })
         .catch((err) => {
