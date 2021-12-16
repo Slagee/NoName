@@ -1,9 +1,10 @@
 import { Button } from "antd";
+//import employees from "../../services/employees/employees";
 
 const columns = [
     { title: 'Jméno', dataIndex: 'name', key: 'name', width: 300 },
-    { title: 'Datum narození', dataIndex: 'dob', key: 'dob', align: 'center' },
-    { title: 'Středisko', dataIndex: 'department', key: 'department', align: 'center' },
+    { title: 'Rodné číslo', dataIndex: 'birthNumber', key: 'birthNumber', align: 'center' },
+    //{ title: 'Středisko', dataIndex: '', key: 'birthNumber', align: 'center' },
     {
       title: '',
       dataIndex: '',
@@ -14,7 +15,7 @@ const columns = [
     
   ];
   
-  const data = [
+  const dataHard = [
     {
       key: 1,
       name: 'Adam Novák',
@@ -47,4 +48,18 @@ const columns = [
   },
   ];
 
-  export { data, columns };
+/*const data = employees.getEmployeesPaged()
+  .then((res) => {
+  var employees = {data: []};
+
+  for(var i in res.content) {    
+    var item = res.content[i];   
+    employees.data.push({ 
+      "name" : item.name + " " + item.surname,
+      "birthNumber" : item.birthNumber
+    });
+  }
+  return employees.data;
+});*/
+
+export { dataHard, columns };
