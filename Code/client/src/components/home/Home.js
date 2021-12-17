@@ -6,7 +6,6 @@ import { GetEmployeesList } from './GetEmployeesList';
 import { useState } from 'react/cjs/react.development';
 import { LoadingOutlined } from '@ant-design/icons/lib/icons';
 
-
 const { Search } = Input;
 
 const Home = () => {
@@ -26,7 +25,8 @@ const Home = () => {
     return (
         <div>
             <Search placeholder="Vyhledej záznam" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
-            {isLoading ? (
+            {isLoading ?
+            (
             <div className='loading'>
                 <LoadingOutlined style={{fontSize: '5rem'}} />
                 <p>Načítám data...</p>

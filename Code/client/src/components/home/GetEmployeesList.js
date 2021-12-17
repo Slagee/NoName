@@ -11,8 +11,10 @@ export function GetEmployeesList(name) {
             setLoading(true);
             console.log(name)
             const response = await employees.getEmployeesByName(name);
-            setLoading(false);
-            setData(response.content);
+            if (response) {                
+                setLoading(false);
+                setData(response.content);
+            }
         })();
     }, [name]);
 

@@ -50,7 +50,6 @@ class Employees {
             url = "employee/page?name=" +name
             console.log("call" + url);
         }
-        console.log("call outside if" + url);
         return await fetch(url,
         {
             method: 'GET',
