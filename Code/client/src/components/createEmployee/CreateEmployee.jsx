@@ -1,14 +1,22 @@
 import { Select, Form, Input, Button, message } from "antd";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
+import AddDocument from "../addDocument/addDocument";
 import './CreateEmployee.css'
+import { GetUnitsList } from "./GetUnitsList";
+
+const { Option } = Select;
 
 export default function CreateEmployee() {
     const [form] = Form.useForm();
+    const [units, isLoading] = GetUnitsList();
+
     let user = localStorage.getItem("username");
     if (!user) {
         return <Navigate to="/" />
     }
+
+    
 
     const onFinish = (values) => {
         employees.createEmployee(values)
@@ -39,9 +47,22 @@ export default function CreateEmployee() {
                     <Input onChange={e => form.setFieldsValue({employeeSurname: e.target.value})}/>
                 </Form.Item>
                 <Form.Item label="Středisko">
-                    <Select>
+                    {isLoading ? 
+                    (
+                        <Select>
 
-                    </Select>
+                        </Select>
+                    ) : (
+                        <Select
+                            showSearch
+                            placeholder="Vyberte středisko"
+                            filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                        >
+                            {units.map((unit) => (
+                                <Option key={unit.id}>{unit.number} - {unit.name}</Option>
+                            ))}
+                        </Select>
+                    )}                    
                 </Form.Item>
                 <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message:"Je potřeba vyplnit rodné číslo zaměstnance" }]}>
                     <Input onChange={e => form.setFieldsValue({employeeBirthNumber: e.target.value})}/>
@@ -50,7 +71,6 @@ export default function CreateEmployee() {
                     <Button className="createEmployeeBtn" type="primary" htmlType="submit" size="large">Uložit</Button>
                 </Form.Item>
             </Form>
-            
         </div>
         
     )

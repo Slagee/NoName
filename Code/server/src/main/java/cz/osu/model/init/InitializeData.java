@@ -27,6 +27,7 @@ public class InitializeData {
         resourceDatabasePopulator.addScript(new ClassPathResource("db_scripts/user.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("db_scripts/permission.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("db_scripts/user_permission.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("db_scripts/unit.sql"));
 
         resourceDatabasePopulator.execute(dataSource);
     }

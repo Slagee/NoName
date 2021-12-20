@@ -1,6 +1,6 @@
 package cz.osu.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -41,6 +41,11 @@ public class Employee {
     @JsonManagedReference
     private List<Document> documentsForEmployee;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "unit_id")
+    @JsonBackReference
+    private Unit unitForEmployee;
+
     public Employee() {
     }
 
@@ -72,6 +77,8 @@ public class Employee {
         return documentsForEmployee;
     }
 
+    public Unit getUnitForEmployee() { return unitForEmployee; }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -85,4 +92,6 @@ public class Employee {
     }
 
     public void setBirthNumber(String birthNumber) { this.birthNumber = birthNumber; }
+
+    public void setUnitForEmployee(Unit unit) { this.unitForEmployee = unit; }
 }
