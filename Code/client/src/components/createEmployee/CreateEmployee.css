@@ -10,6 +10,10 @@
     margin-right: 8rem;
 }
 
+.backArrow:hover {
+    color: #00AEEF;
+}
+
 .createEmployeeRow {
     float: right;
 }

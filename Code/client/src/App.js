@@ -19,7 +19,7 @@ function App() {
         <Content className='Content'>
         <BrowserRouter>
           <Routes>            
-            <Route path="/" element={<Login setToken={setToken} />} />
+            <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/home" element={<Home />} />
             <Route path="/createEmployee" element={<CreateEmployee />} />
             <Route path="*" element={<Home />} />

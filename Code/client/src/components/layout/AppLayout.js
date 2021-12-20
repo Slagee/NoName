@@ -24,7 +24,7 @@ export function AppLayout({ token }) {
     }
 
     return(
-        <Header style={{ background: 'white' }}>
+        <Header className='layoutHeader' style={{ background: 'white' }}>
             <Row>
                 <Col span={4}>
                     <a href='/home' className='logo' onClick={e => { if (!button) e.preventDefault() }}>
