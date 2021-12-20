@@ -47,7 +47,7 @@ class Employees {
         var url = "employee/page"
         if (name !== null) {
             
-            url = "employee/page?name=" +name
+            url = "employee/page?search=" +name
             console.log("call" + url);
         }
         return await fetch(url,

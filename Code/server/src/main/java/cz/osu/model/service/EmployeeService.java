@@ -6,7 +6,6 @@ import cz.osu.model.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +24,18 @@ public class EmployeeService {
         return employeeRepository.findById(id).orElse(null);
     }
 
+    /*
     public Page<Employee> loadPage(Specification<Employee> employeeSpec, Pageable pageable){
         return employeeRepository.findAll(employeeSpec, pageable);
+    }*/
+
+    public Page<Employee> employeesPageSearch(String search, Pageable pageable) {
+        if (search == null || search.isEmpty())
+        {
+            return employeeRepository.findAll(pageable);
+        } else {
+            return employeeRepository.findAllByNameContainingOrSurnameContaining(search, search, pageable);
+        }
     }
 
     public Employee addEmployee(EmployeeCreateDto employeeCreate) {

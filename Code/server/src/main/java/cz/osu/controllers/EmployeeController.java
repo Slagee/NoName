@@ -3,15 +3,9 @@ package cz.osu.controllers;
 import cz.osu.model.entity.Employee;
 import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.service.EmployeeService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +31,7 @@ public class EmployeeController {
         return employeeService.getById(id);
     }
 
+    /*
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping(value = "/employee/page")
     @ApiImplicitParams({
@@ -52,6 +47,12 @@ public class EmployeeController {
             }) Specification<Employee> employeeSpec,
             Pageable pageable){
         return employeeService.loadPage(employeeSpec, pageable);
+    }*/
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
+    @GetMapping(value = "employee/page")
+    public Page<Employee> employeePageSearch(@RequestParam(value = "search", defaultValue = "") String search, Pageable pageable) {
+        return employeeService.employeesPageSearch(search, pageable);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
