@@ -6,6 +6,7 @@ export default function AddDocument() {
     const props = {
         name: "file",
         multiple: true,
+        accept: ".pdf",
         action: ""
     }
     return (

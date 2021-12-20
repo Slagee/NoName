@@ -108,7 +108,8 @@ public class DocumentController {
         document.setStoreDate(new Date());
         document.setEmployeeForDocument(document.getEmployeeForDocument());
         documentService.addDocument(document);
-        return new ResponseEntity<>("Successfully uploaded!", HttpStatus.OK);
+
+        return new ResponseEntity<>(document, HttpStatus.CREATED);
     }
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
