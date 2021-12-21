@@ -16,13 +16,10 @@ export default function CreateEmployee() {
         return <Navigate to="/login" />
     }
 
-    
-
     const onFinish = (values) => {
         employees.createEmployee(values)
             .then((res) => {
                 if (res === true) {
-                    console.log("true", res)
                     message.success("Zaměstnance se podařilo vytvořit")
                 } else {
                     message.error(res)   

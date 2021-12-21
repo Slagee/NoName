@@ -44,10 +44,10 @@ class Employees {
     }
 
     async getEmployeesByName(name) {
-        var url = "employee/page"
+        var url = "employee/page?size=10"
         if (name !== null) {
             
-            url = "employee/page?search=" +name
+            url = "employee/page?size=10&search=" +name
             console.log("call" + url);
         }
         return await fetch(url,
