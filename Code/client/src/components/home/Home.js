@@ -21,6 +21,9 @@ const Home = () => {
     function goCreateEmployee() {
         window.location.href = "/createEmployee";
     }
+    function goEmployeeDetail() {
+        window.location.href = "/employeeDetail";
+    }
 
     return (
         <div>
@@ -35,6 +38,9 @@ const Home = () => {
             <Table
                 columns={columns}
                 dataSource={employeesList}
+                pagination={{
+                    pageSize: 10
+                }}
             />
             )}
             

@@ -8,6 +8,7 @@ import Home from './components/home/Home';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
 import CreateEmployee from './components/createEmployee/CreateEmployee';
+import EmployeeDetail from './components/employeeDetail/EmployeeDetail';
 
 function App() {
   const { token, setToken } = useToken();
@@ -22,6 +23,7 @@ function App() {
             <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/home" element={<Home />} />
             <Route path="/createEmployee" element={<CreateEmployee />} />
+            <Route path="/employeeDetail" element={<EmployeeDetail />}/>
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>

@@ -1,0 +1,14 @@
+.employeeContent{
+    font-size: large;
+    font-weight: bold;
+}
+
+.files{
+    font-size: normal;
+    font-weight: normal;
+    display: inline;
+}
+
+.downloadButton{
+    display: inline;
+}
