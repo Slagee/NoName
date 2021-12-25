@@ -1,9 +1,9 @@
-import { ArrowLeftOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
+import { ArrowLeftOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
 import { Select, Form, Input, Button, message, Row, Col } from "antd";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
 import AddDocument from "../addDocument/AddDocument";
-import './CreateEmployee.css'
+import './EditEmployee.css'
 
 export default function CreateEmployee() {
     const [form] = Form.useForm();
@@ -51,14 +51,31 @@ export default function CreateEmployee() {
                 <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message:"Je potřeba vyplnit rodné číslo zaměstnance" }]}>
                     <Input onChange={e => form.setFieldsValue({employeeBirthNumber: e.target.value})}/>
                 </Form.Item>
+                <Row>
+                    <Col span={4} offset={2}>Uložené soubory:</Col>
+                    <Col className="files" span={6}>
+                        <Row>
+                            <Col>
+                                Soubor1.pdf
+                            </Col>
+                            <Col offset={3}>
+                                <Button danger type="primary" shape="round" icon={<DeleteOutlined />} size='small'>
+                                    Stáhnout
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
                 <Row style={{'marginBottom': "2rem", 'marginTop':"2rem"}} align="middle">
                         <Col offset={2}>
                             <Button type="primary" htmlType="submit" size="large" icon={<SaveOutlined />}>Uložit</Button>
                         </Col>
+                        <Col offset={1}>
+                            <Button danger type="dashed" htmlType="submit" icon={<DeleteOutlined />} size="small">Odstranit</Button>
+                        </Col>
                 </Row>
+                <AddDocument />
             </Form>
-            <AddDocument />
-            
         </div>
         
     )

@@ -22,6 +22,29 @@ class Employees {
         });
     }
 
+    /*async editEmployee(employeeInfo) {
+        return fetch("employee",
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(employeeInfo)
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.ok;
+            }
+            else {
+                return res.text();
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }*/
+
     async getEmployeeById(id) {
         return fetch("employee/"+id,
         {

@@ -2,7 +2,7 @@ import { Button } from "antd";
 //import employees from "../../services/employees/employees";
 
 
-function goEmployeeDetail() {
+function goEmployeeDetail(id) {
   window.location.href = "/employeeDetail"
 }
 
@@ -15,7 +15,7 @@ const columns = [
       title: '',
       dataIndex: '',
       key: 'x',
-      render: () => <Button type="primary" onClick={goEmployeeDetail}>Zobrazit</Button>,
+      render: (text, record) => <Button type="primary" onClick={goEmployeeDetail(record.id)}>Zobrazit</Button>,
       align: 'center'
     },
     

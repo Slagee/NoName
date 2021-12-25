@@ -4,18 +4,34 @@ import { Button, Row, Col, Typography } from "antd";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
 import './EmployeeDetail.css'
+import { id } from "../../services/employees/selector";
+import { GetEmployeeById } from "../home/GetEmployeeById";
+import { LoadingOutlined } from '@ant-design/icons/lib/icons';
 
 const {Title} = Typography;
 
-export default function CreateEmployee() {
+export default function EmployeeDetail() {
+    const [employeeById, isLoading] = GetEmployeeById(id);
+    function goEditEmployee() {
+        window.location.href = "/editEmployee";
+    }
+    
+
     return (
-        <div className="employeeContent">
+        isLoading ? 
+        (
+        <div className='loading'>
+            <LoadingOutlined style={{fontSize: '5rem'}} />
+            <p>Načítám data...</p>
+        </div>
+        ):(
+            <div className="employeeContent">
             <Row style={{'marginBottom': "2rem"}}>
                 <ArrowLeftOutlined className="backArrow" style={{fontSize: '2rem'}} onClick={() => window.history.back()}/>
             </Row>            
             <Row>
                 <Col span={4}>Jméno a příjmení:</Col>
-                <Col span={6}>Jan Panzenberger</Col>
+                <Col span={6}>{employeeById}</Col>
             </Row>
             <Row>
                 <Col span={4}>Datum narození:</Col>
@@ -45,11 +61,13 @@ export default function CreateEmployee() {
                     <Button type="secondary" icon={<ExportOutlined />} size='large' style={{'marginRight': "2rem"}}>
                         Exportovat
                     </Button>
-                    <Button type="primary" icon={<EditOutlined />} size='large'>
+                    <Button type="primary" icon={<EditOutlined />} size='large' onClick={goEditEmployee}>
                         Upravit
                     </Button>
                 </Col>
             </Row>
         </div>
+        )
+        
     )
 }
