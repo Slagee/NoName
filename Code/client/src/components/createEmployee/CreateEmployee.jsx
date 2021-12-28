@@ -1,4 +1,5 @@
 import { Select, Form, Input, Button, message } from "antd";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
 import AddDocument from "../addDocument/addDocument";
@@ -10,16 +11,26 @@ const { Option } = Select;
 export default function CreateEmployee() {
     const [form] = Form.useForm();
     const [units, isLoading] = GetUnitsList();
+    const [employeeUnit, setEmployeeUnit] = useState(null);
 
     let user = localStorage.getItem("username");
     if (!user) {
         return <Navigate to="/" />
     }
 
-    
+    const onUnitChange = value => {
+        console.log("before: "+value[0])
+        setEmployeeUnit(value)
+    }
+
+    const options = units.map((unit) => (
+        <Option key={[unit.number, unit.name]}>{unit.number} - {unit.name}</Option>
+    ))
 
     const onFinish = (values) => {
-        employees.createEmployee(values)
+        //values.employeeUnit = employeeUnit;
+        console.log(employeeUnit[0]);
+        employees.createEmployee(values, employeeUnit[0])
             .then((res) => {
                 if (res === true) {
                     console.log("true", res)
@@ -53,15 +64,14 @@ export default function CreateEmployee() {
 
                         </Select>
                     ) : (
-                        <Select
-                            showSearch
-                            placeholder="Vyberte středisko"
-                            filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                        >
-                            {units.map((unit) => (
-                                <Option key={unit.id}>{unit.number} - {unit.name}</Option>
-                            ))}
-                        </Select>
+                                <Select
+                                    showSearch
+                                    placeholder="Středisko"
+                                    filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                    onChange={onUnitChange}
+                                >
+                                    {options}
+                                </Select>                       
                     )}                    
                 </Form.Item>
                 <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message:"Je potřeba vyplnit rodné číslo zaměstnance" }]}>

@@ -31,13 +31,13 @@ public class EmployeeController {
         return employeeService.list();
     }
 
-    @Secured({"ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping("/employee")
     public Employee employeeById(@RequestParam(value = "id", defaultValue = "1") Long id) {
         return employeeService.getById(id);
     }
 
-    @Secured({"ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping(value = "/employee/page")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", dataTypeClass = String.class, paramType = "query"),
@@ -56,10 +56,10 @@ public class EmployeeController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @PostMapping(path = "/employee", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeCreateDto employeeCreate) {
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeCreateDto employeeCreate, @RequestParam(value = "unitNumber", defaultValue = "1") int unitId) {
         Employee createEmployee;
         try {
-            createEmployee = employeeService.addEmployee(employeeCreate);
+            createEmployee = employeeService.addEmployee(employeeCreate, unitId);
         } catch (IllegalStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
