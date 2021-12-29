@@ -2,7 +2,6 @@ import { Select, Form, Input, Button, message } from "antd";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
-import AddDocument from "../addDocument/addDocument";
 import './CreateEmployee.css'
 import { GetUnitsList } from "./GetUnitsList";
 
@@ -19,7 +18,6 @@ export default function CreateEmployee() {
     }
 
     const onUnitChange = value => {
-        console.log("before: "+value[0])
         setEmployeeUnit(value)
     }
 
@@ -28,15 +26,13 @@ export default function CreateEmployee() {
     ))
 
     const onFinish = (values) => {
-        //values.employeeUnit = employeeUnit;
-        console.log(employeeUnit[0]);
         employees.createEmployee(values, employeeUnit[0])
             .then((res) => {
                 if (res === true) {
                     console.log("true", res)
                     message.success("Zaměstnance se podařilo vytvořit")
                 } else {
-                    message.error(res)   
+                    message.error(res)
                 }
             });
     }
@@ -52,36 +48,35 @@ export default function CreateEmployee() {
                 onFinish={onFinish}
             >
                 <Form.Item name="name" label="Jméno" rules={[{ required: true, message: "Je potřeba vyplnit jméno zaměstnance" }]}>
-                    <Input onChange={e => form.setFieldsValue({employeeName: e.target.value})}/>
+                    <Input onChange={e => form.setFieldsValue({ employeeName: e.target.value })} />
                 </Form.Item>
-                <Form.Item name="surname" label="Příjmení" rules={[{ required: true, message:"Je potřeba vyplnit příjmení zaměstnance" }]}>
-                    <Input onChange={e => form.setFieldsValue({employeeSurname: e.target.value})}/>
+                <Form.Item name="surname" label="Příjmení" rules={[{ required: true, message: "Je potřeba vyplnit příjmení zaměstnance" }]}>
+                    <Input onChange={e => form.setFieldsValue({ employeeSurname: e.target.value })} />
                 </Form.Item>
-                <Form.Item label="Středisko">
-                    {isLoading ? 
-                    (
-                        <Select>
+                <Form.Item label="Středisko" rules={[{ required: true, message: "Je potřeba vyplnit středisko zaměstnance" }]}>
+                    {isLoading ?
+                        (
+                            <Select>
 
-                        </Select>
-                    ) : (
-                                <Select
-                                    showSearch
-                                    placeholder="Středisko"
-                                    filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    onChange={onUnitChange}
-                                >
-                                    {options}
-                                </Select>                       
-                    )}                    
+                            </Select>
+                        ) : (
+                            <Select
+                                showSearch
+                                placeholder="Středisko"
+                                filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                onChange={onUnitChange}
+                            >
+                                {options}
+                            </Select>
+                        )}
                 </Form.Item>
-                <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message:"Je potřeba vyplnit rodné číslo zaměstnance" }]}>
-                    <Input onChange={e => form.setFieldsValue({employeeBirthNumber: e.target.value})}/>
+                <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message: "Je potřeba vyplnit rodné číslo zaměstnance" }]}>
+                    <Input onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
                 </Form.Item>
-                <Form.Item wrapperCol={{offset: 12}}>
+                <Form.Item wrapperCol={{ offset: 12 }}>
                     <Button className="createEmployeeBtn" type="primary" htmlType="submit" size="large">Uložit</Button>
                 </Form.Item>
             </Form>
         </div>
-        
     )
 }
