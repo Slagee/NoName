@@ -1,7 +1,6 @@
 package cz.osu.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -10,6 +9,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Employee {
 
     @Id
@@ -33,17 +33,15 @@ public class Employee {
 
     @OneToMany(mappedBy = "employeeForPosition", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<Position> positions;
 
     @OneToMany(mappedBy = "employeeForDocument",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
-    @JsonManagedReference
     private List<Document> documentsForEmployee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "unit_id")
-    @JsonBackReference
+    @JsonIgnoreProperties("employeeUnit")
     private Unit unitForEmployee;
 
     public Employee() {
