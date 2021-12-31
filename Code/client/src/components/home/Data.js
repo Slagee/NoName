@@ -1,21 +1,19 @@
 import { Button } from "antd";
-//import employees from "../../services/employees/employees";
 
-
-function goEmployeeDetail() {
-  window.location.href = "/employeeDetail"
+function goEmployeeDetail(id) {
+  window.location.href = "employeeDetail/"+id;
+  console.log(id);
 }
 
 const columns = [
     { title: 'Jméno', dataIndex: 'name', key: 'name'},
     { title: 'Příjmení', dataIndex: 'surname', key: 'surname'},
     { title: 'Rodné číslo', dataIndex: 'birthNumber', key:'birthNumber', align: 'center' },
-    //{ title: 'Středisko', dataIndex: '', key: 'birthNumber', align: 'center' },
     {
       title: '',
       dataIndex: '',
       key: 'x',
-      render: () => <Button type="primary" onClick={goEmployeeDetail}>Zobrazit</Button>,
+      render: (text, record) => <Button type="primary" onClick={()=>goEmployeeDetail(record.id)}>Zobrazit</Button>, // Na onClick spravne funguji jen funkce ve tvaru ()=>
       align: 'center'
     },
     

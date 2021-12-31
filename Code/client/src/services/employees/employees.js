@@ -23,7 +23,7 @@ class Employees {
     }
 
     async getEmployeeById(id) {
-        return fetch("employee/"+id,
+        return fetch("http://localhost:3000/employee?id="+id, //Tady jsem radeji pouzil absolutni URL, bez toho se vytvari GET request ve tvaru employeeDetail/employee?id=x
         {
             method: 'GET',
             headers: {

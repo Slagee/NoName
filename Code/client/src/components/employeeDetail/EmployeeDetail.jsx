@@ -1,13 +1,15 @@
+import './EmployeeDetail.css'
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 import { DownloadOutlined, EditOutlined, ExportOutlined } from '@ant-design/icons';
-import { Button, Row, Col, Typography } from "antd";
-import { Navigate } from "react-router-dom";
-import employees from "../../services/employees/employees";
-import './EmployeeDetail.css'
+import { Button, Row, Col } from "antd";
+import { GetEmployeeById } from "../home/GetEmployeeById";
 
-const {Title} = Typography;
-
-export default function CreateEmployee() {
+export default function EmployeeDetail() {
+    const [employeeById] = GetEmployeeById();
+    function goEditEmployee() {
+        window.location.href = "/editEmployee";
+    }
+    
     return (
         <div className="employeeContent">
             <Row style={{'marginBottom': "2rem"}}>
@@ -15,11 +17,11 @@ export default function CreateEmployee() {
             </Row>            
             <Row>
                 <Col span={4}>Jméno a příjmení:</Col>
-                <Col span={6}>Jan Panzenberger</Col>
+                <Col span={6}>{ employeeById.name } { employeeById.surname }</Col>
             </Row>
             <Row>
-                <Col span={4}>Datum narození:</Col>
-                <Col span={6}>16.07.1999</Col>
+                <Col span={4}>Rodné číslo:</Col>
+                <Col span={6}>{ employeeById.birthNumber }</Col>
             </Row>
             <Row style = {{'marginBottom': "2rem"}}>
                 <Col span={4}>Středisko:</Col>
@@ -27,17 +29,21 @@ export default function CreateEmployee() {
             </Row>
             <Row style={{'marginBottom': "4rem"}}>
                 <Col span={4}>Uložené soubory:</Col>
-                <Col className="files" span={6}>
-                    <Row>
-                        <Col>
-                            Soubooor
-                        </Col>
-                        <Col offset={3}>
-                            <Button type="primary" shape="round" icon={<DownloadOutlined />} size='small'>
-                                Stáhnout
-                            </Button>
-                        </Col>
-                    </Row>
+                <Col className="files" span={20}>
+                    
+                    {(employeeById.documentsForEmployee || []).map(({ originalName, type }) => (
+                        <Row>
+                            <Col span={10}>
+                                {type.name} - {originalName}
+                            </Col>
+                            <Col span={10} offset={1}>
+                                <Button type="primary" shape="round" icon={<DownloadOutlined />} size='small'>
+                                    Stáhnout
+                                </Button>
+                            </Col>
+                        </Row>
+                    ))}
+
                 </Col>
             </Row>
             <Row >
@@ -45,7 +51,7 @@ export default function CreateEmployee() {
                     <Button type="secondary" icon={<ExportOutlined />} size='large' style={{'marginRight': "2rem"}}>
                         Exportovat
                     </Button>
-                    <Button type="primary" icon={<EditOutlined />} size='large'>
+                    <Button type="primary" onClick={()=>goEditEmployee()} icon={<EditOutlined /> } size='large'>
                         Upravit
                     </Button>
                 </Col>
