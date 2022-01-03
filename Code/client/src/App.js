@@ -24,8 +24,8 @@ function App() {
             <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/home" element={<Home />} />
             <Route path="/createEmployee" element={<CreateEmployee />} />
-            <Route path="/employeeDetail" element={<EmployeeDetail />}/>
-            <Route path="/editEmployee" element={<EditEmployee />}/>
+            <Route path="/employeeDetail/:id" element={<EmployeeDetail />}/>
+            <Route path="/editEmployee/:id" element={<EditEmployee />}/>
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>

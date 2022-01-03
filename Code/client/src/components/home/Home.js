@@ -5,7 +5,6 @@ import { Navigate } from 'react-router-dom';
 import { GetEmployeesList } from './GetEmployeesList';
 import { useState } from 'react/cjs/react.development';
 import { LoadingOutlined } from '@ant-design/icons/lib/icons';
-import { updateSelector } from '../../services/employees/selector';
 
 const { Search } = Input;
 

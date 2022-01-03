@@ -30,9 +30,11 @@ public class EmployeeService {
     }*/
 
     public Page<Employee> employeesPageSearch(String search, Pageable pageable) {
-        if (search == null || search.isEmpty())
-        {
+        if (search == null || search.isEmpty()) {
             return employeeRepository.findAll(pageable);
+        } else if (search.contains(" ")) {
+            String[] s = search.split(" ");
+            return employeeRepository.findAllByNameContainingAndSurnameContaining(s[0], s[1], pageable);
         } else {
             return employeeRepository.findAllByNameContainingOrSurnameContaining(search, search, pageable);
         }

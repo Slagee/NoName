@@ -1,6 +1,6 @@
 class Employees {
     async createEmployee(employeeInfo) {
-        return fetch("employee",
+        return fetch("http://localhost:8080/employee",
         {
             method: 'POST',
             headers: {
@@ -46,7 +46,8 @@ class Employees {
     }*/
 
     async getEmployeeById(id) {
-        return fetch("employee/"+id,
+        //var url = "employee?id="+id
+        return fetch("http://localhost:8080/employee?id="+id,
         {
             method: 'GET',
             headers: {
@@ -67,10 +68,10 @@ class Employees {
     }
 
     async getEmployeesByName(name) {
-        var url = "employee/page"
+        var url = "http://localhost:8080/employee/page"
         if (name !== null) {
             
-            url = "employee/page?search=" +name
+            url = "http://localhost:8080/employee/page?search=" +name
             console.log("call" + url);
         }
         return await fetch(url,
@@ -94,7 +95,7 @@ class Employees {
     }
 
     async getEmployeesPaged() {
-        return await fetch("employee/page",
+        return await fetch("http://localhost:8080/employee/page",
         {
             method: 'GET',
             headers: {

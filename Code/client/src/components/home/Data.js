@@ -3,7 +3,7 @@ import { Button } from "antd";
 
 
 function goEmployeeDetail(id) {
-  window.location.href = "/employeeDetail"
+  window.location.href = "/employeeDetail/"+id;
 }
 
 const columns = [
@@ -15,7 +15,7 @@ const columns = [
       title: '',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => <Button type="primary" onClick={goEmployeeDetail(record.id)}>Zobrazit</Button>,
+      render: (text, record) => <Button type="primary" onClick={() => goEmployeeDetail(record.id)}>Zobrazit</Button>,
       align: 'center'
     },
     

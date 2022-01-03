@@ -3,17 +3,16 @@ import employees from "../../services/employees/employees";
 
 export function GetEmployeeById(id) {
     const [data, setData] = useState([]);
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
     
     useEffect(() => {
         (async () => {
             setLoading(true);
-            console.log(id)
             const response = await employees.getEmployeeById(id);
-            if (response) {                
-                setLoading(false);
-                setData(response.content);
+            if (response) {
+                setData(response);
+                setLoading(false);                
             }
         })();
     }, [id]);

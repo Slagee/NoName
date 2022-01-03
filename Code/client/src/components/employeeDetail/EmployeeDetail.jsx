@@ -1,22 +1,19 @@
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 import { DownloadOutlined, EditOutlined, ExportOutlined } from '@ant-design/icons';
-import { Button, Row, Col, Typography } from "antd";
-import { Navigate } from "react-router-dom";
-import employees from "../../services/employees/employees";
+import { Button, Row, Col } from "antd";
+import { useParams } from "react-router-dom";
 import './EmployeeDetail.css'
-import { id } from "../../services/employees/selector";
 import { GetEmployeeById } from "../home/GetEmployeeById";
 import { LoadingOutlined } from '@ant-design/icons/lib/icons';
 
-const {Title} = Typography;
-
 export default function EmployeeDetail() {
-    const [employeeById, isLoading] = GetEmployeeById(id);
+    const params = useParams();
+    const [employeeById, isLoading] = GetEmployeeById(params.id);
+
     function goEditEmployee() {
-        window.location.href = "/editEmployee";
+        window.location.href = "/editEmployee/"+params.id;
     }
     
-
     return (
         isLoading ? 
         (
@@ -31,7 +28,7 @@ export default function EmployeeDetail() {
             </Row>            
             <Row>
                 <Col span={4}>Jméno a příjmení:</Col>
-                <Col span={6}>{employeeById}</Col>
+                <Col span={6}>{employeeById.name}</Col>
             </Row>
             <Row>
                 <Col span={4}>Datum narození:</Col>
