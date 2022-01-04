@@ -17,3 +17,11 @@
 .employeeContent {
     padding: 0rem 10rem
 }
+
+.ant-select {
+    font-weight: normal;
+}
+
+#documentItem {
+    font-weight: normal;
+}

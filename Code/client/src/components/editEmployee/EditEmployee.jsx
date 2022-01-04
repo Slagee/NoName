@@ -1,8 +1,11 @@
 import { ArrowLeftOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
 import { Select, Form, Input, Button, message, Row, Col } from "antd";
+import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
+import { useState } from "react/cjs/react.development";
 import employees from "../../services/employees/employees";
 import { GetUnitsList } from "../../services/units/GetUnitsList";
+import units from "../../services/units/units";
 import AddDocument from "../addDocument/AddDocument";
 import { GetEmployeeById } from "../home/GetEmployeeById";
 import './EditEmployee.css'
@@ -12,8 +15,21 @@ const { Option } = Select;
 export default function EditEmployee() {
     const [form] = Form.useForm();
     const params = useParams();
-    const [units, isUnitsLoading] = GetUnitsList();
+    const [unit, setUnit] = useState(null);
+    const [unitsList, isUnitsLoading] = GetUnitsList();
     const [employee, isLoading] = GetEmployeeById(params.id);
+
+    useEffect(() => {
+        (async () => {
+            if (employee.unitForEmployee) {
+                const response = await units.getUnitById(employee.unitForEmployee.id);
+                console.log(response);
+                if (response) {
+                    setUnit(response);
+                }
+            }
+        })();
+    }, [employee]);
 
     let user = localStorage.getItem("username");
     if (!user) {
@@ -21,11 +37,11 @@ export default function EditEmployee() {
     }
 
     const onUnitChange = value => {
-        console.log(value)
+        console.log("unit:", unit)
     }
 
-    const options = units.map((unit) => (
-        <Option key={[unit.number, unit.name]}>{unit.number} - {unit.name}</Option>
+    const options = unitsList.map((unit) => (
+        <Option key={[unit.id, unit.number, unit.name]} >{unit.number} - {unit.name}</Option>
     ))
 
     const onFinish = (values) => {
@@ -77,8 +93,8 @@ export default function EditEmployee() {
                                 </Select>
                             ) : (
                                 <Select
+                                    placeholder={employee.unitForEmployee ? (employee.unitForEmployee.number +" - "+ employee.unitForEmployee.name) : ("Vyberte středisko")}
                                     showSearch
-                                    placeholder="Středisko"
                                     filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                     onChange={onUnitChange}
                                 >
@@ -91,7 +107,7 @@ export default function EditEmployee() {
                     </Form.Item>
                     <Form.Item label="Uložené soubory:">
                         {employee.documentsForEmployee.map((item) => (
-                            <Row style={{ padding: '0.6rem' }} key={item.id}>{item.originalName}</Row>
+                            <Row id="documentItem" style={{ padding: '0.6rem' }} key={item.id}>{item.originalName}</Row>
                         ))}
                     </Form.Item>
                     <Row style={{ 'marginBottom': "2rem", 'marginTop': "2rem" }} align="middle">

@@ -18,6 +18,27 @@ class Units {
             console.log(err);
         });
     }
+
+    async getUnitById(id) {
+        return fetch("http://localhost:8080/unit?id="+id,
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            }
+            else {
+                return res.status;
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
 }
 
 export default new Units();
