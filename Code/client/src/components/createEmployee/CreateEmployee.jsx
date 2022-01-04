@@ -1,25 +1,38 @@
-import { ArrowLeftOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
-import { Select, Form, Input, Button, message, Row, Col } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
+import { Select, Form, Input, Button, message, Row } from "antd";
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
-import AddDocument from "../addDocument/AddDocument";
 import './CreateEmployee.css'
+import { GetUnitsList } from "./GetUnitsList";
+
+const { Option } = Select;
 
 export default function CreateEmployee() {
     const [form] = Form.useForm();
+    const [units, isLoading] = GetUnitsList();
+    const [employeeUnit, setEmployeeUnit] = useState(null);
+
     let user = localStorage.getItem("username");
     if (!user) {
         return <Navigate to="/login" />
     }
 
+    const onUnitChange = value => {
+        setEmployeeUnit(value)
+    }
+
+    const options = units.map((unit) => (
+        <Option key={[unit.number, unit.name]}>{unit.number} - {unit.name}</Option>
+    ))
+
     const onFinish = (values) => {
-        employees.createEmployee(values)
+        employees.createEmployee(values, employeeUnit[0])
             .then((res) => {
                 if (res === true) {
-                    console.log("true", res)
                     message.success("Zaměstnance se podařilo vytvořit")
                 } else {
-                    message.error(res)   
+                    message.error(res)
                 }
             });
     }
@@ -38,28 +51,35 @@ export default function CreateEmployee() {
                 onFinish={onFinish}
             >
                 <Form.Item name="name" label="Jméno" rules={[{ required: true, message: "Je potřeba vyplnit jméno zaměstnance" }]}>
-                    <Input onChange={e => form.setFieldsValue({employeeName: e.target.value})}/>
+                    <Input onChange={e => form.setFieldsValue({ employeeName: e.target.value })} />
                 </Form.Item>
-                <Form.Item name="surname" label="Příjmení" rules={[{ required: true, message:"Je potřeba vyplnit příjmení zaměstnance" }]}>
-                    <Input onChange={e => form.setFieldsValue({employeeSurname: e.target.value})}/>
+                <Form.Item name="surname" label="Příjmení" rules={[{ required: true, message: "Je potřeba vyplnit příjmení zaměstnance" }]}>
+                    <Input onChange={e => form.setFieldsValue({ employeeSurname: e.target.value })} />
                 </Form.Item>
-                <Form.Item label="Středisko">
-                    <Select>
+                <Form.Item label="Středisko" rules={[{ required: true, message: "Je potřeba vyplnit středisko zaměstnance" }]}>
+                    {isLoading ?
+                        (
+                            <Select>
 
-                    </Select>
+                            </Select>
+                        ) : (
+                            <Select
+                                showSearch
+                                placeholder="Středisko"
+                                filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                onChange={onUnitChange}
+                            >
+                                {options}
+                            </Select>
+                        )}
                 </Form.Item>
-                <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message:"Je potřeba vyplnit rodné číslo zaměstnance" }]}>
-                    <Input onChange={e => form.setFieldsValue({employeeBirthNumber: e.target.value})}/>
+                <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message: "Je potřeba vyplnit rodné číslo zaměstnance" }]}>
+                    <Input onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
                 </Form.Item>
-                <Row style={{'marginBottom': "2rem", 'marginTop':"2rem"}} align="middle">
-                        <Col offset={2}>
-                            <Button type="primary" htmlType="submit" size="large" icon={<SaveOutlined />}>Uložit</Button>
-                        </Col>
-                </Row>
+                <Form.Item wrapperCol={{ offset: 12 }}>
+                    <Button className="createEmployeeBtn" type="primary" htmlType="submit" size="large">Uložit</Button>
+                </Form.Item>
             </Form>
-            <AddDocument />
-            
         </div>
-        
     )
 }

@@ -16,6 +16,18 @@ public class EmployeeCreateDto {
     @NotEmpty
     private String birthNumber;
 
+    @NotNull
+    @NotEmpty
+    private Unit employeeUnit;
+
+    public Unit getEmployeeUnit() {
+        return employeeUnit;
+    }
+
+    public void setEmployeeUnit(Unit employeeUnit) {
+        this.employeeUnit = employeeUnit;
+    }
+
     public String getName() {
         return name;
     }
