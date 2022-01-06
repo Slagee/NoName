@@ -43,11 +43,11 @@ class Employees {
         });
     }
 
-    async getEmployeesByName(name) {
-        var url = "employee/page"
+    async getEmployeesByName(name, page) {
+        var url = "/employee/page?size=10&search&page="+(page-1)
         if (name !== null) {
             
-            url = "employee/page?search=" +name
+            url = "employee/page?size=10&search="+ name + "&page="+(page-1)
             console.log("call" + url);
         }
         return await fetch(url,
@@ -71,7 +71,7 @@ class Employees {
     }
 
     async getEmployeesPaged() {
-        return await fetch("employee/page",
+        return await fetch("employee/page?size=10&search",
         {
             method: 'GET',
             headers: {
