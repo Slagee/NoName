@@ -22,10 +22,10 @@ class Employees {
         });
     }
 
-    /*async editEmployee(employeeInfo) {
-        return fetch("employee",
+    async editEmployee(employeeInfo, id) {
+        return fetch("http://localhost:8080/employee/"+id,
         {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.getItem('token')
@@ -43,7 +43,7 @@ class Employees {
         .catch((err) => {
             console.log(err)
         });
-    }*/
+    }
 
     async getEmployeeById(id) {
         //var url = "employee?id="+id

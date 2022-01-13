@@ -1,8 +1,9 @@
 import { ArrowLeftOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
-import { Select, Form, Input, Button, message, Row, Col } from "antd";
+import { Select, Form, Input, Button, message, Row, Col, Checkbox } from "antd";
 import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
+import documents from "../../services/documents/documents";
 import employees from "../../services/employees/employees";
 import { GetUnitsList } from "../../services/units/GetUnitsList";
 import units from "../../services/units/units";
@@ -23,7 +24,6 @@ export default function EditEmployee() {
         (async () => {
             if (employee.unitForEmployee) {
                 const response = await units.getUnitById(employee.unitForEmployee.id);
-                console.log(response);
                 if (response) {
                     setUnit(response);
                 }
@@ -36,8 +36,11 @@ export default function EditEmployee() {
         return <Navigate to="/login" />
     }
 
-    const onUnitChange = value => {
-        console.log("unit:", unit)
+    const onUnitChange = async (value) => {
+        const response = await units.getUnitById(value[0]);
+        if (response) {
+            setUnit(response);
+        }        
     }
 
     const options = unitsList.map((unit) => (
@@ -45,15 +48,29 @@ export default function EditEmployee() {
     ))
 
     const onFinish = (values) => {
-        employees.createEmployee(values)
+        values.employeeUnit = unit;
+        employees.editEmployee(values, employee.id)
             .then((res) => {
                 if (res === true) {
                     console.log("true", res)
-                    message.success("Zaměstnance se podařilo vytvořit")
+                    message.success("Zaměstnance se podařilo upravit")
                 } else {
                     message.error(res)
                 }
             });
+    }
+
+    const deleteDocument = (id) => {
+        documents.deleteDocument(id)
+            .then((res) => {
+                if (res === true) {
+                    console.log("document id" +id+ " successfuly deleted")
+                    message.success("Dokument se podařilo odstranit")
+                    
+                } else {
+                    message.error(res);
+                }
+            })
     }
 
     return (
@@ -69,7 +86,6 @@ export default function EditEmployee() {
                 <Form
                     form={form}
                     labelCol={{ span: 4 }}
-                    wrapperCol={{ span: 8 }}
                     layout="horizontal"
                     size="large"
                     initialValues={{
@@ -80,10 +96,10 @@ export default function EditEmployee() {
                     onFinish={onFinish}
                 >
                     <Form.Item name="name" label="Jméno" rules={[{ required: true, message: "Je potřeba vyplnit jméno zaměstnance" }]}>
-                        <Input onChange={e => form.setFieldsValue({ employeeName: e.target.value })} />
+                        <Input style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeName: e.target.value })} />
                     </Form.Item>
                     <Form.Item name="surname" label="Příjmení" rules={[{ required: true, message: "Je potřeba vyplnit příjmení zaměstnance" }]}>
-                        <Input onChange={e => form.setFieldsValue({ employeeSurname: e.target.value })} />
+                        <Input style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeSurname: e.target.value })} />
                     </Form.Item>
                     <Form.Item label="Středisko">
                         {isUnitsLoading ?
@@ -93,6 +109,7 @@ export default function EditEmployee() {
                                 </Select>
                             ) : (
                                 <Select
+                                style={{width: '25%'}}
                                     placeholder={employee.unitForEmployee ? (employee.unitForEmployee.number +" - "+ employee.unitForEmployee.name) : ("Vyberte středisko")}
                                     showSearch
                                     filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
@@ -103,22 +120,34 @@ export default function EditEmployee() {
                             )}
                     </Form.Item>
                     <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message: "Je potřeba vyplnit rodné číslo zaměstnance" }]}>
-                        <Input onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
+                        <Input style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
                     </Form.Item>
                     <Form.Item label="Uložené soubory:">
                         {employee.documentsForEmployee.map((item) => (
-                            <Row id="documentItem" style={{ padding: '0.6rem' }} key={item.id}>{item.originalName}</Row>
+                            <Row id="documentItem" style={{ alignItems: 'center', margin: '0 0 0.8rem 0.2rem' }} key={item.id}>
+                                <Col span={4} style={{fontWeight: 'bold'}}>{item.originalName}</Col>
+                                <Col span={8}>
+                                    <Select defaultValue={item.type.name} style={{width: '80%'}}></Select>
+                                </Col>
+                                <Col span={6}>
+                                    <Checkbox>Soubor v rámci projektu</Checkbox>
+                                </Col>
+                                <Col span={4} offset={2}>
+                                    <Button danger onClick={() => deleteDocument(item.id)} icon={<DeleteOutlined />} size="small">Odstranit</Button>
+                                </Col>
+                            </Row>
                         ))}
                     </Form.Item>
-                    <Row style={{ 'marginBottom': "2rem", 'marginTop': "2rem" }} align="middle">
-                        <Col offset={2}>
-                            <Button type="primary" htmlType="submit" size="large" icon={<SaveOutlined />}>Uložit</Button>
+                    <AddDocument employeeId={params.id}/>
+                    <Row style={{marginTop: '1rem', alignItems: 'center'}}>
+                        <Col offset={16}>
+                            <Button danger type="dashed" htmlType="submit" icon={<DeleteOutlined />} size="small" style={{padding: '0 0.5rem'}}>Odstranit</Button>
                         </Col>
-                        <Col offset={1}>
-                            <Button danger type="dashed" htmlType="submit" icon={<DeleteOutlined />} size="small">Odstranit</Button>
+                        <Col offset={3}>
+                            <Button type="primary" htmlType="submit" size="large" icon={<SaveOutlined />} style={{padding: '0 2.5rem'}}>Uložit</Button>
                         </Col>
-                    </Row>
-                    <AddDocument />
+                        
+                    </Row>                    
                 </Form>
             </div>
         )

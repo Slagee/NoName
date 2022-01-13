@@ -71,4 +71,17 @@ public class EmployeeController {
 
         return new ResponseEntity<>(createEmployee, HttpStatus.CREATED);
     }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
+    @PutMapping(path = "/employee/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> editEmployee(@RequestBody EmployeeCreateDto updateEmployee, @PathVariable("id") Long id) {
+        Employee updatedEmployee;
+        try {
+            updatedEmployee = employeeService.updateEmployee(updateEmployee, id);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(updatedEmployee, HttpStatus.CREATED);
+    }
 }

@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import cz.osu.model.entity.Document;
 import cz.osu.model.entity.Employee;
+import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.service.DocumentService;
 import cz.osu.model.service.EmployeeService;
 import cz.osu.model.service.FileService;
@@ -77,6 +78,23 @@ public class DocumentController {
     }
 
     @Secured("ROLE_ADMIN")
+    @DeleteMapping(path = "/document/{id}")
+    public ResponseEntity<?> deleteDocument(@PathVariable("id") Long id)
+    {
+        Document document = documentService.getById(id);
+        if (document == null) {
+            return new ResponseEntity<>("Dokument se nepodařilo najít v databázi", HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            documentService.deleteDocument(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Secured("ROLE_ADMIN")
     @GetMapping(path = "/role-test")
     public ResponseEntity<?> getTestRole(){
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -114,13 +132,14 @@ public class DocumentController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping("/document/download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam("id") Long id){
+    public ResponseEntity<?> downloadFile(@RequestParam("id") Long id){
         String pathString = documentService.getPathById(id);
         if (pathString == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Nepodařilo se najít cestu k dokumentu", HttpStatus.BAD_REQUEST);
         Path path = Paths.get(pathString);
         try {
             Resource resource = new UrlResource(path.toUri());
+            System.out.println(resource);
             if (resource.exists()){
                 return ResponseEntity.ok()
                         .contentType(MediaType.valueOf(MediaType.MULTIPART_FORM_DATA_VALUE))
@@ -128,8 +147,8 @@ public class DocumentController {
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Nepodařilo se stáhnout dokument",HttpStatus.BAD_REQUEST);
     }
 }
