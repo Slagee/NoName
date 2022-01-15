@@ -3,6 +3,7 @@ import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 import { DownloadOutlined, EditOutlined, ExportOutlined } from '@ant-design/icons';
 import { Button, Row, Col } from "antd";
 import { GetEmployeeById } from "../home/GetEmployeeById";
+import documents from "../../services/documents/documents";
 
 export default function EmployeeDetail() {
     const [employeeById] = GetEmployeeById();
@@ -31,13 +32,13 @@ export default function EmployeeDetail() {
                 <Col span={4}>Uložené soubory:</Col>
                 <Col className="files" span={20}>
                     
-                    {(employeeById.documentsForEmployee || []).map(({ originalName, type }) => (
+                    {(employeeById.documentsForEmployee || []).map(({ originalName, type, id }) => (
                         <Row>
                             <Col span={10}>
                                 {type.name} - {originalName}
                             </Col>
                             <Col span={10} offset={1}>
-                                <Button type="primary" shape="round" icon={<DownloadOutlined />} size='small'>
+                                <Button type="primary" onClick={()=>documents.downloadDocumentById(id)} shape="round" icon={<DownloadOutlined />} size='small'>
                                     Stáhnout
                                 </Button>
                             </Col>
