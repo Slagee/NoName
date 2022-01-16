@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -34,12 +35,31 @@ public class EmployeeService {
     }*/
 
     public Page<Employee> employeesPageSearch(String search, Pageable pageable) {
-        if (search == null || search.isEmpty())
-        {
+        if (search == null || search.isEmpty()) {
             return employeeRepository.findAll(pageable);
+        } else if (search.contains(" ")) {
+            String[] s = search.split(" ");
+            return employeeRepository.findAllByNameContainingAndSurnameContaining(s[0], s[1], pageable);
         } else {
             return employeeRepository.findAllByNameContainingOrSurnameContaining(search, search, pageable);
         }
+    }
+
+    public Employee updateEmployee(EmployeeCreateDto employeeUpdate, Long id) {
+        Optional<Employee> employeeExists = employeeRepository.findById(id);
+        if (employeeExists.isEmpty())
+        {
+            throw new IllegalStateException("Vybraného zaměstnance se nepodařilo najít");
+        }
+        Employee employee = employeeExists.get();
+        employee.setName(employeeUpdate.getName());
+        employee.setSurname(employeeUpdate.getSurname());
+        employee.setBirthNumber(employeeUpdate.getBirthNumber());
+        System.out.println("updated: " +employeeUpdate.getEmployeeUnit());
+        employee.setUnitForEmployee(employeeUpdate.getEmployeeUnit());
+        System.out.println("old: " +employee.getUnitForEmployee());
+
+        return employeeRepository.save(employee);
     }
 
     public Employee addEmployee(EmployeeCreateDto employeeCreate, int unitNumber) {

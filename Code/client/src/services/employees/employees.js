@@ -1,6 +1,6 @@
 class Employees {
     async createEmployee(employeeInfo, unitNumber) {
-        return fetch("employee?unitNumber="+unitNumber,
+        return fetch("http://localhost:8080/employee?unitNumber="+unitNumber,
         {
             method: 'POST',
             headers: {
@@ -22,8 +22,32 @@ class Employees {
         });
     }
 
+    async editEmployee(employeeInfo, id) {
+        return fetch("http://localhost:8080/employee/"+id,
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(employeeInfo)
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.ok;
+            }
+            else {
+                return res.text();
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
+
     async getEmployeeById(id) {
-        return fetch("employee/"+id,
+        //var url = "employee?id="+id
+        return fetch("http://localhost:8080/employee?id="+id,
         {
             method: 'GET',
             headers: {
@@ -44,10 +68,10 @@ class Employees {
     }
 
     async getEmployeesByName(name) {
-        var url = "employee/page?size=10"
+        var url = "http://localhost:8080/employee/page"
         if (name !== null) {
             
-            url = "employee/page?size=10&search=" +name
+            url = "http://localhost:8080/employee/page?search=" +name
             console.log("call" + url);
         }
         return await fetch(url,
@@ -71,7 +95,7 @@ class Employees {
     }
 
     async getEmployeesPaged() {
-        return await fetch("employee/page",
+        return await fetch("http://localhost:8080/employee/page",
         {
             method: 'GET',
             headers: {

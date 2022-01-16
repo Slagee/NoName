@@ -28,6 +28,11 @@ public class DocumentService {
         return documentRepository.save(document);
     }
 
+    public void deleteDocument(Long id) {
+        Document document = getById(id);
+        documentRepository.delete(document);
+    }
+
     public String getPathById(Long id){
         Document document = documentRepository.findById(id).orElse(null);
         if (document != null) {

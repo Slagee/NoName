@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react/cjs/react.development";
-import units from "../../services/units/units";
+import units from "./units";
 
 export function GetUnitsList() {
     const [unitsList, setUnit] = useState([]);

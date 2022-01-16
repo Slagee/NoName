@@ -35,6 +35,9 @@ const Home = () => {
             <Table
                 columns={columns}
                 dataSource={employeesList}
+                pagination={{
+                    pageSize: 10
+                }}
             />
             )}
             

@@ -3,8 +3,8 @@ import { Select, Form, Input, Button, message, Row } from "antd";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import employees from "../../services/employees/employees";
+import { GetUnitsList } from "../../services/units/GetUnitsList";
 import './CreateEmployee.css'
-import { GetUnitsList } from "./GetUnitsList";
 
 const { Option } = Select;
 
@@ -23,7 +23,7 @@ export default function CreateEmployee() {
     }
 
     const options = units.map((unit) => (
-        <Option key={[unit.number, unit.name]}>{unit.number} - {unit.name}</Option>
+        <Option key={[unit.id, unit.number, unit.name]}>{unit.number} - {unit.name}</Option>
     ))
 
     const onFinish = (values) => {
