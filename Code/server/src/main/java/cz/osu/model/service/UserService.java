@@ -39,6 +39,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElse(null);
     }
 
+
     public User registerNewUserAccount(UserDto userDto) {
 
         // checking if user exists

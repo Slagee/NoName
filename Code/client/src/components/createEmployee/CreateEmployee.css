@@ -1,0 +1,19 @@
+.ant-input-number-lg {
+    width: 100%;
+}
+
+.backArrow:hover {
+    color: #00AEEF;
+}
+
+.createEmployeeRow {
+    float: right;
+}
+
+.ant-form-item-label {
+    font-weight: bold;
+}
+
+.employeeContent {
+    padding: 0rem 10rem
+}

@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import { AppLayout } from './components/layout/AppLayout';
+import Login from './components/login/Login';
 import './App.css';
+import React from 'react';
+import useToken from './services/authentication/useToken';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './components/home/Home';
+import { Layout } from 'antd';
+import { Content } from 'antd/lib/layout/layout';
+import CreateEmployee from './components/createEmployee/CreateEmployee';
+import EmployeeDetail from './components/employeeDetail/EmployeeDetail';
+import EditEmployee from './components/editEmployee/EditEmployee';
 
 function App() {
+  const { token, setToken } = useToken();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Layout>
+        <AppLayout token={token} />
+        <Content className='Content'>
+        <BrowserRouter>
+          <Routes>            
+            <Route path="/login" element={<Login setToken={setToken} />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/createEmployee" element={<CreateEmployee />} />
+            <Route path="/employeeDetail/:id" element={<EmployeeDetail />}/>
+            <Route path="/editEmployee/:id" element={<EditEmployee />}/>
+            <Route path="*" element={<Home />} />
+          </Routes>
+        </BrowserRouter>
+        </Content>        
+      </Layout>
     </div>
   );
 }
