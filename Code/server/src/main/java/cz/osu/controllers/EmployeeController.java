@@ -25,7 +25,8 @@ public class EmployeeController {
         return employeeService.list();
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
+
+    @Secured({"ROLE_ADMIN","ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping("/employee")
     public Employee employeeById(@RequestParam(value = "id", defaultValue = "1") Long id) {
         return employeeService.getById(id);

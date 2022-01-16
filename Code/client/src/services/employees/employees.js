@@ -67,11 +67,11 @@ class Employees {
         });
     }
 
-    async getEmployeesByName(name) {
-        var url = "http://localhost:8080/employee/page"
+    async getEmployeesByName(name, page) {
+        var url = "http://localhost:8080/employee/page?size=10&search&page="+(page-1)
         if (name !== null) {
             
-            url = "http://localhost:8080/employee/page?search=" +name
+            url = "http://localhost:8080/employee/page?size=10&search="+ name + "&page="+(page-1)
             console.log("call" + url);
         }
         return await fetch(url,
@@ -95,7 +95,7 @@ class Employees {
     }
 
     async getEmployeesPaged() {
-        return await fetch("http://localhost:8080/employee/page",
+        return await fetch("http://localhost:8080/employee/page?size=10&search",
         {
             method: 'GET',
             headers: {

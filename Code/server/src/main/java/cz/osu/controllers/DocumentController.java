@@ -142,7 +142,7 @@ public class DocumentController {
             System.out.println(resource);
             if (resource.exists()){
                 return ResponseEntity.ok()
-                        .contentType(MediaType.valueOf(MediaType.MULTIPART_FORM_DATA_VALUE))
+                        .contentType(MediaType.valueOf(MediaType.APPLICATION_PDF_VALUE))
                         .body(resource);
             }
         } catch (MalformedURLException e) {

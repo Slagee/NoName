@@ -35,6 +35,24 @@ class Documents {
             } else {
                 return res.text();
             }
+        });
+    }
+    
+    async downloadDocumentById(id) {
+        return fetch("http://localhost:8080/document/download?id="+id, //Tady jsem radeji pouzil absolutni URL, bez toho se vytvari GET request ve tvaru employeeDetail/employee?id=x
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token'),
+            //    'Content-Type': 'application/pdf'
+            }
+        })
+        .then( res => res.blob())
+        .then(blob => {
+            console.log(blob)
+            var file = window.URL.createObjectURL(blob);
+            window.open(file);
+            //window.location.assign(file);
         })
         .catch((err) => {
             console.log(err)

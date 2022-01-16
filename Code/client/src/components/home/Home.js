@@ -10,7 +10,8 @@ const { Search } = Input;
 
 const Home = () => {
     const [searchName, setSearchName] = useState(null);
-    const [employeesList, isLoading] = GetEmployeesList(searchName);
+    const [page, setPage] = useState(1);
+    const [employeesList, isLoading, totalPages] = GetEmployeesList(searchName, page);
 
     let user = localStorage.getItem("username");
     
@@ -36,7 +37,14 @@ const Home = () => {
                 columns={columns}
                 dataSource={employeesList}
                 pagination={{
-                    pageSize: 10
+                    pageSize: 10,
+                    total: totalPages*10,
+                    onChange: (page) => {
+                        setPage(page);
+                        console.log(page);
+                    },
+                    current:page,
+                    simple:true
                 }}
             />
             )}

@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSpecificationExecutor<Employee> {
     Optional<Employee> findByBirthNumber(String birthNumber);
     Page<Employee> findAllByNameContainingOrSurnameContaining(String name, String surname, Pageable pageable);
+
     Page<Employee> findAllByNameContainingAndSurnameContaining(String name, String surname, Pageable pageable);
 }
