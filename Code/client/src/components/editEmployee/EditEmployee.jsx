@@ -1,5 +1,5 @@
 import { ArrowLeftOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
-import { Select, Form, Input, Button, message, Row, Col, Checkbox } from "antd";
+import { Select, Form, Input, Button, message, Row, Col, Checkbox, InputNumber } from "antd";
 import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
@@ -120,7 +120,7 @@ export default function EditEmployee() {
                             )}
                     </Form.Item>
                     <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message: "Je potřeba vyplnit rodné číslo zaměstnance" }]}>
-                        <Input style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
+                        <InputNumber type="number" style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
                     </Form.Item>
                     <Form.Item label="Uložené soubory:">
                         {employee.documentsForEmployee.map((item) => (
