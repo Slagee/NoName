@@ -55,30 +55,23 @@ public class EmployeeService {
         employee.setName(employeeUpdate.getName());
         employee.setSurname(employeeUpdate.getSurname());
         employee.setBirthNumber(employeeUpdate.getBirthNumber());
-        System.out.println("updated: " +employeeUpdate.getEmployeeUnit());
         employee.setUnitForEmployee(employeeUpdate.getEmployeeUnit());
-        System.out.println("old: " +employee.getUnitForEmployee());
 
         return employeeRepository.save(employee);
     }
 
-    public Employee addEmployee(EmployeeCreateDto employeeCreate, int unitNumber) {
+    public Employee addEmployee(EmployeeCreateDto employeeCreate) {
         boolean employeeExists = employeeRepository.findByBirthNumber(employeeCreate.getBirthNumber()).isPresent();
 
         if(employeeExists){
             throw new IllegalStateException("Zaměstnanec s tímto rodným číslem již existuje");
         }
 
-        Unit unit = unitRepository.findByNumber(unitNumber);
-        if (unit == null) {
-            throw new IllegalStateException("Zadané středisko se nepodařilo najít");
-        }
-
         Employee employee = new Employee();
         employee.setName(employeeCreate.getName());
         employee.setSurname(employeeCreate.getSurname());
         employee.setBirthNumber(employeeCreate.getBirthNumber());
-        employee.setUnitForEmployee(unit);
+        employee.setUnitForEmployee(employeeCreate.getEmployeeUnit());
 
         return employeeRepository.save(employee);
     }

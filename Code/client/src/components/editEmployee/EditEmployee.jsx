@@ -109,7 +109,7 @@ export default function EditEmployee() {
                                 </Select>
                             ) : (
                                 <Select
-                                style={{width: '25%'}}
+                                    style={{width: '25%'}}
                                     placeholder={employee.unitForEmployee ? (employee.unitForEmployee.number +" - "+ employee.unitForEmployee.name) : ("Vyberte středisko")}
                                     showSearch
                                     filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
