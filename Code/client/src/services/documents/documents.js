@@ -53,6 +53,7 @@ class Documents {
             var file = window.URL.createObjectURL(blob);
             window.open(file);
             //window.location.assign(file);
+            console.log("sad")
         })
         .catch((err) => {
             console.log(err)
