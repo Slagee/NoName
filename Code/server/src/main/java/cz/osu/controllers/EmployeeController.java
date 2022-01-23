@@ -85,4 +85,16 @@ public class EmployeeController {
 
         return new ResponseEntity<>(updatedEmployee, HttpStatus.CREATED);
     }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
+    @DeleteMapping(path = "/employee/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
+        try {
+            employeeService.deleteEmployee(id);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Podařilo se odstranit zaměstnance", HttpStatus.OK);
+    }
 }

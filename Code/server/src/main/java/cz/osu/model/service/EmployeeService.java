@@ -1,8 +1,10 @@
 package cz.osu.model.service;
 
+import cz.osu.model.entity.Document;
 import cz.osu.model.entity.Employee;
 import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.entity.Unit;
+import cz.osu.model.repository.DocumentRepository;
 import cz.osu.model.repository.EmployeeRepository;
 import cz.osu.model.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
-    private UnitRepository unitRepository;
+    private DocumentRepository documentRepository;
 
     public List<Employee> list(){
         return employeeRepository.findAll();
@@ -74,5 +76,22 @@ public class EmployeeService {
         employee.setUnitForEmployee(employeeCreate.getEmployeeUnit());
 
         return employeeRepository.save(employee);
+    }
+
+    public void deleteEmployee(Long id) {
+        Optional<Employee> employeeExists = employeeRepository.findById(id);
+        if (employeeExists.isEmpty())
+        {
+            throw new IllegalStateException("Vybraného zaměstnance se nepodařilo najít");
+        }
+
+        Employee employee = employeeExists.get();
+
+        try {
+            employeeRepository.delete(employee);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+
     }
 }
