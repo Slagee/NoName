@@ -58,10 +58,10 @@ public class EmployeeController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @PostMapping(path = "/employee", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeCreateDto employeeCreate, @RequestParam(value = "unitNumber", defaultValue = "1") int unitId) {
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeCreateDto employeeCreate) {
         Employee createEmployee;
         try {
-            createEmployee = employeeService.addEmployee(employeeCreate, unitId);
+            createEmployee = employeeService.addEmployee(employeeCreate);
         } catch (IllegalStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

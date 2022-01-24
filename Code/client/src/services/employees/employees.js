@@ -1,6 +1,6 @@
 class Employees {
-    async createEmployee(employeeInfo, unitNumber) {
-        return fetch("http://localhost:8080/employee?unitNumber="+unitNumber,
+    async createEmployee(employeeInfo) {
+        return fetch("http://localhost:8080/employee",
         {
             method: 'POST',
             headers: {

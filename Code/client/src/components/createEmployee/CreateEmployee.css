@@ -17,3 +17,11 @@
 .employeeContent {
     padding: 0rem 10rem
 }
+
+.createEmployeeBtn {
+    margin-top: 2rem;
+    margin-right: 25%;
+    float: right;
+    padding: 0.5rem 3rem 2rem;
+    text-align: center;
+}
