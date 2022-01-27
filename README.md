@@ -39,3 +39,22 @@ Backend využívá technologie jako je dříve zmíněná databáze MySQL spole�
 ### Backend struktura
 
 ![image](https://user-images.githubusercontent.com/61951915/150696348-90101bcb-b7e6-4278-b3b0-2044e5236343.png)
+
+## Použití aplikace
+
+Login Screen
+![image](https://user-images.githubusercontent.com/61951915/151391602-71ee27d5-71e5-41c5-bbab-7abbc6a8f22d.png)
+
+
+Main Page
+![image](https://user-images.githubusercontent.com/61951915/151391782-ade4312f-fb1c-4af8-a9b7-b76352fd11e6.png)
+
+Přidání nového zaměstnance
+![image](https://user-images.githubusercontent.com/61951915/151391894-7254cb9c-013e-420b-9189-a94cf71d8338.png)
+
+Detail existujícího zaměstnance
+![image](https://user-images.githubusercontent.com/61951915/151392107-0ca7e486-211e-4850-9a00-d6d997cf29e7.png)
+
+Úprava existujícího zaměstnance
+![image](https://user-images.githubusercontent.com/61951915/151392190-e7fd12da-9477-4396-a786-ec4cdd36cd0a.png)
+
