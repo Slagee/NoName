@@ -65,7 +65,7 @@ Provedené akce potvrdí tlačítkem „Uložit“.
 Pokud uživatel/administrátor zvolil na „Hlavní stránce“ tlačítko „Zobrazit“, systém přesměruje uživatele/administrátora na stránku „Detail existujícího zaměstnance“.
 Na této stránce se zobrazí následující informace o uživateli: jméno, příjmení, rodné číslo, středisko a soubory vztahující se k jednotlivému zaměstnanci.
 Uživatel/administrátor může stahovat jednotlivé soubory.
-V případě potřeby změny údajů nebo souborů uživatel/administrátor vybere tlačítko „Upravit“, díky kterému je systém přesměruje na stránku „Úprava existujícího zaměstnance“.
+V případě potřeby změny údajů nebo souborů uživatel/administrátor vybere tlačítko „Upravit“, díky kterému jej systém přesměruje na stránku „Úprava existujícího zaměstnance“.
 
 **Úprava existujícího zaměstnance**
 ![image](https://user-images.githubusercontent.com/61951915/151392190-e7fd12da-9477-4396-a786-ec4cdd36cd0a.png)
