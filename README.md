@@ -1,7 +1,7 @@
 # Dokumentační systém Slezské Diakonie
 *Aplikace pro dokumentaci je rozpracovaná s chybějícími featurami. Některé sekce nebudou kompletní z důvodu dodělávání projektu v dalším semestru.*
 
-Dokumentační systém Slezské Diakonie (dále SD) je aplikace sloužící jako evidence zaměstnanců pro tuto organizaci. Mezi hlavní funkcionality patří možnost ukládání .pdf dokumentů patřící k jednotlivým zaměstnancům na server prostřednictvím webové aplikace a také jejich následné mazání. Taktéž nabízí přehled dokumentů celé organizace z pohledu jednotlivých zaměstnanců.
+Dokumentační systém Slezské Diakonie (dále SD) je aplikace sloužící k evidenci zaměstnanců pro tuto organizaci. Mezi hlavní funkcionality této aplikace patří možnost ukládání .pdf dokumentů patřící k jednotlivým zaměstnancům na server prostřednictvím webové aplikace a také jejich následné mazání. Taktéž nabízí přehled dokumentů v rámci celé organizace z pohledu jednotlivých zaměstnanců.
 
 ## Technické specifikace
 
