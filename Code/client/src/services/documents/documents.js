@@ -49,11 +49,9 @@ class Documents {
         })
         .then( res => res.blob())
         .then(blob => {
-            console.log(blob)
             var file = window.URL.createObjectURL(blob);
             window.open(file);
             //window.location.assign(file);
-            console.log("sad")
         })
         .catch((err) => {
             console.log(err)

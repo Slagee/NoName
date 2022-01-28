@@ -77,10 +77,10 @@ export default function EmployeeDetail() {
                 </Col>
             </Row>
             <Row >
-                <Col span={2}>
+                <Col span={2}>{/*
                     <Button type="secondary" icon={<ExportOutlined />} size='large' style={{'marginRight': "2rem"}}>
                         Exportovat
-                    </Button>
+                    </Button>*/}
                 </Col>
                 <Col span={2} offset={20}>
                     <Button type="primary" icon={<EditOutlined />} size='large' onClick={goEditEmployee}>
