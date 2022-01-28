@@ -51,7 +51,7 @@ V případě chybného jména nebo hesla vyskočí validátory pro upozornění.
 **Main Page**
 ![image](https://user-images.githubusercontent.com/61951915/151391782-ade4312f-fb1c-4af8-a9b7-b76352fd11e6.png)
 Na hlavní stránce uživatel/administrátor může pomocí vyhledávacího okna vyhledat zaměstnance pomocí jména/příjmení.
-Dále si může zobrazit detaily o konkrétním zaměstnanci pomocí tlačítka zobrazit, které se nachází u jednotlivých zaměstnanců.
+Dále si může zobrazit detaily o konkrétním zaměstnanci pomocí tlačítka „Zobrazit“, které se nachází u jednotlivých zaměstnanců.
 Při volbě tlačítka „Zobrazit“ systém přesměruje uživatele/administrátora na stránku „Detail existujícího zaměstnance“.
 Chce-li uživatel/administrátor přidat nového zaměstnance, stiskne tlačítko „Přidat zaměstnace“, systém přesměruje uživatele/administrátora na stránku „Přidání nového zaměstnance“. 
 
