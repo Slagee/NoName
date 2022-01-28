@@ -42,19 +42,39 @@ Backend využívá technologie jako je dříve zmíněná databáze MySQL spole�
 
 ## Použití aplikace
 
-Login Screen
+**Login Screen**
 ![image](https://user-images.githubusercontent.com/61951915/151391602-71ee27d5-71e5-41c5-bbab-7abbc6a8f22d.png)
+Na „Login screenu/Přihlašovací stránce“ se uživatel/administrátor přihlásí do systému pomocích svých přihlašovacích údajů.
+A potvrdí tlačítkem Přihlásit se.
+Pokud je přihlášení úspěšné uživatel/administrátor je přesměrovaný na „Main page/Hlavní stránku“.
+V případě chybného jména nebo hesla vyskočí validátory pro upozornění.
 
-
-Main Page
+**Main Page**
 ![image](https://user-images.githubusercontent.com/61951915/151391782-ade4312f-fb1c-4af8-a9b7-b76352fd11e6.png)
+Na hlavní stránce uživatel/administrátor může pomocí vyhledávacího okna vyhledat zaměstnance pomocí jména/příjmení.
+A může si zobrazit detaily o konkrétním zaměstnanci pomocí tlačítka zobrazit, které se nachází u jednotlivých zaměstnanců.
+Při volbě tlačítka „Zobrazit“ systém přesměruje uživatele/administrátora na stránku „Detail existujícího zaměstnance“.
+Pokud chce uživatel/administrátor přidat nového zaměstnance stiskne tlačítko „Přidat zaměstnace“, systém přesměruje uživatele/administrátora na stránku „Přidání nového zaměstnance“, 
 
-Přidání nového zaměstnance
+**Přidání nového zaměstnance**
 ![image](https://user-images.githubusercontent.com/61951915/151391894-7254cb9c-013e-420b-9189-a94cf71d8338.png)
+Uživatel vyplní detaily zaměstnance, jako je: jméno, příjmení, středisko a rodné číslo.
+Provedené akce potvrdí tlačítkem „Uložit“.
 
-Detail existujícího zaměstnance
+**Detail existujícího zaměstnance**
 ![image](https://user-images.githubusercontent.com/61951915/151392107-0ca7e486-211e-4850-9a00-d6d997cf29e7.png)
+Pokud uživatel/administrátor zvolil na „Hlavní stránce“ tlačítko „Zobrazit“ systém přesměruje uživatele/administrátora na stránku „Detail existujícího zaměstnance“.
+Zde na stránce se zobrazí informace o uživateli, jako jsou: jméno, příjmení, rodní číslo, středisko a soubory vztahující se k jednotlivému zaměstnanci.
+Uživatel/administrátor může stahovat jednotlivé soubory.
+V případě potřeby změny údajů nebo souborů uživatel/administrátor vyberou tlačítko „Upravit“, díky kterému je systém přesměruje na stránku „Úprava existujícího zaměstnance“.
 
-Úprava existujícího zaměstnance
+**Úprava existujícího zaměstnance**
 ![image](https://user-images.githubusercontent.com/61951915/151392190-e7fd12da-9477-4396-a786-ec4cdd36cd0a.png)
+Na této stránce může uživatel/administrátor měnit potřebné atributy: jméno, příjmení, rodné číslo, středisko, ale i soubory.
+Nebo pokud je potřeba smazat daného zaměstnance vybere uživatel/administrátor tlačítko „Odstranit“, které se nachází dole vedle tlačítka „Uložit“
+Se soubory se může provádět:
+  -	Zaškrtnutím radio buttonu, které zajistí, že se jedná o soubor v rámci projektu, kde tato volba slouží pro speciální nastavování a změnu datumu skartace.
+  -	Odstranění souboru pomocí tlačítka „Odstranit“.
+  -	Přidání nových souborů pomocí políčka pro nahrání nových souborů.
+
 
