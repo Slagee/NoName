@@ -10,13 +10,41 @@ Na serveru běží databáze MySQL
 - Login: Root
 - Heslo: sd_S6253_dx
 
-### Využité programy programy
-- Xampp pro zprovoznění modulů (Tomcat, Apache, MySQL)
-- IntelliJ Idea (IDE pro zapnutí aplikačního serveru)
-- Node.js (správa frontendového kódu)
-- jakýkoliv lightweight textový editor s možností příkazového řádku (VS Code, Sublime text)
-- Postman pro testování HTTP požadavků
-- Github desktop klient nebo MINGW64 pro manipulaci s git repozitářem
+### Využité programy
+- Aplikační server a databáze (Tomcat, Apache, MySQL)
+  - Xampp
+  - phpMyAdmin nebo MySQL Workbench pro práci s databází
+- Vývojové prostředí
+  - IntelliJ Idea (IDE pro zapnutí a úpravu backendové části aplikace)
+  - Visual Studio Code (Textový editor/IDE pro zapnutí a úpravu frontendové části aplikace)
+- Doporučené aplikace
+  - Postman pro testování HTTP požadavků
+  - Github desktop klient nebo MINGW64 pro manipulaci s git repozitářem - například stažení celé aplikace
+
+### Setup databáze
+- Instalace XAMPP pro spouštění MySQL databáze na Localhost
+- Je potřeba si změnit heslo pro Root uživatele, aby souhlasilo s heslem, co je na serveru
+- Dále je nutné vytvořit si schéma databáze, aby název souhlasil s názvem schématu na serveru
+  - Pro zjednodušení workflow se snadno vytváří přes MySQL Workbench.
+  - Při vytváření je třeba si dát pozor, aby byla zvolena správná znaková sada!
+    - Charset: utf-8
+    - Collation: utf8_czech_ci
+
+### Spuštění aplikace
+#### Stažení aplikace z verzovacího systému
+- V aplikaci GitHub desktop si otevřeme file > clone repository, vybereme záložku URL a do ní vložíme URL tohoto repozitáře: https://github.com/Slagee/NoName, potvrdíme naklonování. V rámci adresáře který se klonováním lokálně vytvořil v počítači můžeme spustit IntelliJ Idea ve složce server a Visual Studio Code ve složce client.
+#### Aplikační server a databáze
+- V otevřeném programu xampp zvolíme spuštění serverů MySQL a Apache.
+- Na URL adrese localhost/phpmyadmin je možné provést setup databáze.
+#### Backend
+- V programu IntelliJ Idea zvolíme buildování projektu (Zelené kladívko v pravém horním rohu), tato akce je poměrně dlouhá, ale je nutné ji provést jen jednou.
+- Backend spouštíme tlačítkem se zelenou šipkou, tato akce může chvíli trvat.
+#### Frontend
+- V programu Visual Studio stačí pouze v terminále napsat tyto příkazy:
+  - `npm install` - stažení potřebných balíčků (například CSS framework)
+  - `npm audit fix` - oprava chyb
+  - `npm start` - spuštění samotné aplikace
+- Jakmile je spuštění úspěšné, můžeme aplikaci otevřít přes URL localhost:3000, ale obvykle se aplikace zapne v prohlížeči automaticky
 
 ### Architektura
 Část aplikace přímo komunikující s uživatelem (frontend) je tvořená pomocí javascriptového frameworku React pro tvorbu dynamických webových aplikací, UI je tvořeno CSS frameworkem Ant design.
