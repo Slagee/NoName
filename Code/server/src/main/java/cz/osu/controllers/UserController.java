@@ -3,12 +3,11 @@ package cz.osu.controllers;
 import cz.osu.security.account.UserDto;
 import cz.osu.model.entity.User;
 import cz.osu.model.service.UserService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,8 +22,12 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
+    final
     UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Deprecated
     @Secured("ROLE_ADMIN")
@@ -35,9 +38,9 @@ public class UserController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @GetMapping("/user/page")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userName", dataTypeClass = String.class, paramType = "query"),
-            @ApiImplicitParam(name = "email",  dataTypeClass = String.class, paramType = "query"),
+    @Parameters({
+            @Parameter(name = "userName"),
+            @Parameter(name = "email"),
     })
     public Page<User> loadUsersPage(
             @And({

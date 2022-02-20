@@ -3,19 +3,15 @@ package cz.osu.controllers;
 import com.sun.istack.NotNull;
 
 import cz.osu.model.entity.Document;
-import cz.osu.model.entity.Employee;
-import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.service.DocumentService;
 import cz.osu.model.service.EmployeeService;
 import cz.osu.model.service.FileService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.domain.EqualIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.domain.LikeIgnoreCase;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -32,20 +28,23 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 @RestController
 public class DocumentController {
-    @Autowired
+    final
     DocumentService documentService;
-    @Autowired
+    final
     EmployeeService employeeService;
-    @Autowired
-    private FileService fileService;
+    private final FileService fileService;
 
-    public DocumentController() {
+    public DocumentController(DocumentService documentService, EmployeeService employeeService, FileService fileService) {
+        this.documentService = documentService;
+        this.employeeService = employeeService;
+        this.fileService = fileService;
     }
 
     @Deprecated
@@ -62,10 +61,10 @@ public class DocumentController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping("/document/page")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "originalName", dataTypeClass = String.class, paramType = "query"),
-            @ApiImplicitParam(name = "employeeId",  dataTypeClass = Long.class, paramType = "query"),
-            @ApiImplicitParam(name = "typeId",  dataTypeClass = Long.class, paramType = "query"),
+    @Parameters({
+            @Parameter(name = "originalName"),
+            @Parameter(name = "employeeId"),
+            @Parameter(name = "typeId"),
     })
     public Page<Document> loadDocumentPage(
             @And({
@@ -113,7 +112,7 @@ public class DocumentController {
         if (file.isEmpty()){
             return new ResponseEntity<>("File is empty", HttpStatus.BAD_REQUEST);
         }
-        if (!file.getOriginalFilename().endsWith(".pdf")){
+        if (!Objects.requireNonNull(file.getOriginalFilename()).endsWith(".pdf")){
             return new ResponseEntity<>("File is not PDF", HttpStatus.BAD_REQUEST);
         }
         String path = fileService.saveUploadedFile(file);
