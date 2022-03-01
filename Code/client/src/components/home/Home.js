@@ -3,13 +3,13 @@ import { Table, Input, Button } from 'antd';
 import { columns } from './Data.js';
 import { Navigate } from 'react-router-dom';
 import { GetEmployeesList } from './GetEmployeesList';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 
 const { Search } = Input;
 
 const Home = () => {
-    const [searchName, setSearchName] = useState(null);
-    const [page, setPage] = useState(1);
+    const [searchName, setSearchName] = useState(null)
+    const [page, setPage] = useState(1)
     const [employeesList, isLoading, totalPages] = GetEmployeesList(searchName, page);
 
     let user = localStorage.getItem("username");
