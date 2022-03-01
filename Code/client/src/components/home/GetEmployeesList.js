@@ -9,12 +9,11 @@ export function GetEmployeesList(name, page) {
     useEffect(() => {
         (async () => {
             setLoading(true);
-            console.log(name + ", " + page)
             const response = await employees.getEmployeesByName(name, page);
-            if (response) {                
-                setLoading(false);
+            if (response) {
                 setData(response.content);
                 setTotalPages(response.totalPages)
+                setLoading(false);
             }
         })();
     }, [name, page]);

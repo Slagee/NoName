@@ -1,8 +1,10 @@
 package cz.osu.model.service;
 
+import cz.osu.model.entity.Document;
 import cz.osu.model.entity.Employee;
 import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.entity.Unit;
+import cz.osu.model.repository.DocumentRepository;
 import cz.osu.model.repository.EmployeeRepository;
 import cz.osu.model.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
     @Autowired
-    private UnitRepository unitRepository;
+    private DocumentRepository documentRepository;
 
     public List<Employee> list(){
         return employeeRepository.findAll();
@@ -55,31 +57,41 @@ public class EmployeeService {
         employee.setName(employeeUpdate.getName());
         employee.setSurname(employeeUpdate.getSurname());
         employee.setBirthNumber(employeeUpdate.getBirthNumber());
-        System.out.println("updated: " +employeeUpdate.getEmployeeUnit());
         employee.setUnitForEmployee(employeeUpdate.getEmployeeUnit());
-        System.out.println("old: " +employee.getUnitForEmployee());
 
         return employeeRepository.save(employee);
     }
 
-    public Employee addEmployee(EmployeeCreateDto employeeCreate, int unitNumber) {
+    public Employee addEmployee(EmployeeCreateDto employeeCreate) {
         boolean employeeExists = employeeRepository.findByBirthNumber(employeeCreate.getBirthNumber()).isPresent();
 
         if(employeeExists){
             throw new IllegalStateException("Zaměstnanec s tímto rodným číslem již existuje");
         }
 
-        Unit unit = unitRepository.findByNumber(unitNumber);
-        if (unit == null) {
-            throw new IllegalStateException("Zadané středisko se nepodařilo najít");
-        }
-
         Employee employee = new Employee();
         employee.setName(employeeCreate.getName());
         employee.setSurname(employeeCreate.getSurname());
         employee.setBirthNumber(employeeCreate.getBirthNumber());
-        employee.setUnitForEmployee(unit);
+        employee.setUnitForEmployee(employeeCreate.getEmployeeUnit());
 
         return employeeRepository.save(employee);
+    }
+
+    public void deleteEmployee(Long id) {
+        Optional<Employee> employeeExists = employeeRepository.findById(id);
+        if (employeeExists.isEmpty())
+        {
+            throw new IllegalStateException("Vybraného zaměstnance se nepodařilo najít");
+        }
+
+        Employee employee = employeeExists.get();
+
+        try {
+            employeeRepository.delete(employee);
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+
     }
 }

@@ -58,10 +58,10 @@ public class EmployeeController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @PostMapping(path = "/employee", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeCreateDto employeeCreate, @RequestParam(value = "unitNumber", defaultValue = "1") int unitId) {
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeCreateDto employeeCreate) {
         Employee createEmployee;
         try {
-            createEmployee = employeeService.addEmployee(employeeCreate, unitId);
+            createEmployee = employeeService.addEmployee(employeeCreate);
         } catch (IllegalStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -84,5 +84,17 @@ public class EmployeeController {
         }
 
         return new ResponseEntity<>(updatedEmployee, HttpStatus.CREATED);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
+    @DeleteMapping(path = "/employee/{id}")
+    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long id) {
+        try {
+            employeeService.deleteEmployee(id);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("Podařilo se odstranit zaměstnance", HttpStatus.OK);
     }
 }
