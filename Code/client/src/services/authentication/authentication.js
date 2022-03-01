@@ -2,7 +2,7 @@ import { message } from 'antd';
 
 class AuthService {
     async login(credentials) {
-        return fetch("http://localhost:8080/login",
+        return fetch("http://185.28.102.174:8080/login",
         {
             method: 'POST',
             headers: {

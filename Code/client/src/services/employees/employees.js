@@ -1,6 +1,6 @@
 class Employees {
     async createEmployee(employeeInfo) {
-        return fetch("http://localhost:8080/employee",
+        return fetch("http://185.28.102.174:8080/employee",
         {
             method: 'POST',
             headers: {
@@ -23,7 +23,7 @@ class Employees {
     }
 
     async editEmployee(employeeInfo, id) {
-        return fetch("http://localhost:8080/employee/"+id,
+        return fetch("http://185.28.102.174:8080/employee/"+id,
         {
             method: 'PUT',
             headers: {
@@ -47,7 +47,7 @@ class Employees {
 
     async getEmployeeById(id) {
         //var url = "employee?id="+id
-        return fetch("http://localhost:8080/employee?id="+id,
+        return fetch("http://185.28.102.174:8080/employee?id="+id,
         {
             method: 'GET',
             headers: {
@@ -68,10 +68,10 @@ class Employees {
     }
 
     async getEmployeesByName(name, page) {
-        var url = "http://localhost:8080/employee/page?size=10&search&page="+(page-1)
+        var url = "http://185.28.102.174:8080/employee/page?size=10&search&page="+(page-1)
         if (name !== null) {
             
-            url = "http://localhost:8080/employee/page?size=10&search="+ name + "&page="+(page-1)
+            url = "http://185.28.102.174:8080/employee/page?size=10&search="+ name + "&page="+(page-1)
             console.log("call" + url);
         }
         return await fetch(url,
@@ -95,7 +95,7 @@ class Employees {
     }
 
     async getEmployeesPaged() {
-        return await fetch("http://localhost:8080/employee/page?size=10&search",
+        return await fetch("http://185.28.102.174:8080/employee/page?size=10&search",
         {
             method: 'GET',
             headers: {
@@ -116,7 +116,7 @@ class Employees {
     }
 
     async deleteEmployee(id) {
-        return await fetch("http://localhost:8080/employee/"+id,
+        return await fetch("http://185.28.102.174:8080/employee/"+id,
         {
             method: "DELETE",
             headers: {
