@@ -32,7 +32,7 @@ class UserControllerTest {
 
     @MockBean
     private UserController userController;
-
+/*
     @Test
     void registerUserAccount() throws Exception {
         String uri = "/user/registration";
@@ -50,5 +50,5 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userDto)))
                 .andExpect(status().is(200));
-    }
+    }*/
 }

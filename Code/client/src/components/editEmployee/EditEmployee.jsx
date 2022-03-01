@@ -1,5 +1,6 @@
-import { ArrowLeftOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
-import { Select, Form, Input, Button, message, Row, Col, Checkbox, InputNumber } from "antd";
+import { ArrowLeftOutlined, DeleteOutlined, ExclamationCircleOutlined, SaveOutlined } from "@ant-design/icons/lib/icons";
+import { Select, Form, Input, Button, message, Row, Col, Checkbox } from "antd";
+import confirm from "antd/lib/modal/confirm";
 import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
@@ -40,7 +41,7 @@ export default function EditEmployee() {
         const response = await units.getUnitById(value[0]);
         if (response) {
             setUnit(response);
-        }        
+        }
     }
 
     const options = unitsList.map((unit) => (
@@ -60,17 +61,55 @@ export default function EditEmployee() {
             });
     }
 
-    const deleteDocument = (id) => {
-        documents.deleteDocument(id)
-            .then((res) => {
-                if (res === true) {
-                    console.log("document id" +id+ " successfuly deleted")
-                    message.success("Dokument se podařilo odstranit")
-                    
-                } else {
-                    message.error(res);
-                }
-            })
+    function showDeleteConfirmDocument(id) {
+        confirm({
+            title: 'Pozor',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Určitě chcete smazat dokument?',
+            okText: 'Ano',
+            okType: 'danger',
+            cancelText: 'Ne',
+            onOk() {
+                documents.deleteDocument(id)
+                    .then((res) => {
+                        if (res === true) {
+                            console.log("smazáno")
+                            message.success("Dokument se podařilo smazat")
+                        } else {
+                            console.log("nepodařilo se", res)
+                            message.warning("Dokument se nepodařilo smazat")
+                        }
+                    });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
+    }
+
+    function showDeleteConfirmEmlpoyee() {
+        confirm({
+            title: 'Pozor',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Určitě chcete smazat zaměstnance ' + employee.name + ' ' + employee.surname + '?',
+            okText: 'Ano',
+            okType: 'danger',
+            cancelText: 'Ne',
+            onOk() {
+                employees.deleteEmployee(employee.id)
+                    .then((res) => {
+                        if (res === true) {
+                            console.log("smazáno")
+                            window.location.replace('/home')
+                        } else {
+                            console.log("nepodařilo se", res)
+                        }
+                    });
+            },
+            onCancel() {
+                console.log('Cancel');
+            },
+        });
     }
 
     return (
@@ -96,10 +135,10 @@ export default function EditEmployee() {
                     onFinish={onFinish}
                 >
                     <Form.Item name="name" label="Jméno" rules={[{ required: true, message: "Je potřeba vyplnit jméno zaměstnance" }]}>
-                        <Input style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeName: e.target.value })} />
+                        <Input style={{ width: '25%' }} onChange={e => form.setFieldsValue({ employeeName: e.target.value })} />
                     </Form.Item>
                     <Form.Item name="surname" label="Příjmení" rules={[{ required: true, message: "Je potřeba vyplnit příjmení zaměstnance" }]}>
-                        <Input style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeSurname: e.target.value })} />
+                        <Input style={{ width: '25%' }} onChange={e => form.setFieldsValue({ employeeSurname: e.target.value })} />
                     </Form.Item>
                     <Form.Item label="Středisko">
                         {isUnitsLoading ?
@@ -109,8 +148,8 @@ export default function EditEmployee() {
                                 </Select>
                             ) : (
                                 <Select
-                                    style={{width: '25%'}}
-                                    placeholder={employee.unitForEmployee ? (employee.unitForEmployee.number +" - "+ employee.unitForEmployee.name) : ("Vyberte středisko")}
+                                    style={{ width: '25%' }}
+                                    placeholder={employee.unitForEmployee ? (employee.unitForEmployee.number + " - " + employee.unitForEmployee.name) : ("Vyberte středisko")}
                                     showSearch
                                     filterOption={(input, option) => option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                     onChange={onUnitChange}
@@ -120,34 +159,34 @@ export default function EditEmployee() {
                             )}
                     </Form.Item>
                     <Form.Item name="birthNumber" label="Rodné číslo" rules={[{ required: true, message: "Je potřeba vyplnit rodné číslo zaměstnance" }]}>
-                        <InputNumber type="number" style={{width: '25%'}} onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
+                        <Input style={{ width: '25%' }} onChange={e => form.setFieldsValue({ employeeBirthNumber: e.target.value })} />
                     </Form.Item>
                     <Form.Item label="Uložené soubory:">
                         {employee.documentsForEmployee.map((item) => (
                             <Row id="documentItem" style={{ alignItems: 'center', margin: '0 0 0.8rem 0.2rem' }} key={item.id}>
-                                <Col span={4} style={{fontWeight: 'bold'}}>{item.originalName}</Col>
+                                <Col span={4} style={{ fontWeight: 'bold' }}>{item.originalName}</Col>
                                 <Col span={8}>
-                                    <Select defaultValue={item.type.name} style={{width: '80%'}}></Select>
+                                    <Select defaultValue={item.type.name} style={{ width: '80%' }}></Select>
                                 </Col>
                                 <Col span={6}>
                                     <Checkbox>Soubor v rámci projektu</Checkbox>
                                 </Col>
                                 <Col span={4} offset={2}>
-                                    <Button danger onClick={() => deleteDocument(item.id)} icon={<DeleteOutlined />} size="small">Odstranit</Button>
+                                    <Button danger onClick={() => showDeleteConfirmDocument(item.id)} icon={<DeleteOutlined />} size="small">Odstranit</Button>
                                 </Col>
                             </Row>
                         ))}
                     </Form.Item>
-                    <AddDocument employeeId={params.id}/>
-                    <Row style={{marginTop: '1rem', alignItems: 'center'}}>
+                    <AddDocument employeeId={params.id} />
+                    <Row style={{ marginTop: '1rem', alignItems: 'center' }}>
                         <Col offset={16}>
-                            <Button danger type="dashed" htmlType="submit" icon={<DeleteOutlined />} size="small" style={{padding: '0 0.5rem'}}>Odstranit</Button>
+                            <Button danger type="dashed" icon={<DeleteOutlined />} size="middle" style={{ padding: '0 0.5rem' }} onClick={showDeleteConfirmEmlpoyee}>Odstranit</Button>
                         </Col>
                         <Col offset={3}>
-                            <Button type="primary" htmlType="submit" size="large" icon={<SaveOutlined />} style={{padding: '0 2.5rem'}}>Uložit</Button>
+                            <Button type="primary" htmlType="submit" size="large" icon={<SaveOutlined />} style={{ padding: '0 2.5rem' }}>Uložit</Button>
                         </Col>
-                        
-                    </Row>                    
+
+                    </Row>
                 </Form>
             </div>
         )

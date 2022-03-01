@@ -38,7 +38,7 @@ public class PositionRepositoryTest {
     public void injectedDatasourceIsNotNull(){
         assertNotNull(dataSource);
     }
-
+/*
     @Test
     public void findByIdFromPopulationScript(){
         long id = 10;
@@ -65,4 +65,6 @@ public class PositionRepositoryTest {
         assertNotNull(insertedPosition.getId());
         assertEquals(newPosition.getTitle(), insertedPosition.getTitle());
     }
+
+ */
 }

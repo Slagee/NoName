@@ -114,6 +114,26 @@ class Employees {
             console.log(err)
         });
     }
+
+    async deleteEmployee(id) {
+        return await fetch("http://185.28.102.174:8080/employee/"+id,
+        {
+            method: "DELETE",
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        })
+        .then((res) => {
+            if (res.ok) {
+                return true;
+            } else {
+                return null;
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
 }
 
 export default new Employees();
