@@ -4,6 +4,7 @@ import { Form, Input, Button, Checkbox, Row, Card, Col } from 'antd';
 import './UserRegistration.css'
 import { LockOutlined, MailOutlined} from "@ant-design/icons/lib/icons";
 import { useForm } from "antd/lib/form/Form";
+import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 
 export default function UserRegistration() {
   const [form] = useForm();
@@ -16,7 +17,8 @@ const onFinishFailed = (errorInfo) => {
 };
 
 return (
-  <Row gutter={16}>
+  <Row gutter={20}>
+  <ArrowLeftOutlined className="backArrow" style={{ fontSize: '2rem' }} onClick={() => window.history.back()} />
   <Col span={8} offset={8}> 
   <Card title = "Registrace uživatele">
     <Form className='Register-form'
@@ -59,7 +61,6 @@ return (
       Registrovat
     </Button>
   </Form.Item>
-
 </Form>
 </Card>
 </Col>
