@@ -24,7 +24,7 @@ export default function Login({ setToken })
             
         }).catch((error) => {
             console.log(error);
-        });
+    });
     }
 
     if (redirect === true) {
