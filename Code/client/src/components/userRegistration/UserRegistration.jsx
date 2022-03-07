@@ -1,16 +1,27 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Form, Input, Button, Checkbox, Row, Card, Col } from 'antd';
+import { Form, Input, Button, Row, Card, Col , Select} from 'antd';
+import authenticationService from '../../services/authentication/authentication';
 import './UserRegistration.css'
 import { LockOutlined, MailOutlined} from "@ant-design/icons/lib/icons";
 import { useForm } from "antd/lib/form/Form";
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 
 export default function UserRegistration() {
+  const { Option } = Select;
   const [form] = useForm();
-  const onFinish = (values) => {
-  console.log('Success:', values);
-};
+  const onFinish = async (values) => {
+    await authenticationService.register(values).then((res) => {
+        if (res === "") {
+            alert("Registrace neúspěšná.");
+        } else {
+            alert("Úspěšná registrace, můžete se přihlásit.");
+        }
+        
+    }).catch((error) => {
+        console.log(error);
+});
+}
 
 const onFinishFailed = (errorInfo) => {
   console.log('Failed:', errorInfo);
@@ -28,8 +39,8 @@ return (
       initialValues={{ remember: true,}}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-    autoComplete="off"
-    >
+      autoComplete="off"
+      >
     <Form.Item
       label="E-mail"
       name="e-mail"
@@ -49,9 +60,23 @@ return (
     <Form.Item 
       label="Heslo znovu"
       name="againpassword"
-      rules={[{required: true, message: 'Vyplňte heslo! Hesla se neshodují! ',},]}
+      rules={[{required: true, message: 'Vyplňte heslo! Hesla se neshodují!'}]}
     >
       <Input.Password onChange={e => form.setFieldsValue(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}/>
+    </Form.Item>
+
+    <Form.Item
+      label="Role"
+      name="permissionName"
+      rules={[{required: true, message: 'Vyberte roli!'}]}>
+      <Select
+          placeholder="Vyberte roli pro zaměstnance"
+          allowClear
+        >
+          <Option value="ROLE_ADMIN">Administrátor</Option>
+          <Option value="ROLE_ACCOUNTANT">Účetní</Option>
+          <Option value="ROLE_HR">Human Resources</Option>
+        </Select>    
     </Form.Item>
 
     <Form.Item

@@ -25,6 +25,27 @@ class AuthService {
         });
     }
 
+    async register(credentials) {
+        return fetch("http://185.28.102.174:8080/user/registration",
+        {
+            method: 'POST',
+            body: JSON.stringify(credentials)
+        })
+        .then((res) => {
+            if (res.ok) {
+                message.success("Registrace úspěšná");
+                return res.text()
+            }
+            else {
+                message.error("Něco se nepovedlo");
+                return ""
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
+
     logout() {
         localStorage.removeItem("username");
         localStorage.removeItem('token');
