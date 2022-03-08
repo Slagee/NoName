@@ -34,14 +34,15 @@ export function AppLayout({ token }) {
     return(
         <Header className='layoutHeader' style={{ background: 'white' }}>
             <Row>
-                <Col span={4}>
+                <Col span={1}>
                     <a href='/home' className='logo' onClick={e => { if (!button) e.preventDefault() }}>
                         <img src={companyLogo} alt="Slezská diakonie logo" />
                     </a>
                 </Col>
+                <Col span={1} className='version'>v0.2</Col>
                             {/* Doplnit funkci ověřující zda je uživatel administrátor */}
-                            
-                <Col span={3} offset={5}><Button type='link' className='regBtn' onClick={goUserRegistration} icon={<UserAddOutlined/>}>Registrace uživatele</Button></Col>
+
+                <Col span={3} offset={7}><Button type='link' className='regBtn' onClick={goUserRegistration} icon={<UserAddOutlined/>}>Registrace uživatele</Button></Col>
                 <Col span={3}><Button type='link' className='adminBtn' onClick={goAdminRole} icon={<SettingOutlined />}>Editace rolí</Button></Col>
                 <Col span={2} offset={4}>
                     {username}
