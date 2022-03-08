@@ -1,6 +1,6 @@
 class Documents {
     async createDocument(formData) {
-        return await fetch("http://185.28.102.174:8080/document",
+        return await fetch("http://localhost:8080/document",
         {
             method: 'POST',
             headers: {
