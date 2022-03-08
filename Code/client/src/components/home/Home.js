@@ -1,5 +1,5 @@
 import './Home.css';
-import { Table, Input, Button } from 'antd';
+import { Table, Input, Button, Row, Col } from 'antd';
 import { columns } from './Data.js';
 import { Navigate } from 'react-router-dom';
 import { GetEmployeesList } from './GetEmployeesList';
