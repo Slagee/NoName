@@ -37,7 +37,7 @@ public class TimedService {
 
         for (Document doc : documents) {
             if (fmt.format(doc.getReleaseDate()).equals(weekForm)) {
-                System.out.println("Dokument " +doc.getOriginalName()+ "bude smazan za tyden");
+                System.out.println("Dokument " +doc.getOriginalName()+ " bude smazan za tyden");
             }
             if (doc.getReleaseDate().before(new Date())) {
                 System.out.println("Mazu soubor: " +doc.getOriginalName());

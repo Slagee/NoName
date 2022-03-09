@@ -1,6 +1,6 @@
 class Units {
     async getUnits() {
-        return await fetch("http://185.28.102.174:8080/unit/list",
+        return await fetch(process.env.REACT_APP_API_UNITS+"list",
         {
             method: 'GET',
             headers: {
@@ -20,7 +20,7 @@ class Units {
     }
 
     async getUnitById(id) {
-        return fetch("http://185.28.102.174:8080/unit?id="+id,
+        return fetch(process.env.REACT_APP_API_UNITS+id,
         {
             method: 'GET',
             headers: {

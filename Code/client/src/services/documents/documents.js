@@ -1,6 +1,6 @@
 class Documents {
     async createDocument(formData) {
-        return await fetch("http://localhost:8080/document",
+        return await fetch(process.env.REACT_APP_API_DOCUMENTS,
         {
             method: 'POST',
             headers: {
@@ -22,7 +22,7 @@ class Documents {
     }
 
     async deleteDocument(id) {
-        return await fetch("http://185.28.102.174:8080/document/"+id,
+        return await fetch(process.env.REACT_APP_API_DOCUMENTS+id,
         {
             method: 'DELETE',
             headers: {
@@ -39,7 +39,7 @@ class Documents {
     }
     
     async downloadDocumentById(id) {
-        return fetch("http://185.28.102.174:8080/document/download?id="+id, //Tady jsem radeji pouzil absolutni URL, bez toho se vytvari GET request ve tvaru employeeDetail/employee?id=x
+        return fetch(process.env.REACT_APP_API_DOCUMENTS+"download?id="+id, //Tady jsem radeji pouzil absolutni URL, bez toho se vytvari GET request ve tvaru employeeDetail/employee?id=x
         {
             method: 'GET',
             headers: {
