@@ -1,0 +1,12 @@
+.Admin-form{
+    padding-top: 2em;
+}
+
+.backArrow:hover {
+    color: #00AEEF;
+}
+
+.SaveButton{
+    font-weight: bold;
+    float: right;
+}
