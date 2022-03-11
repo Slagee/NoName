@@ -1,6 +1,5 @@
 import { Space, Table} from 'antd';
 import { Form, Input, Button, Checkbox, Row, Card, Col } from 'antd';
-import { Radio } from 'antd';
 import './AdminRole.css';
 /*import { GetEmployeesList } from './GetEmployeesList';*/
 import { useState } from 'react';
@@ -10,15 +9,23 @@ import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 const { Search } = Input;
 
 export default function AdminRole() {
+function onChange(e) {
+    console.log(`checked = ${e.target.checked}`);
+  }
 const [searchName, setSearchName] = useState(null)
 const [page, setPage] = useState(1)
 /*const [employeesList, isLoading, totalPages] = GetEmployeesList(searchName, page);*/
 
 const columns = [
   {
-    title: 'Jméno a Příjmení',
-    dataIndex: 'nameSurname',
-    key: 'name-surname',
+    title: 'Jméno',
+    dataIndex: 'name',
+    key: 'surname',
+  },
+  {
+    title: 'Příjmení',
+    dataIndex: 'surname',
+    key: 'surname',
   },
   {
     title: 'Administrátor',
@@ -43,87 +50,99 @@ const columns = [
 const data = [
   {
     key: '1',
-    nameSurname: 'Leona Blažková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Leona',
+    surname: 'Blažková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '2',
-    nameSurname: 'Jaroslava Havlíčková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Jaroslava',
+    surname: 'Havlíčková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '3',
-    nameSurname: 'Erika Sedláčková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Erika',
+    surname: 'Sedláčková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '4',
-    nameSurname: 'Emilie Blažková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Emilie',
+    surname: 'Blažková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '5',
-    nameSurname: 'Ema Matoušková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Ema',
+    surname: 'Matoušková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '6',
-    nameSurname: 'Helena Vlčková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Helena',
+    surname: 'Vlčková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '7',
-    nameSurname: 'Danuše Hrubá',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Danuše',
+    surname: 'Hrubá',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '8',
-    nameSurname: 'Simona Stáňková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Simona',
+    surname: 'Stáňková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '9',
-    nameSurname: 'Božena Pavlíková',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Božena',
+    surname: 'Pavlíková',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '10',
-    nameSurname: 'Magda Křížová',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Magda',
+    surname: 'Křížová',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '11',
-    nameSurname: 'Terezie Nguyen Thi',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Terezie Nguyen Thi',
+    surname: 'Nguyen Thi',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
   {
     key: '12',
-    nameSurname: 'Helena Novotná',
-    administrator: <Radio value={1}></Radio>,
-    accountant: <Radio value={2}></Radio>,
-    personnel: <Radio value={3}></Radio>,
+    name: 'Helena',
+    surname: 'Novotná',
+    administrator: <Checkbox onChange={onChange}></Checkbox>,
+    accountant: <Checkbox onChange={onChange}></Checkbox>,
+    personnel: <Checkbox onChange={onChange}></Checkbox>,
   },
 ];
   return(
@@ -144,10 +163,3 @@ const data = [
     </div>
   );
 }
-
-<Row>
-      <Col span={8}>col-8</Col>
-      <Col span={8} offset={8}>
-        col-8
-      </Col>
-    </Row>
