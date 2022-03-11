@@ -4,6 +4,7 @@ import companyLogo from '../../SD_logo2.png';
 import { Header } from 'antd/lib/layout/layout';
 import authentication from '../../services/authentication/authentication';
 import { message } from 'antd';
+import {LogoutOutlined, ExclamationCircleOutlined} from "@ant-design/icons/lib/icons";
 
 export function AppLayout({ token }) {
     let button;
@@ -12,7 +13,7 @@ export function AppLayout({ token }) {
         button = null;
         username = null
     } else {
-        button = <Button type='submit' onClick={handleLogout}>Odhlásit se</Button>
+        button = <Button type='submit' onClick={handleLogout} icon={<LogoutOutlined />}>Odhlásit se</Button>
         username = localStorage.getItem("username");
         
     }

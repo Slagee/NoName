@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { Form, Input, Button, Row, Card, Col , Select} from 'antd';
 import authenticationService from '../../services/authentication/authentication';
 import './UserRegistration.css'
-import { LockOutlined, MailOutlined} from "@ant-design/icons/lib/icons";
+import { LockOutlined, MailOutlined, PlusCircleOutlined} from "@ant-design/icons/lib/icons";
 import { useForm } from "antd/lib/form/Form";
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 
@@ -82,7 +82,7 @@ return (
     <Form.Item
       wrapperCol={{offset: 10, span: 6,}}
     >
-    <Button type="primary" htmlType="submit">
+    <Button type="primary" htmlType="submit" icon={<PlusCircleOutlined />}>
       Registrovat
     </Button>
   </Form.Item>

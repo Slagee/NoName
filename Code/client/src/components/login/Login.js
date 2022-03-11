@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import authenticationService from '../../services/authentication/authentication';
 import './Login.css';
-import { LockOutlined, UserOutlined } from "@ant-design/icons/lib/icons";
+import { LockOutlined, UserOutlined,LoginOutlined } from "@ant-design/icons/lib/icons";
 import { useForm } from "antd/lib/form/Form";
 
 export default function Login({ setToken })
@@ -58,7 +58,7 @@ export default function Login({ setToken })
 
                     <Form.Item>
                         <Row justify="space-around" align="middle">
-                            <Button type="primary" htmlType="submit">
+                            <Button type="primary" htmlType="submit" icon={<LoginOutlined />}>
                                 Přihlásit se
                             </Button>
                         </Row>
