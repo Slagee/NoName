@@ -2,7 +2,8 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Button, Row, Card, Col , Select} from 'antd';
 import authenticationService from '../../services/authentication/authentication';
-import './UserRegistration.css'
+import './UserRegistration.css';
+import { Navigate } from "react-router-dom";
 import { LockOutlined, MailOutlined, PlusCircleOutlined} from "@ant-design/icons/lib/icons";
 import { useForm } from "antd/lib/form/Form";
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
@@ -10,12 +11,18 @@ import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 export default function UserRegistration() {
   const { Option } = Select;
   const [form] = useForm();
+
+  let user = localStorage.getItem("username");
+    if (!user) {
+        return <Navigate to="/login" />
+    }
+  
   const onFinish = async (values) => {
     await authenticationService.register(values).then((res) => {
         if (res === "") {
-            alert("Registrace neúspěšná.");
+            console.log("Registrace neúspěšná.");
         } else {
-            alert("Úspěšná registrace, můžete se přihlásit.");
+            console.log("Registrace úspěšná");
         }
         
     }).catch((error) => {
@@ -34,6 +41,7 @@ return (
   <Card title = "Registrace uživatele">
     <Form className='Register-form'
       name="Register-form"
+      form={form}
       labelCol={{span: 8,}}
       wrapperCol={{span: 12}}
       initialValues={{ remember: true,}}
@@ -43,7 +51,7 @@ return (
       >
     <Form.Item
       label="E-mail"
-      name="e-mail"
+      name="userName"
       rules={[{required: true, message: 'Prosím zadejte e-mail!',},]}
     >
       <Input onChange={e => form.setFieldsValue(e.target.value)} prefix={<MailOutlined className="site-form-item-icon" />}/>
@@ -63,11 +71,11 @@ return (
       rules={[{required: true, message: 'Vyplňte heslo! Hesla se neshodují!'}]}
     >
       <Input.Password onChange={e => form.setFieldsValue(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}/>
-    </Form.Item>
+    </Form.Item> 
 
-    <Form.Item
+    {/*<Form.Item
       label="Role"
-      name="permissionName"
+      name="permissionNames"
       rules={[{required: true, message: 'Vyberte roli!'}]}>
       <Select
           placeholder="Vyberte roli pro zaměstnance"
@@ -77,7 +85,7 @@ return (
           <Option value="ROLE_ACCOUNTANT">Účetní</Option>
           <Option value="ROLE_HR">Human Resources</Option>
         </Select>    
-    </Form.Item>
+</Form.Item>*/}
 
     <Form.Item
       wrapperCol={{offset: 10, span: 6,}}

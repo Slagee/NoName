@@ -52,7 +52,8 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUserName(userDto.getUserName());
         user.setPasswordHash(passwordEncoder.encode(userDto.getPassword()));
-        List<String> permissionsNames = userDto.getPermissionNames();
+        //List<String> permissionsNames = userDto.getPermissionNames();
+        List<String> permissionsNames = List.of("ROLE_ADMIN");
         List<Permission> permissionsFound = permissionRepository.findByNameIn(permissionsNames);
 
         user.setUserPermissions(permissionsFound);

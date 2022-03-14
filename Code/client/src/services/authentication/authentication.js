@@ -2,7 +2,7 @@ import { message } from 'antd';
 
 class AuthService {
     async login(credentials) {
-        return fetch("http://185.28.102.174:8080/login",
+        return fetch("http://localhost:8080/login",
         {
             method: 'POST',
             headers: {
@@ -26,9 +26,13 @@ class AuthService {
     }
 
     async register(credentials) {
-        return fetch("http://185.28.102.174:8080/user/registration",
+        return fetch("http://127.0.0.1:8080/user/registration",
         {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
             body: JSON.stringify(credentials)
         })
         .then((res) => {
@@ -37,7 +41,8 @@ class AuthService {
                 return res.text()
             }
             else {
-                message.error("Něco se nepovedlo");
+                message.error("Něco se nepovedlo, uživatel s tímto e-mailem už pravděpodobně existuje");
+                console.log(JSON.stringify(credentials))
                 return ""
             }
         })
