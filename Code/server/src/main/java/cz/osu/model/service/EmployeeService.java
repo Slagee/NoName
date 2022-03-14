@@ -1,12 +1,9 @@
 package cz.osu.model.service;
 
-import cz.osu.model.entity.Document;
 import cz.osu.model.entity.Employee;
 import cz.osu.model.entity.EmployeeCreateDto;
-import cz.osu.model.entity.Unit;
 import cz.osu.model.repository.DocumentRepository;
 import cz.osu.model.repository.EmployeeRepository;
-import cz.osu.model.repository.UnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,8 +17,6 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-    @Autowired
-    private DocumentRepository documentRepository;
 
     public List<Employee> list(){
         return employeeRepository.findAll();

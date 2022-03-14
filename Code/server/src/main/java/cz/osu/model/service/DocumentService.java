@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
@@ -25,6 +28,16 @@ public class DocumentService {
     }
 
     public Document addDocument(Document document){
+        /*Calendar cal = new GregorianCalendar();
+        cal.add(Calendar.YEAR, +5);
+        Date years = cal.getTime();
+
+        document.setReleaseDate(years);*/
+        Calendar cal = new GregorianCalendar();
+        cal.add(Calendar.DAY_OF_MONTH, +7);
+        Date week = cal.getTime();
+
+        document.setReleaseDate(week);
         return documentRepository.save(document);
     }
 
