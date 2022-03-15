@@ -8,7 +8,7 @@ const { Search } = Input;
 
 export default function ListOfCenters() {
 
-const [searchName, setSearchName] = useState(null)
+const [searchCenters, setSearchCenters] = useState(null)
 const [page, setPage] = useState(1)
 
 const columns = [
@@ -16,110 +16,76 @@ const columns = [
       title: 'Středisko',
       dataIndex: 'center',
       key: 'center',
-      align: 'center'
-
     },
     {
       dataIndex: 'editing',
       key: 'editing',
-      align: 'center'
+      align: 'center',
+      width: '6%'
     },
     {
       dataIndex: 'deletion',
       key: 'deletion',
-      align: 'center'
+      align: 'center',
+      width: '6%'
     },
   ];
   
   const data = [
     {
       key: '1',
-      center: 'Leona',
+      center: 'ÚSTŘEDÍ Český Těšín',
       editing: <Button type="primary" htmlType="submit">Upravit</Button>,
       deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
     },
     {
       key: '2',
-      center: 'Leona',
+      center: 'BETHEL Karviná',
       editing: <Button type="primary" htmlType="submit">Upravit</Button>,
       deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
     },
     {
       key: '3',
-      center: 'Leona',
+      center: 'BETANIA Komorní Lhotka',
       editing: <Button type="primary" htmlType="submit">Upravit</Button>,
       deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
     },
     {
       key: '4',
-      center: 'Leona',
+      center: 'BETEZDA Komorní Lhotka',
       editing: <Button type="primary" htmlType="submit">Upravit</Button>,
       deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
     },
     {
       key: '5',
-      center: 'Leona',
+      center: 'EBEN-EZER Český Těšín',
       editing: <Button type="primary" htmlType="submit">Upravit</Button>,
       deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '6',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '7',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '8',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '9',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '10',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '11',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
-    {
-      key: '12',
-      center: 'Leona',
-      editing: <Button type="primary" htmlType="submit">Upravit</Button>,
-      deletion: <Button danger icon={<DeleteOutlined/>}>Odstranit</Button>, 
-    },
+    }
   ];
     return(
       <div className='Centers-Table'>
         <Row>
-          <Col span={8}><ArrowLeftOutlined className="backArrow" style={{ fontSize: '2rem' }} onClick={() => window.history.back()} /></Col>
+          <Col span={8}>
+            <ArrowLeftOutlined className="backArrow" style={{ fontSize: '2rem' }} onClick={() => window.history.back()} /></Col>
           <Col span={8} offset={8}>
-          <Search placeholder="Vyhledej středisko" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
+            <Search placeholder="Vyhledej středisko" onChange={e => setSearchCenters(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
           </Col>
         </Row>
-  
-        <Table dataSource={data} columns={columns}></Table>
+
+        <Row>
+          <Col span={10} offset={7}>
+            <Table dataSource={data} columns={columns}></Table>
+          </Col>
+        </Row>
+
         <Form.Item>
-      <Button type="primary" className='SaveButton' htmlType="submit">
-        Uložit změny
-      </Button>
-    </Form.Item>
+        <Row>
+          <Col span={10} offset={7}> 
+            <Button type="primary" className='SaveButton' htmlType="submit">Uložit změny</Button>
+          </Col>
+        </Row>   
+        </Form.Item>
       </div>
     );
   }
