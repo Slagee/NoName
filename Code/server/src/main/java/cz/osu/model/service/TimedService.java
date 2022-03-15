@@ -1,13 +1,10 @@
 package cz.osu.model.service;
 
 import cz.osu.model.entity.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.print.Doc;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -37,7 +34,7 @@ public class TimedService {
 
         for (Document doc : documents) {
             if (fmt.format(doc.getReleaseDate()).equals(weekForm)) {
-                doc.setNotify(true);
+                documentService.notifyDoc(doc.getId());
                 System.out.println("Dokument " +doc.getOriginalName()+ "bude smazan za tyden");
             } else if (doc.getReleaseDate().before(new Date())) {
                 System.out.println("Mazu soubor: " +doc.getOriginalName());

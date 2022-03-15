@@ -6,3 +6,20 @@
 .layoutHeader {
     margin-bottom: 2rem;
 }
+
+#content {
+    background-color: #ececec;
+}
+
+#notifButton {
+    border: none;
+    padding: 0;
+}
+
+#notifDocName {
+    font-weight: bold;
+}
+
+#notifCard {
+    margin-bottom: 1rem;
+}
