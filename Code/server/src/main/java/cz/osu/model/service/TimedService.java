@@ -37,9 +37,9 @@ public class TimedService {
 
         for (Document doc : documents) {
             if (fmt.format(doc.getReleaseDate()).equals(weekForm)) {
+                doc.setNotify(true);
                 System.out.println("Dokument " +doc.getOriginalName()+ "bude smazan za tyden");
-            }
-            if (doc.getReleaseDate().before(new Date())) {
+            } else if (doc.getReleaseDate().before(new Date())) {
                 System.out.println("Mazu soubor: " +doc.getOriginalName());
                 try {
                     documentService.deleteDocument(doc.getId());
@@ -61,8 +61,7 @@ public class TimedService {
         for (Document doc : documents) {
             if (doc.getReleaseDate().equals(week)) {
                 System.out.println("Dokument " +doc.getOriginalName()+ " bude smazan za tyden");
-            }
-            if (doc.getReleaseDate().before(new Date())) {
+            } else if (doc.getReleaseDate().before(new Date())) {
                 try {
                     documentService.deleteDocument(doc.getId());
                 } catch (Exception ex) {

@@ -32,6 +32,17 @@ public class Document {
     @Column
     private Date validityDate;
 
+    @Column
+    private boolean notify;
+
+    public boolean isNotify() {
+        return notify;
+    }
+
+    public void setNotify(boolean notify) {
+        this.notify = notify;
+    }
+
     @Column(length = 255)
     private String path;
 

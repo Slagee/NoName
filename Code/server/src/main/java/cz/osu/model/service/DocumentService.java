@@ -54,6 +54,11 @@ public class DocumentService {
         return null;
     }
 
+    public List<Document> getNotifDocs() {
+
+        return documentRepository.getDocumentByNotify();
+    }
+
     public Page<Document> loadPage(Specification<Document> documentSpec, Pageable pageable) {
         return documentRepository.findAll(documentSpec, pageable);
     }

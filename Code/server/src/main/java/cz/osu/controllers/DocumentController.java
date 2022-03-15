@@ -150,4 +150,10 @@ public class DocumentController {
         }
         return new ResponseEntity<>("Nepodařilo se stáhnout dokument",HttpStatus.BAD_REQUEST);
     }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR"})
+    @GetMapping("/documents/notifications")
+    public List<Document> getNotifDocuments() {
+        return documentService.getNotifDocs();
+    }
 }
