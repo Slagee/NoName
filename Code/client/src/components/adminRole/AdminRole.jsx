@@ -21,6 +21,7 @@ const columns = [
     title: 'Jméno',
     dataIndex: 'name',
     key: 'surname',
+    width: '12%'
   },
   {
     title: 'Příjmení',
@@ -31,19 +32,22 @@ const columns = [
     title: 'Administrátor',
     dataIndex: 'administrator',
     key: 'administrator',
-    align: 'center'
+    align: 'center',
+    width: '12%'
   },
   {
     title: 'Mzdový účetní',
     dataIndex: 'accountant',
     key: 'accountant',
-    align: 'center'
+    align: 'center',
+    width: '12%'
   },
   {
     title: 'Personalista',
     dataIndex: 'personnel',
     key: 'personnel',
-    align: 'center'
+    align: 'center',
+    width: '12%'
   },
 ];
 
@@ -130,7 +134,7 @@ const data = [
   },
   {
     key: '11',
-    name: 'Terezie Nguyen Thi',
+    name: 'Terezie',
     surname: 'Nguyen Thi',
     administrator: <Checkbox onChange={onChange}></Checkbox>,
     accountant: <Checkbox onChange={onChange}></Checkbox>,
@@ -150,7 +154,7 @@ const data = [
       <Row>
         <Col span={8}><ArrowLeftOutlined className="backArrow" style={{ fontSize: '2rem' }} onClick={() => window.history.back()} /></Col>
         <Col span={8} offset={8}>
-        <Search placeholder="Vyhledej záznam" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
+        <Search placeholder="Vyhledej uživatele" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
         </Col>
       </Row>
 
