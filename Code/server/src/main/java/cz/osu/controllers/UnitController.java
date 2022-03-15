@@ -6,6 +6,7 @@ import cz.osu.model.service.UnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +24,8 @@ public class UnitController {
     }
 
     @Secured({"ROLE_ACCOUNTANT","ROLE_ADMIN"})
-    @GetMapping("/unit")
-    public Unit unitById(@RequestParam(value = "id", defaultValue = "1") Long id) {
+    @GetMapping("/unit/{id}")
+    public Unit unitById(@PathVariable("id") Long id) {
         return unitService.getById(id);
     }
 }

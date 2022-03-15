@@ -2,7 +2,7 @@ import { message } from 'antd';
 
 class AuthService {
     async login(credentials) {
-        return fetch("http://localhost:8080/login",
+        return fetch(process.env.REACT_APP_API + "login",
         {
             method: 'POST',
             headers: {
