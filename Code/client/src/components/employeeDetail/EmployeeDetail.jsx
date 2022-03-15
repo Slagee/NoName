@@ -1,6 +1,6 @@
 import './EmployeeDetail.css'
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
-import { DownloadOutlined, EditOutlined, ExportOutlined } from '@ant-design/icons';
+import { DownloadOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Row, Col, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import './EmployeeDetail.css'
