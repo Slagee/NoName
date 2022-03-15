@@ -2,7 +2,8 @@ import { message } from 'antd';
 
 class AuthService {
     async login(credentials) {
-        return fetch("http://185.28.102.174:8080/login",
+        {/*return fetch("http://localhost:8080/login",*/}
+        return fetch(process.env.REACT_APP_API + "login",
         {
             method: 'POST',
             headers: {
@@ -17,6 +18,33 @@ class AuthService {
             }
             else {
                 message.error("Zadali jste špatné přihlašovací údaje!");
+                return ""
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
+
+    async register(credentials) {
+        {/*return fetch("http://localhost:8080/user/registration",*/}
+        return fetch(process.env.REACT_APP_API + "user/registration",
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(credentials)
+        })
+        .then((res) => {
+            if (res.ok) {
+                message.success("Registrace úspěšná");
+                return res.text()
+            }
+            else {
+                message.error("Něco se nepovedlo, uživatel s tímto e-mailem už pravděpodobně existuje");
+                console.log(JSON.stringify(credentials))
                 return ""
             }
         })

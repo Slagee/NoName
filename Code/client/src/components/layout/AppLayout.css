@@ -1,8 +1,14 @@
 .logo {
     float: left;
     margin: auto;
+    width: 50%;
 }
 
 .layoutHeader {
     margin-bottom: 2rem;
+}
+
+.version{
+    font-style: italic;
+    color: rgb(177, 177, 177);
 }

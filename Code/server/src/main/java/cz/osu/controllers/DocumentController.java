@@ -76,7 +76,7 @@ public class DocumentController {
         return documentService.loadPage(documentSpec, pageable);
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @DeleteMapping(path = "/document/{id}")
     public ResponseEntity<?> deleteDocument(@PathVariable("id") Long id)
     {
