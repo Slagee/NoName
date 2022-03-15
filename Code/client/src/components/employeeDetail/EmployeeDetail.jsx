@@ -1,7 +1,7 @@
 import './EmployeeDetail.css'
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 import { DownloadOutlined, EditOutlined, ExportOutlined } from '@ant-design/icons';
-import { Button, Row, Col } from "antd";
+import { Button, Row, Col, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import './EmployeeDetail.css'
 import { GetEmployeeById } from "../home/GetEmployeeById";
@@ -14,6 +14,11 @@ export default function EmployeeDetail() {
 
     function goEditEmployee() {
         window.location.href = "/editEmployee/"+params.id;
+    }
+    function readEmployeeUnit(){
+        if (!employeeById.unitForEmployee) {
+            return "Zaměstnanec nemá vyplněné středisko"
+        } else { return employeeById.unitForEmployee.name}
     }
     
     return (
@@ -38,7 +43,14 @@ export default function EmployeeDetail() {
             </Row>
             <Row style = {{'marginBottom': "2rem"}}>
                 <Col span={4}>Středisko:</Col>
-                <Col span={6}>BETEZDA</Col>
+                <Col span={6}>
+                    {(() => {
+                        switch (employeeById.unitForEmployee) {
+                            case null:   return "Středisko neuvedeno";
+                            default: return employeeById.unitForEmployee.name;
+                        }
+                     })()}
+                </Col>
             </Row>
             <Row style={{'marginBottom': "4rem"}}>
                 <Col span={4}>Uložené soubory:</Col>
@@ -47,23 +59,30 @@ export default function EmployeeDetail() {
                     {(employeeById.documentsForEmployee || []).map(({ originalName, type, id }) => (
                         <Row>
                             <Col span={10}>
-                                {type.name} - {originalName}
+                                {type.name}
                             </Col>
-                            <Col span={10} offset={1}>
-                                <Button type="primary" onClick={()=> documents.downloadDocumentById(id)} shape="round" icon={<DownloadOutlined />} size='small'>
+                            <Col span={10}>
+                                {originalName}
+                            </Col>
+                            <Col span={4}>
+                                <Button type="primary" onClick={()=> documents.downloadDocumentById(id)} shape="round" icon={<DownloadOutlined />} size='middle'>
                                     Stáhnout
                                 </Button>
                             </Col>
+                            <Divider />
                         </Row>
+                        
                     ))}
 
                 </Col>
             </Row>
             <Row >
-                <Col span={12}>
+                <Col span={2}>{/*
                     <Button type="secondary" icon={<ExportOutlined />} size='large' style={{'marginRight': "2rem"}}>
                         Exportovat
-                    </Button>
+                    </Button>*/}
+                </Col>
+                <Col span={2} offset={20}>
                     <Button type="primary" icon={<EditOutlined />} size='large' onClick={goEditEmployee}>
                         Upravit
                     </Button>
