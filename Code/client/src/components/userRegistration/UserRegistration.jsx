@@ -22,7 +22,6 @@ export default function UserRegistration() {
             console.log("Registrace neúspěšná.");
         } else {
             console.log("Registrace úspěšná");
-            window.history.back();
         }
         
     }).catch((error) => {
