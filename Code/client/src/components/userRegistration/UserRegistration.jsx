@@ -1,6 +1,6 @@
 import React from 'react';
 import 'antd/dist/antd.css';
-import { Form, Input, Button, Row, Card, Col , Select} from 'antd';
+import { Form, Input, Button, Row, Card, Col , Checkbox} from 'antd';
 import authenticationService from '../../services/authentication/authentication';
 import './UserRegistration.css';
 import { Navigate } from "react-router-dom";
@@ -9,7 +9,6 @@ import { useForm } from "antd/lib/form/Form";
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 
 export default function UserRegistration() {
-  const { Option } = Select;
   const [form] = useForm();
 
   let user = localStorage.getItem("username");
@@ -23,6 +22,7 @@ export default function UserRegistration() {
             console.log("Registrace neúspěšná.");
         } else {
             console.log("Registrace úspěšná");
+            window.history.back();
         }
         
     }).catch((error) => {
@@ -73,19 +73,29 @@ return (
       <Input.Password onChange={e => form.setFieldsValue(e.target.value)} prefix={<LockOutlined className="site-form-item-icon" />}/>
     </Form.Item> 
 
-    {/*<Form.Item
-      label="Role"
-      name="permissionNames"
-      rules={[{required: true, message: 'Vyberte roli!'}]}>
-      <Select
-          placeholder="Vyberte roli pro zaměstnance"
-          allowClear
-        >
-          <Option value="ROLE_ADMIN">Administrátor</Option>
-          <Option value="ROLE_ACCOUNTANT">Účetní</Option>
-          <Option value="ROLE_HR">Human Resources</Option>
-        </Select>    
-</Form.Item>*/}
+    <Form.Item 
+    name="permissionNames" 
+    label="Role zaměstnance"
+    rules={[{required: true, message: 'Vyplňte roli zaměstnance!'}]}
+    >
+        <Checkbox.Group>
+          <Row>
+              <Checkbox value="ROLE_ACCOUNTANT" style={{ lineHeight: '32px' }}>
+                Mzdový účetní
+              </Checkbox>
+          </Row>
+          <Row>
+              <Checkbox value="ROLE_HR" style={{ lineHeight: '32px' }}>
+                Personalista
+              </Checkbox>
+          </Row>
+          <Row>
+              <Checkbox value="ROLE_ADMIN" style={{ lineHeight: '32px' }}>
+                Administrátor
+              </Checkbox>
+          </Row>
+        </Checkbox.Group>
+      </Form.Item>
 
     <Form.Item
       wrapperCol={{offset: 10, span: 6,}}
