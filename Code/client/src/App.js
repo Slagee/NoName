@@ -11,6 +11,7 @@ import CreateEmployee from './components/createEmployee/CreateEmployee';
 import EmployeeDetail from './components/employeeDetail/EmployeeDetail';
 import EditEmployee from './components/editEmployee/EditEmployee';
 import UserRegistration from './components/userRegistration/UserRegistration';
+import ListOfCenters from './components/listOfCenters/ListOfCenters';
 
 function App() {
   const { token, setToken } = useToken();
@@ -28,6 +29,7 @@ function App() {
             <Route path="/employeeDetail/:id" element={<EmployeeDetail />}/>
             <Route path="/editEmployee/:id" element={<EditEmployee />}/>
             <Route path="/userRegistration" element={<UserRegistration />}/>
+            <Route path="/listOfCenters" element={<ListOfCenters />}/>
             <Route path="*" element={<Home />} />
           </Routes>
         </BrowserRouter>
