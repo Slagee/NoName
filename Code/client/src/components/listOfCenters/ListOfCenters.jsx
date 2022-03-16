@@ -1,8 +1,8 @@
 import { Space, Table} from 'antd';
-import { Form, Input, Button, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col, Modal } from 'antd';
 import './ListOfCenters.css';
 import { useState } from 'react';
-import { ArrowLeftOutlined, DeleteOutlined } from "@ant-design/icons/lib/icons";
+import { ArrowLeftOutlined, DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons/lib/icons";
 
 const { Search } = Input;
 
@@ -10,6 +10,20 @@ export default function ListOfCenters() {
 
 const [searchCenters, setSearchCenters] = useState(null)
 const [page, setPage] = useState(1)
+
+const [isModalVisible, setIsModalVisible] = useState(false);
+
+const showModal = () => {
+  setIsModalVisible(true);
+};
+
+const handleOk = () => {
+  setIsModalVisible(false);
+};
+
+const handleCancel = () => {
+  setIsModalVisible(false);
+};
 
 const columns = [
     {
@@ -68,7 +82,7 @@ const columns = [
         <Row>
           <Col span={8}>
             <ArrowLeftOutlined className="backArrow" style={{ fontSize: '2rem' }} onClick={() => window.history.back()} /></Col>
-          <Col span={8} offset={8}>
+          <Col span={8} offset={1}>
             <Search placeholder="Vyhledej středisko" onChange={e => setSearchCenters(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
           </Col>
         </Row>
@@ -82,7 +96,10 @@ const columns = [
         <Form.Item>
         <Row>
           <Col span={10} offset={7}> 
-            <Button type="primary" className='SaveButton' htmlType="submit">Uložit změny</Button>
+            <Button type="primary" className='SaveButton' htmlType="submit" icon={<PlusCircleOutlined  />} onClick={showModal}>Přidat středisko</Button>
+              <Modal title="Středisko" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <p>Some contents...</p>
+              </Modal>
           </Col>
         </Row>   
         </Form.Item>
