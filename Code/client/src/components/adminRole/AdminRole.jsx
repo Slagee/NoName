@@ -21,7 +21,7 @@ const columns = [
     title: 'Jméno',
     dataIndex: 'name',
     key: 'surname',
-    width: '12%'
+    width: '14%'
   },
   {
     title: 'Příjmení',
@@ -33,21 +33,21 @@ const columns = [
     dataIndex: 'administrator',
     key: 'administrator',
     align: 'center',
-    width: '12%'
+    width: '18%'
   },
   {
     title: 'Mzdový účetní',
     dataIndex: 'accountant',
     key: 'accountant',
     align: 'center',
-    width: '12%'
+    width: '18%'
   },
   {
     title: 'Personalista',
     dataIndex: 'personnel',
     key: 'personnel',
     align: 'center',
-    width: '12%'
+    width: '18%'
   },
 ];
 
@@ -157,13 +157,19 @@ const data = [
         <Search placeholder="Vyhledej uživatele" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
         </Col>
       </Row>
+      <Row>
+        <Col span={15} offset={5}>
+          <Table dataSource={data} columns={columns}></Table>
+        </Col>
+      </Row>
 
-      <Table dataSource={data} columns={columns}></Table>
       <Form.Item>
-    <Button type="primary" className='SaveButton' htmlType="submit">
-      Uložit změny
-    </Button>
-  </Form.Item>
+        <Row>
+          <Col span={15} offset={5}> 
+            <Button type="primary" className='SaveButton' htmlType="submit">Přidat středisko</Button>
+          </Col>
+        </Row>
+      </Form.Item>
     </div>
   );
 }
