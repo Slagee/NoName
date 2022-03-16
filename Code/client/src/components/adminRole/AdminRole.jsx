@@ -1,10 +1,9 @@
 import { Space, Table} from 'antd';
-import { Form, Input, Button, Checkbox, Row, Card, Col } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Card, Col, Modal } from 'antd';
 import './AdminRole.css';
 /*import { GetEmployeesList } from './GetEmployeesList';*/
 import { useState } from 'react';
-import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
-
+import { ArrowLeftOutlined, PlusCircleOutlined } from "@ant-design/icons/lib/icons";
 
 const { Search } = Input;
 
@@ -153,7 +152,7 @@ const data = [
     <div className='User-Table'>
       <Row>
         <Col span={8}><ArrowLeftOutlined className="backArrow" style={{ fontSize: '2rem' }} onClick={() => window.history.back()} /></Col>
-        <Col span={8} offset={8}>
+        <Col span={8} offset={4}>
         <Search placeholder="Vyhledej uživatele" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
         </Col>
       </Row>
@@ -165,11 +164,11 @@ const data = [
 
       <Form.Item>
         <Row>
-          <Col span={15} offset={5}> 
-            <Button type="primary" className='SaveButton' htmlType="submit">Přidat středisko</Button>
+          <Col span={5} offset={15}> 
+            <Button type="primary" className='SaveButton' htmlType="submit">Uložit změny</Button>
           </Col>
         </Row>
       </Form.Item>
     </div>
   );
-}
+};
