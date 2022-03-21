@@ -1,3 +1,4 @@
+CSS
 .Admin-form{
     padding-top: 2em;
 }
@@ -10,4 +11,13 @@
 .SaveButton{
     font-weight: bold;
     float: right;
+}
+
+.DeleteButton{
+    font-weight: bold;
+    float: right;
+}
+
+.EditButton{
+    font-weight: bold;
 }
