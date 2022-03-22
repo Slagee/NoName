@@ -51,7 +51,7 @@ return (
     <Form.Item
       label="E-mail"
       name="userName"
-      rules={[{required: true, message: 'Prosím zadejte e-mail!',},]}
+      rules={[{type: "email", required: true, message: 'Prosím zadejte e-mail!',},]}
     >
       <Input onChange={e => form.setFieldsValue(e.target.value)} prefix={<MailOutlined className="site-form-item-icon" />}/>
     </Form.Item>

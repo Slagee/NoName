@@ -9,13 +9,34 @@ import { ToolOutlined, UserAddOutlined , SettingOutlined , LogoutOutlined, ShopO
 export function AppLayout({ token }) {
     let button;
     let username;
+    let menu;
+    let dropdown;
     if (!token && token === null) {
         button = null;
-        username = null
+        username = null;
+        menu = null;
+        dropdown = null;
     } else {
         button = <Button type='submit' onClick={handleLogout} icon={<LogoutOutlined />}>Odhlásit se</Button>
         username = localStorage.getItem("username");
-        
+        menu = (
+            <Menu>
+                <Menu.Item>
+                    <Button type='link' onClick={goUserRegistration} icon={<UserAddOutlined/>}>Registrace uživatele</Button>
+                </Menu.Item>
+                <Menu.Item>
+                    <Button type='link' onClick={goAdminRole} icon={<SettingOutlined />}>Editace rolí</Button>
+                </Menu.Item>
+                <Menu.Item>
+                    <Button type='link' onClick={goListOfCentres} icon={<ShopOutlined />}>Seznam středisek</Button>
+                </Menu.Item>
+            </Menu>);
+        dropdown = <Dropdown overlay={menu}>
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                <ToolOutlined/> Nástroje <DownOutlined />
+            </a>
+        </Dropdown>;
+
     }
 
     function handleLogout() {
@@ -34,19 +55,6 @@ export function AppLayout({ token }) {
         window.location.href = "/listOfCenters";
     }
 
-    const menu = (
-    <Menu>
-        <Menu.Item>
-            <Button type='link' onClick={goUserRegistration} icon={<UserAddOutlined/>}>Registrace uživatele</Button>
-        </Menu.Item>
-        <Menu.Item>
-            <Button type='link' onClick={goAdminRole} icon={<SettingOutlined />}>Editace rolí</Button>
-        </Menu.Item>
-        <Menu.Item>
-            <Button type='link' onClick={goListOfCentres} icon={<ShopOutlined />}>Seznam středisek</Button>
-        </Menu.Item>
-    </Menu>);
-
     return(
         <Header className='layoutHeader' style={{ background: 'white' }}>
             <Row>
@@ -58,13 +66,8 @@ export function AppLayout({ token }) {
                 <Col span={1} className='version'>v0.3</Col>
                 
                 <Col span={2} offset={16}>
-                    <Dropdown overlay={menu}>
-                        <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                            <ToolOutlined/> Nástroje <DownOutlined />
-                        </a>
-                    </Dropdown>
+                    {dropdown}
                 </Col>
-
                 <Col span={1}>
                     {username}
                 </Col>
