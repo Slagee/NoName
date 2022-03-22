@@ -6,7 +6,6 @@ import cz.osu.security.jwt.JwtTokenVerifierFilter;
 import cz.osu.security.jwt.JwtUsernameAndPasswordAuthFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -25,15 +24,12 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.header.writers.ClearSiteDataHeaderWriter;
-import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.stereotype.Component;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.SecretKey;
-import javax.servlet.http.Cookie;
 
 import java.util.Arrays;
 

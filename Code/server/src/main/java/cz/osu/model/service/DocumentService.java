@@ -9,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
