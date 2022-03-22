@@ -159,7 +159,7 @@ public class DocumentController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR"})
     @GetMapping("/document/removeNotification/{id}")
-    public ResponseEntity<?> getNotifyDocuments(@PathVariable("id") Long id) {
+    public ResponseEntity<?> removeNotification(@PathVariable("id") Long id) {
         documentService.removeNotifyDoc(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

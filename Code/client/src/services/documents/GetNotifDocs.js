@@ -19,5 +19,5 @@ export function GetNotifDocs() {
         fetchNotifDocs();
     }, []);
 
-    return [data, isLoading];
+    return [data, updateData, isLoading];
 }

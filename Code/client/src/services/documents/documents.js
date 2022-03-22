@@ -80,6 +80,27 @@ class Documents {
         });
     }
 
+    async removeNotification(id) {
+        return fetch(process.env.REACT_APP_API_DOCUMENTS+"removeNotification/"+id,
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
+        .then((res) => {
+            if (res.ok) {
+                return true;
+            }
+            else {
+                return null;
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
+
     async getEmployeeId(id) {
         return fetch(process.env.REACT_APP_API_DOCUMENTS+"employeeForThisDocument/"+id,
         {
