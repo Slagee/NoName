@@ -3,7 +3,7 @@ import Login from './components/login/Login';
 import './App.css';
 import React from 'react';
 import useToken from './services/authentication/useToken';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './components/home/Home';
 import { Layout } from 'antd';
 import { Content } from 'antd/lib/layout/layout';
@@ -13,6 +13,7 @@ import EditEmployee from './components/editEmployee/EditEmployee';
 import UserRegistration from './components/userRegistration/UserRegistration';
 import ListOfCenters from './components/listOfCenters/ListOfCenters';
 import AdminRole from './components/adminRole/AdminRole';
+import DocumentNotification from "./components/documentNotification/DocumentNotification";
 
 function App() {
   const { token, setToken } = useToken();
@@ -21,9 +22,8 @@ function App() {
     <div className="App">
       <Layout>
         <AppLayout token={token} />
-        <Content className='Content'>
-        <BrowserRouter>
-          <Routes>            
+        <Content className="Content">
+          <Routes>
             <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/home" element={<Home />} />
             <Route path="/createEmployee" element={<CreateEmployee />} />
@@ -32,10 +32,10 @@ function App() {
             <Route path="/userRegistration" element={<UserRegistration />}/>
             <Route path="/listOfCenters" element={<ListOfCenters />}/>
             <Route path="/adminRole" element={<AdminRole />}/>
+            <Route path="/notifications" element={<DocumentNotification />} />
             <Route path="*" element={<Home />} />
           </Routes>
-        </BrowserRouter>
-        </Content>        
+        </Content>
       </Layout>
     </div>
   );

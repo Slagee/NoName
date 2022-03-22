@@ -11,11 +11,13 @@ export function AppLayout({ token }) {
     let username;
     let menu;
     let dropdown;
+    let alert;
     if (!token && token === null) {
         button = null;
         username = null;
         menu = null;
         dropdown = null;
+        alert = null;
     } else {
         button = <Button type='submit' onClick={handleLogout} icon={<LogoutOutlined />}>Odhlásit se</Button>
         username = localStorage.getItem("username");
@@ -36,14 +38,27 @@ export function AppLayout({ token }) {
                 <ToolOutlined/> Nástroje <DownOutlined />
             </a>
         </Dropdown>;
+        alert = (
+          <Button type="link" id="notifButton" onClick={routeDocumentNotif}>
+        <Badge count={notifDocs.length}>
+          <ExclamationCircleOutlined style={{ fontSize: "150%" }} />
+        </Badge>
+      </Button>
+        )
 
     }
 
-    function handleLogout() {
-        authentication.logout();
-        window.location.replace("/");
-        message.warning("Úspěšně jste se odhlásili!");
-    }
+  let navigate = useNavigate();
+  const routeDocumentNotif = () => {
+    let path = `notifications`;
+    navigate(path);
+  };
+
+  function handleLogout() {
+    authentication.logout();
+    window.location.replace("/");
+    message.warning("Úspěšně jste se odhlásili!");
+  }
 
     function goUserRegistration() {
         window.location.href = "/userRegistration";
@@ -64,8 +79,11 @@ export function AppLayout({ token }) {
                     </a>
                 </Col>
                 <Col span={1} className='version'>v0.3</Col>
+                <Col span={1} offset={12}>
+                  {alert}
+                </Col>
                 
-                <Col span={2} offset={16}>
+                <Col span={2}>
                     {dropdown}
                 </Col>
                 <Col span={1}>

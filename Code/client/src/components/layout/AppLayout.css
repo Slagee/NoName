@@ -12,3 +12,20 @@
     font-style: italic;
     color: rgb(177, 177, 177);
 }
+
+#content {
+    background-color: #ececec;
+}
+
+#notifButton {
+    border: none;
+    padding: 0;
+}
+
+#notifDocName {
+    font-weight: bold;
+}
+
+#notifCard {
+    margin-bottom: 1rem;
+}

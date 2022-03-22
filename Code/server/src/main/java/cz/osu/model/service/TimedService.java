@@ -1,13 +1,10 @@
 package cz.osu.model.service;
 
 import cz.osu.model.entity.Document;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.print.Doc;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -22,7 +19,7 @@ public class TimedService {
         this.documentService = documentService;
     }
 
-    /*@Scheduled(cron = "0 * * ? * *")
+    @Scheduled(cron = "0 * * ? * *")
     public void deleteTest() {
         System.out.println("Bezim kazdou minutu po spusteni");
         List<Document> documents = documentService.list();
@@ -37,9 +34,9 @@ public class TimedService {
 
         for (Document doc : documents) {
             if (fmt.format(doc.getReleaseDate()).equals(weekForm)) {
-                System.out.println("Dokument " +doc.getOriginalName()+ " bude smazan za tyden");
-            }
-            if (doc.getReleaseDate().before(new Date())) {
+                documentService.notifyDoc(doc.getId());
+                System.out.println("Dokument " +doc.getOriginalName()+ "bude smazan za tyden");
+            } else if (doc.getReleaseDate().before(new Date())) {
                 System.out.println("Mazu soubor: " +doc.getOriginalName());
                 try {
                     documentService.deleteDocument(doc.getId());
@@ -49,9 +46,9 @@ public class TimedService {
                 System.out.println("Povedlo se smazat dokument");
             }
         }
-    }*/
+    }
 
-    /*@Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void deleteDocuments() {
         System.out.println("Bezim kazdou pulnoc");
         List<Document> documents = documentService.list();
@@ -61,8 +58,7 @@ public class TimedService {
         for (Document doc : documents) {
             if (doc.getReleaseDate().equals(week)) {
                 System.out.println("Dokument " +doc.getOriginalName()+ " bude smazan za tyden");
-            }
-            if (doc.getReleaseDate().before(new Date())) {
+            } else if (doc.getReleaseDate().before(new Date())) {
                 try {
                     documentService.deleteDocument(doc.getId());
                 } catch (Exception ex) {
@@ -70,5 +66,5 @@ public class TimedService {
                 }
             }
         }
-    }*/
+    }
 }
