@@ -19,9 +19,9 @@ public class TimedService {
         this.documentService = documentService;
     }
 
-    @Scheduled(cron = "0 * * ? * *")
+    @Scheduled(cron = "0 */5 * * * *")
     public void deleteTest() {
-        System.out.println("Bezim kazdou minutu po spusteni");
+        System.out.println("Bezim kazdych 5 minut");
         List<Document> documents = documentService.list();
 
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");

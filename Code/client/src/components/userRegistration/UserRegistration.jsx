@@ -79,7 +79,7 @@ export default function UserRegistration() {
             <Form.Item
               label="Heslo"
               name="password"
-              rules={[{ required: true, message: "Vyplňte heslo! " }]}
+              rules={[{ required: true, message: "Vyplňte heslo!" }]}
             >
               <Input.Password
                 onChange={(e) => form.setFieldsValue(e.target.value)}
@@ -89,16 +89,26 @@ export default function UserRegistration() {
 
             <Form.Item
               label="Heslo znovu"
-              name="againpassword"
+              name="confirm"
+              dependencies={['password']}
+              hasFeedback
               rules={[
                 {
                   required: true,
-                  message: "Vyplňte heslo! Hesla se neshodují!",
+                  message: "Vyplňte heslo!",
                 },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Hesla se neshodují!'));
+                  },
+                }),
               ]}
             >
               <Input.Password
-                onChange={(e) => form.setFieldsValue(e.target.value)}
+                //onChange={(e) => form.setFieldsValue(e.target.value)}
                 prefix={<LockOutlined className="site-form-item-icon" />}
               />
             </Form.Item>
