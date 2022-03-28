@@ -1,6 +1,6 @@
 import './EmployeeDetail.css'
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
-import { DownloadOutlined, EditOutlined, ExportOutlined } from '@ant-design/icons';
+import { DownloadOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Row, Col, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import './EmployeeDetail.css'
@@ -14,11 +14,6 @@ export default function EmployeeDetail() {
 
     function goEditEmployee() {
         window.location.href = "/editEmployee/"+params.id;
-    }
-    function readEmployeeUnit(){
-        if (!employeeById.unitForEmployee) {
-            return "Zaměstnanec nemá vyplněné středisko"
-        } else { return employeeById.unitForEmployee.name}
     }
     
     return (
@@ -57,7 +52,7 @@ export default function EmployeeDetail() {
                 <Col className="files" span={20}>
                     
                     {(employeeById.documentsForEmployee || []).map(({ originalName, type, id }) => (
-                        <Row>
+                        <Row key={id}>
                             <Col span={10}>
                                 {type.name}
                             </Col>

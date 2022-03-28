@@ -52,6 +52,7 @@ export default function ListOfCenters() {
       title: "Číslo",
       dataIndex: "number",
       width: '10%',
+      align: "center",
     },
     {
       title: "Středisko",

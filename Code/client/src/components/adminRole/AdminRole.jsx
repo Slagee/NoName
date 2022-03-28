@@ -1,7 +1,6 @@
 import { Table } from "antd";
-import { Form, Input, Button, Checkbox, Row, Card, Col } from "antd";
+import { Form, Input, Button, Checkbox, Row, Col } from "antd";
 import "./AdminRole.css";
-/*import { GetEmployeesList } from './GetEmployeesList';*/
 import { useState } from "react";
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
 

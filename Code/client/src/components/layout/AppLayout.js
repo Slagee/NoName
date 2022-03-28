@@ -68,9 +68,9 @@ export function AppLayout({ token }) {
     );
     dropdown = (
       <Dropdown overlay={menu}>
-        <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+        <Button type="link" className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
           <ToolOutlined /> Nástroje <DownOutlined />
-        </a>
+        </Button>
       </Dropdown>
     );
     alert = (
