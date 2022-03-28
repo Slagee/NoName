@@ -10,7 +10,7 @@ import documents from '../../services/documents/documents';
 
 export default function EmployeeDetail() {
     const params = useParams();
-    const [employeeById, isLoading] = GetEmployeeById(params.id);
+    const [employeeById, updateEmployeeById, isLoading] = GetEmployeeById(params.id);
 
     function goEditEmployee() {
         window.location.href = "/editEmployee/"+params.id;
