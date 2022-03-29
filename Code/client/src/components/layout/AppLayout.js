@@ -115,12 +115,12 @@ export function AppLayout({ token }) {
         <Col span={1} className="version">
           v0.3
         </Col>
-        <Col span={1} offset={12}>
+        <Col span={1} offset={14}>
           {alert}
         </Col>
 
         <Col span={2}>{dropdown}</Col>
-        <Col span={1}>{username}</Col>
+        <Col span={3}>{username}</Col>
         <Col span={2}>{button}</Col>
       </Row>
     </Header>
