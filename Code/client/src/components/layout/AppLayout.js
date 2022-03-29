@@ -17,6 +17,7 @@ import { GetNotifDocs } from "../../services/documents/GetNotifDocs";
 import { useNavigate } from "react-router-dom";
 
 export function AppLayout({ token }) {
+  console.log(process.env.REACT_APP_VERSION);
   const [notifDocs] = GetNotifDocs([]);
   let button;
   let username;
@@ -113,9 +114,9 @@ export function AppLayout({ token }) {
           </a>
         </Col>
         <Col span={1} className="version">
-          v0.3
+          {process.env.REACT_APP_VERSION}
         </Col>
-        <Col span={1} offset={14}>
+        <Col span={1} offset={13}>
           {alert}
         </Col>
 
