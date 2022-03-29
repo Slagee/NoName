@@ -150,4 +150,29 @@ public class DocumentController {
         }
         return new ResponseEntity<>("Nepodařilo se stáhnout dokument",HttpStatus.BAD_REQUEST);
     }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR"})
+    @GetMapping("/document/notifications")
+    public List<Document> getNotifyDocuments() {
+        return documentService.getNotifDocs();
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR"})
+    @GetMapping("/document/removeNotification/{id}")
+    public ResponseEntity<?> removeNotification(@PathVariable("id") Long id) {
+        documentService.removeNotifyDoc(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT","ROLE_HR"})
+    @GetMapping("/document/employeeForThisDocument/{id}")
+    public ResponseEntity<?> getEmployeeForDocument(@PathVariable("id") Long id) {
+        long employeeId;
+        try {
+            employeeId = documentService.getEmployeeIdForDocument(id);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(employeeId, HttpStatus.OK);
+    }
 }

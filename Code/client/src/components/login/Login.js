@@ -41,7 +41,7 @@ export default function Login({ setToken })
                     autoComplete="off"
                 >
                     <Form.Item
-                        label="Uživatelské jméno"
+                        label="E-mail"
                         name="username"
                         rules={[{ required: true, message: 'Vyplňte uživatelské jméno!' }]}
                     >

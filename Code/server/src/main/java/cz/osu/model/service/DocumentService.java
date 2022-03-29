@@ -1,6 +1,7 @@
 package cz.osu.model.service;
 
 import cz.osu.model.entity.Document;
+import cz.osu.model.entity.Employee;
 import cz.osu.model.repository.DocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +38,7 @@ public class DocumentService {
         cal.add(Calendar.DAY_OF_MONTH, +7);
         Date week = cal.getTime();
 
+        document.setNotify(false);
         document.setReleaseDate(week);
         return documentRepository.save(document);
     }
@@ -52,6 +54,28 @@ public class DocumentService {
             return document.getPath();
         }
         return null;
+    }
+
+    public List<Document> getNotifDocs() {
+        return documentRepository.getDocumentsByNotifyIsTrue();
+    }
+
+    public void removeNotifyDoc(long id) {
+        Document doc = getById(id);
+        doc.setNotify(false);
+        documentRepository.save(doc);
+    }
+
+    public void notifyDoc(long id) {
+        Document doc = getById(id);
+        doc.setNotify(true);
+        documentRepository.save(doc);
+    }
+
+    public long getEmployeeIdForDocument(long id) {
+        Document document = getById(id);
+        Employee employee = document.getEmployeeForDocument();
+        return employee.getId();
     }
 
     public Page<Document> loadPage(Specification<Document> documentSpec, Pageable pageable) {

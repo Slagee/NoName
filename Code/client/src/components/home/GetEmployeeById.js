@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import employees from "../../services/employees/employees";
 
 export function GetEmployeeById(id) {
-    const [data, setData] = useState([]);
+    const [data, updateData] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     
@@ -11,11 +11,12 @@ export function GetEmployeeById(id) {
             setLoading(true);
             const response = await employees.getEmployeeById(id);
             if (response) {
-                setData(response);
+                const json = await response;
+                updateData(json);
                 setLoading(false);                
             }
         })();
     }, [id]);
 
-    return [data, isLoading];
+    return [data, updateData, isLoading];
 }

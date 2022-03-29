@@ -1,7 +1,6 @@
 package cz.osu.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -31,6 +30,17 @@ public class Document {
 
     @Column
     private Date validityDate;
+
+    @Column
+    private boolean notify;
+
+    public boolean isNotify() {
+        return notify;
+    }
+
+    public void setNotify(boolean notify) {
+        this.notify = notify;
+    }
 
     @Column(length = 255)
     private String path;

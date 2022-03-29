@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DocumentTypeService {
     @Autowired
@@ -15,6 +17,10 @@ public class DocumentTypeService {
 
     public Page<DocumentType> loadPage(Specification<DocumentType> documentTypeSpec, Pageable pageable) {
         return documentTypeRepository.findAll(documentTypeSpec, pageable);
+    }
+
+    public List<DocumentType> getDocumentTypes() {
+        return documentTypeRepository.findAll();
     }
 
     public DocumentType getById(Long id) {

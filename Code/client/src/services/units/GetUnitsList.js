@@ -11,7 +11,7 @@ export function GetUnitsList() {
             const response = await units.getUnits();
             if (response) {
                 setLoading(false);
-                setUnit(response);
+                setUnit(response.content);
             }
         })();
     }, []);
