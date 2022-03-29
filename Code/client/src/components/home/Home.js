@@ -41,6 +41,7 @@ const Home = () => {
                     current:page,
                     simple:true
                 }}
+                rowKey="id"
             />
             )}
             

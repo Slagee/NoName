@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 public class DocumentTypeController {
@@ -41,9 +42,15 @@ public class DocumentTypeController {
             return documentTypeService.loadPage(documentTypeSpec, pageable);
     }
 
-    @Secured({"ROLE_ACCOUNTANT","ROLE_HR","ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
+    @Secured({"ROLE_ACCOUNTANT","ROLE_HR", "ROLE_ADMIN", "ROLE_REGISTRY_WORKER","ROLE_VOLUNTEER_COORDINATOR","ROLE_PROJECT_COORDINATOR"})
     @GetMapping("/document/type")
     public DocumentType documentTypeById(@NotNull @RequestParam(value = "id") Long id){
         return documentTypeService.getById(id);
+    }
+
+    @Secured({"ROLE_ACCOUNTATN", "ROLE_HR", "ROLE_ADMIN"})
+    @GetMapping("documentType/list")
+    public List<DocumentType> getDocumentTypeList() {
+        return documentTypeService.getDocumentTypes();
     }
 }

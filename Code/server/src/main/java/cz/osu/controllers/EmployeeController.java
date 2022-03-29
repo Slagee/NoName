@@ -2,8 +2,9 @@ package cz.osu.controllers;
 
 import cz.osu.model.entity.Employee;
 import cz.osu.model.entity.EmployeeCreateDto;
+import cz.osu.model.service.DocumentService;
 import cz.osu.model.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cz.osu.model.service.FileService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,11 @@ import java.util.List;
 
 @RestController
 public class EmployeeController {
-    @Autowired
-    EmployeeService employeeService;
+    final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @Deprecated
     @GetMapping("/employee/list")

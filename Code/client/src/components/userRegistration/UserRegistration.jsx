@@ -1,5 +1,4 @@
 import React from "react";
-import "antd/dist/antd.css";
 import { Form, Input, Button, Row, Card, Col, Checkbox } from "antd";
 import authenticationService from "../../services/authentication/authentication";
 import "./UserRegistration.css";

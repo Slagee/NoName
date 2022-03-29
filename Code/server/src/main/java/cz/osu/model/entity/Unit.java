@@ -18,7 +18,7 @@ public class Unit {
     private Long id;
 
     @Column
-    private int number;
+    private String number;
 
     @Column
     private String name;
@@ -35,11 +35,11 @@ public class Unit {
         this.id = id;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
