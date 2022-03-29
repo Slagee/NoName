@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
 import documents from "../../services/documents/documents";
+import { GetDocumentTypeList } from "../../services/documentType/GetDocumentTypeList";
 import employees from "../../services/employees/employees";
 import { GetUnitsList } from "../../services/units/GetUnitsList";
 import units from "../../services/units/units";
@@ -25,6 +26,7 @@ export default function EditEmployee() {
   const params = useParams();
   const [unit, setUnit] = useState(null);
   const [unitsList, isUnitsLoading] = GetUnitsList();
+  const [documentType, isDocumentTypeLoading] = GetDocumentTypeList();
   const [employee, updateEmployee, isLoading] = GetEmployeeById(params.id);
 
   useEffect(() => {
@@ -38,6 +40,7 @@ export default function EditEmployee() {
     })();
   }, [employee]);
 
+  let unitsSelect;
   let user = localStorage.getItem("username");
   if (!user) {
     return <Navigate to="/login" />;
@@ -50,9 +53,15 @@ export default function EditEmployee() {
     }
   };
 
-  const options = unitsList.map((unit) => (
+  const unitsOptions = unitsList.map((unit) => (
     <Option key={[unit.id, unit.number, unit.name]}>
       {unit.number} - {unit.name}
+    </Option>
+  ));
+
+  const documentTypeOptions = documentType.map((documentType) => (
+    <Option key={documentType.id}>
+      {documentType.name}
     </Option>
   ));
 
@@ -67,6 +76,46 @@ export default function EditEmployee() {
       }
     });
   };
+ 
+  if (isUnitsLoading) {
+    unitsSelect = <Select></Select>;
+  } else {
+    unitsSelect = (
+      <Select
+        style={{ width: "35%" }}
+        placeholder={
+          employee.unitForEmployee
+            ? employee.unitForEmployee.number +
+              " - " +
+              employee.unitForEmployee.name
+            : "Vyberte středisko"
+        }
+        showSearch
+        filterOption={(input, option) =>
+          option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+        onChange={onUnitChange}
+      >
+        {unitsOptions}
+      </Select>
+    );
+  }
+
+  const documentTypeSelect = (document) => {
+    if (isDocumentTypeLoading)
+      return <Select></Select>
+    else {
+      return (
+      <Select
+      style={{ width: "75%" }}
+      defaultValue={document.type.name}
+      onChange={(value) => console.log(value)}
+    >
+      {documentTypeOptions}
+    </Select>
+      )
+    }
+  }
 
   function showDeleteConfirmDocument(id) {
     confirm({
@@ -161,167 +210,146 @@ export default function EditEmployee() {
   return isLoading ? (
     <div>Loading</div>
   ) : (
-    <div className="employeeContent">
-      <Row style={{ marginBottom: "2rem" }}>
-        <ArrowLeftOutlined
-          className="backArrow"
-          style={{ fontSize: "2rem" }}
-          onClick={() => window.history.back()}
-        />
-      </Row>
-      <Form
-        form={form}
-        labelCol={{ span: 4 }}
-        layout="horizontal"
-        size="large"
-        initialValues={{
-          name: employee.name,
-          surname: employee.surname,
-          birthNumber: employee.birthNumber,
-        }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          name="name"
-          label="Jméno"
-          rules={[
-            { required: true, message: "Je potřeba vyplnit jméno zaměstnance" },
-          ]}
-        >
-          <Input
-            style={{ width: "25%" }}
-            onChange={(e) =>
-              form.setFieldsValue({ employeeName: e.target.value })
-            }
+    <Row justify="center">
+      <Col span={18}>
+        <Row style={{ marginBottom: "2rem" }}>
+          <ArrowLeftOutlined
+            className="backArrow"
+            style={{ fontSize: "2rem" }}
+            onClick={() => window.history.back()}
           />
-        </Form.Item>
-        <Form.Item
-          name="surname"
-          label="Příjmení"
-          rules={[
-            {
-              required: true,
-              message: "Je potřeba vyplnit příjmení zaměstnance",
-            },
-          ]}
-        >
-          <Input
-            style={{ width: "25%" }}
-            onChange={(e) =>
-              form.setFieldsValue({ employeeSurname: e.target.value })
-            }
-          />
-        </Form.Item>
-        <Form.Item label="Středisko">
-          {isUnitsLoading ? (
-            <Select></Select>
-          ) : (
-            <Select
-              style={{ width: "25%" }}
-              placeholder={
-                employee.unitForEmployee
-                  ? employee.unitForEmployee.number +
-                    " - " +
-                    employee.unitForEmployee.name
-                  : "Vyberte středisko"
-              }
-              showSearch
-              filterOption={(input, option) =>
-                option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-              onChange={onUnitChange}
-            >
-              {options}
-            </Select>
-          )}
-        </Form.Item>
-        <Form.Item
-          name="birthNumber"
-          label="Rodné číslo"
-          rules={[
-            {
-              required: true,
-              message: "Je potřeba vyplnit rodné číslo zaměstnance",
-            },
-          ]}
-        >
-          <Input
-            style={{ width: "25%" }}
-            onChange={(e) =>
-              form.setFieldsValue({ employeeBirthNumber: e.target.value })
-            }
-          />
-        </Form.Item>
-        <Form.Item label="Uložené soubory:">
-          {employee.documentsForEmployee.map((item) => (
-            <Row
-              id="documentItem"
-              style={{ alignItems: "center", margin: "0 0 0.8rem 0.2rem" }}
-              key={item.id}
-            >
-              <Col span={4} style={{ fontWeight: "bold" }}>
-                {item.originalName}
-              </Col>
-              <Col span={8}>
-                <Select
-                  defaultValue={item.type.name}
-                  style={{ width: "80%" }}
-                ></Select>
-              </Col>
-              <Col span={8}>
-                <Checkbox>Soubor v rámci projektu</Checkbox>
-              </Col>
-              <Col span={4}>
-                <Button
-                  danger
-                  onClick={() => showDeleteConfirmDocument(item.id)}
-                  icon={<DeleteOutlined />}
-                  size="small"
-                >
-                  Odstranit
-                </Button>
-              </Col>
-            </Row>
-          ))}
-        </Form.Item>
-        <Row justify="center">
-          <Col span={23}>
-            <Dragger {...draggerProps}>
-              <p className="ant-upload-drag-icon">
-                <InboxOutlined />
-              </p>
-              <p className="ant-upload-text">
-                Klikněte nebo přetáhněte dokument sem pro nahrání
-              </p>
-            </Dragger>
-          </Col>
         </Row>
-        <Row style={{ marginTop: "1rem", alignItems: "center" }}>
-          <Col offset={16}>
-            <Button
-              danger
-              type="dashed"
-              icon={<DeleteOutlined />}
-              size="middle"
-              style={{ padding: "0 0.5rem" }}
-              onClick={showDeleteConfirmEmlpoyee}
-            >
-              Odstranit
-            </Button>
-          </Col>
-          <Col offset={3}>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              icon={<SaveOutlined />}
-              style={{ padding: "0 2.5rem" }}
-            >
-              Uložit
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </div>
+        <Form
+          form={form}
+          labelCol={{ span: 4 }}
+          layout="horizontal"
+          size="large"
+          initialValues={{
+            name: employee.name,
+            surname: employee.surname,
+            birthNumber: employee.birthNumber,
+          }}
+          onFinish={onFinish}
+        >
+          <Form.Item
+            name="name"
+            label="Jméno"
+            rules={[
+              {
+                required: true,
+                message: "Je potřeba vyplnit jméno zaměstnance",
+              },
+            ]}
+          >
+            <Input
+              style={{ width: "35%" }}
+              onChange={(e) =>
+                form.setFieldsValue({ employeeName: e.target.value })
+              }
+            />
+          </Form.Item>
+          <Form.Item
+            name="surname"
+            label="Příjmení"
+            rules={[
+              {
+                required: true,
+                message: "Je potřeba vyplnit příjmení zaměstnance",
+              },
+            ]}
+          >
+            <Input
+              style={{ width: "35%" }}
+              onChange={(e) =>
+                form.setFieldsValue({ employeeSurname: e.target.value })
+              }
+            />
+          </Form.Item>
+          <Form.Item label="Středisko">{unitsSelect}</Form.Item>
+          <Form.Item
+            name="birthNumber"
+            label="Rodné číslo"
+            rules={[
+              {
+                required: true,
+                message: "Je potřeba vyplnit rodné číslo zaměstnance",
+              },
+            ]}
+          >
+            <Input
+              style={{ width: "35%" }}
+              onChange={(e) =>
+                form.setFieldsValue({ employeeBirthNumber: e.target.value })
+              }
+            />
+          </Form.Item>
+          <Form.Item label="Uložené soubory:">
+            {employee.documentsForEmployee.map((item) => (
+              <Row
+                id="documentItem"
+                style={{ alignItems: "center", margin: "0 0 0.8rem 0.2rem" }}
+                key={item.id}
+              >
+                <Col span={4} style={{ fontWeight: "bold" }}>
+                  {item.originalName}
+                </Col>
+                <Col span={8}>
+                  {documentTypeSelect(item)}
+                </Col>
+                <Col span={8}>
+                  <Checkbox>Soubor v rámci projektu</Checkbox>
+                </Col>
+                <Col span={4}>
+                  <Button
+                    danger
+                    onClick={() => showDeleteConfirmDocument(item.id)}
+                    icon={<DeleteOutlined />}
+                    size="small"
+                  >
+                    Odstranit
+                  </Button>
+                </Col>
+              </Row>
+            ))}
+          </Form.Item>
+          <Row justify="center">
+            <Col span={22}>
+              <Dragger {...draggerProps}>
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  Klikněte nebo přetáhněte dokument sem pro nahrání
+                </p>
+              </Dragger>
+            </Col>
+          </Row>
+          <Row style={{ marginTop: "1rem", alignItems: "center" }}>
+            <Col offset={16}>
+              <Button
+                danger
+                type="dashed"
+                icon={<DeleteOutlined />}
+                size="middle"
+                onClick={showDeleteConfirmEmlpoyee}
+              >
+                Odstranit
+              </Button>
+            </Col>
+            <Col offset={2}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                icon={<SaveOutlined />}
+                style={{ padding: "0 2.5rem" }}
+              >
+                Uložit
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Col>
+    </Row>
   );
 }

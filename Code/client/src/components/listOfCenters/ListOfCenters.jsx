@@ -9,6 +9,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons/lib/icons";
 import units from "../../services/units/units";
+import { GetUnitsList } from "../../services/units/GetUnitsList";
 const { Search } = Input;
 
 export default function ListOfCenters() {
@@ -18,15 +19,7 @@ export default function ListOfCenters() {
   const [isEditing, setIsEditing] = useState(false);
   const [editingCenters, setEditingCenters] = useState(null);
 
-  const [unitList, setUnitList] = useState([]);
-  useEffect(() => {
-    (async () => {
-      const response = await units.getUnits();
-      if (response) {
-        setUnitList(response);
-      }
-    })();
-  }, []);
+  const [unitList, setUnitList] = GetUnitsList();
 
   const { confirm } = Modal;
 

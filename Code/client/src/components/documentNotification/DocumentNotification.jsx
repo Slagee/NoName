@@ -45,13 +45,17 @@ export default function DocumentNotification() {
     {
       title: "Název dokumentu",
       dataIndex: "originalName",
-      width: "30%",
+      width: "30%"
     },
     {
       title: "Datum skartace",
       dataIndex: "releaseDate",
       render: (text) => format(new Date(text), "dd. MM. yyyy"),
-      width: "30%",
+    },
+    {
+      title: "",
+      dataIndex: "",
+      width: "25%",
     },
     {
       title: "",
@@ -62,18 +66,16 @@ export default function DocumentNotification() {
         </Button>
       ),
       align: "center",
-      width: "20%",
     },
     {
       title: "",
       dataIndex: "",
       render: (record) => (
         <Button type="danger" onClick={() => showConfirm(record)}>
-          X
+          Odstranit
         </Button>
       ),
       align: "center",
-      width: "20%",
     },
   ];
 
