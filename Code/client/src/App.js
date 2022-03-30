@@ -14,14 +14,16 @@ import UserRegistration from './components/userRegistration/UserRegistration';
 import ListOfCenters from './components/listOfCenters/ListOfCenters';
 import AdminRole from './components/adminRole/AdminRole';
 import DocumentNotification from "./components/documentNotification/DocumentNotification";
+import { useGetNotifDocs } from './services/documents/useGetNotifDocs';
 
 function App() {
   const { token, setToken } = useToken();
+  const [ notifications, updateNotifications] = useGetNotifDocs();
 
   return (
     <div className="App">
       <Layout>
-        <AppLayout token={token} />
+        <AppLayout token={token} notifications={notifications} />
         <Content className="Content">
           <Routes>
             <Route path="/login" element={<Login setToken={setToken} />} />
@@ -32,7 +34,7 @@ function App() {
             <Route path="/userRegistration" element={<UserRegistration />}/>
             <Route path="/listOfCenters" element={<ListOfCenters />}/>
             <Route path="/adminRole" element={<AdminRole />}/>
-            <Route path="/notifications" element={<DocumentNotification />} />
+            <Route path="/notifications" element={<DocumentNotification notifications={notifications} updateNotifications={updateNotifications} />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Content>
