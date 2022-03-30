@@ -118,9 +118,9 @@ export function AppLayout({ token, notifications }) {
           </a>
         </Col>
         <Col span={1} className="version">
-          v0.3
+          {process.env.REACT_APP_VERSION}
         </Col>
-        <Col span={1} offset={14}>
+        <Col span={1} offset={13}>
           {alert}
         </Col>
 

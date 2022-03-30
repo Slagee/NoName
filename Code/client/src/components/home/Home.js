@@ -9,13 +9,13 @@ const { Search } = Input;
 
 const Home = () => {
     const [searchName, setSearchName] = useState(null)
-    const [page, setPage] = useState(1)
+    var [page, setPage] = useState(1)
     const [employeesList, isLoading, totalPages] = GetEmployeesList(searchName, page);
 
     let user = localStorage.getItem("username");
     
     if (!user) {
-        return <Navigate to="/login" />
+        return <Navigate to="/login"/>
     }
 
     function goCreateEmployee() {
@@ -24,7 +24,7 @@ const Home = () => {
 
     return (
         <div>
-            <Search placeholder="Vyhledej záznam" onChange={e => setSearchName(e.target.value)} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
+            <Search placeholder="Vyhledej záznam" onChange= { (e) => { setSearchName(e.target.value); setPage(1)}} enterButton style={{ width: 300, float: 'right', paddingBottom: '25px' }} />
             {isLoading ?
             (
                 <Table />            
