@@ -76,7 +76,6 @@ export function AppLayout({ token, notifications }) {
       </Dropdown>
     );
     if (notifications) {
-      console.log(notifications);
       alert = (
         <Button type="link" id="notifButton" onClick={routeDocumentNotif}>
           <Badge count={notifications.length}>

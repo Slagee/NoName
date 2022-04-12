@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { message, Table } from "antd";
 import { Form, Input, Button, Row, Col, Modal } from "antd";
 import "./ListOfCenters.css";
 import { useEffect, useState } from "react";
@@ -13,13 +13,10 @@ import { GetUnitsList } from "../../services/units/GetUnitsList";
 const { Search } = Input;
 
 export default function ListOfCenters() {
-  const [selectedUnit, setSelectedUnit] = useState(null);
   const [searchCenters, setSearchCenters] = useState(null);
   const [page, setPage] = useState(1);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingCenters, setEditingCenters] = useState(null);
 
-  const [unitList, setUnitList] = GetUnitsList();
+  const [unitList, updateUnits] = GetUnitsList();
 
   const { confirm } = Modal;
 
@@ -28,13 +25,30 @@ export default function ListOfCenters() {
       title: "Úprava Střediska",
       okText: "Uložit",
       cancelText: "Zrušit",
-      onOk() {
-        console.log("OK editing");
+      onOk: async () => {
+        var response = await units.editUnit(unit, unit.id);
+        if (response.ok)
+          message.success("Středisko se podařilo upravit");
+        else
+          message.error(await response.text())
+        await updateUnits();
       },
       content: (
         <div>
-          <Input type="number" defaultValue={unit.number} onChange={e => unit.number = e.target.value} />
-          <Input defaultValue={unit.name} onChange={e => unit.name = e.target.value} />
+          <Row gutter={[8, 12]} align="middle">
+            <Col span={8}>
+              Číslo střediska
+            </Col>
+            <Col span={16}>
+              <Input type="number" defaultValue={unit.number} onChange={e => unit.number = e.target.value} />
+            </Col>
+            <Col span={8}>
+              Název střediska
+            </Col>
+            <Col span={16}>
+              <Input defaultValue={unit.name} onChange={e => unit.name = e.target.value} />
+            </Col>
+          </Row>
         </div>
       ),
     });
@@ -54,7 +68,7 @@ export default function ListOfCenters() {
     {
       title: "",
       dataIndex: "",
-      render: (text, record) => (
+      render: (record) => (
         <Button
           type="primary"
           icon={<EditOutlined />}
@@ -69,11 +83,11 @@ export default function ListOfCenters() {
     {
       title: "",
       dataIndex: "",
-      render: () => (
+      render: (record) => (
         <Button
           danger
           icon={<DeleteOutlined />}
-          onClick={() => console.log("delete")}
+          onClick={() => onDeleteCenter(record)}
         >
           Odstranit
         </Button>
@@ -84,28 +98,52 @@ export default function ListOfCenters() {
   ];
 
   const onAddCenter = () => {
-    console.log("add unit");
-  };
-
-  const onDeleteCenter = (record) => {
-    Modal.confirm({
-      title: "Opravdu chcete středisko smazat?",
-      okText: "ANO",
-      okType: "danger",
-      cancelText: "NE",
-      onOk: () => {
-        console.log("OK");
+    var unit = {number: "0", name: ""};
+    confirm({
+      title: "Přidat Středisko",
+      okText: "Uložit",
+      cancelText: "Zrušit",
+      onOk: async () => {
+        var response = await units.createUnit(unit);
+        if (response.ok)
+          message.success("Středisko se podařilo vytvořit");
+        else
+          message.error(await response.text())
+        await updateUnits();
       },
+      content: (
+        <div>
+          <Row gutter={[8, 12]} align="middle">
+            <Col span={8}>
+              Číslo střediska
+            </Col>
+            <Col span={16}>
+              <Input type="number" onChange={e => unit.number = e.target.value} />
+            </Col>
+            <Col span={8}>
+              Název střediska
+            </Col>
+            <Col span={16}>
+              <Input onChange={e => unit.name = e.target.value} />
+            </Col>
+          </Row>
+        </div>
+      ),
     });
   };
 
-  const onEditCenter = (record) => {
-    setSelectedUnit(record);
-  };
-
-  const resetEditing = () => {
-    setIsEditing(false);
-    setEditingCenters(null);
+  const onDeleteCenter = (record) => {
+    confirm({
+      title: "Opravdu chcete středisko "+record.name+" smazat?",
+      okText: "ANO",
+      okType: "danger",
+      cancelText: "NE",
+      onOk: async () => {
+        var response = await units.deleteUnit(record.id)
+        message.success(response);
+        await updateUnits();
+      },
+    });
   };
 
   return (
