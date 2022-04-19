@@ -1,5 +1,7 @@
 package cz.osu.model.service;
 
+import cz.osu.model.entity.Employee;
+import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.security.account.UserDto;
 import cz.osu.model.entity.Permission;
 import cz.osu.model.entity.User;
@@ -56,6 +58,20 @@ public class UserService implements UserDetailsService {
         List<String> permissionsNames = userDto.getPermissionNames();
         List<Permission> permissionsFound = permissionRepository.findByNameIn(permissionsNames);
 
+        user.setUserPermissions(permissionsFound);
+
+        return userRepository.save(user);
+    }
+
+    public User updateUser(UserDto userUpdate, Long id) {
+        Optional<User> userExists = userRepository.findById(id);
+        if (userExists.isEmpty())
+        {
+            throw new IllegalStateException("Vybraného uživatele se nepodařilo najít");
+        }
+        User user = userExists.get();
+        List<String> permissionsNames = userUpdate.getPermissionNames();
+        List<Permission> permissionsFound = permissionRepository.findByNameIn(permissionsNames);
         user.setUserPermissions(permissionsFound);
 
         return userRepository.save(user);

@@ -1,5 +1,7 @@
 package cz.osu.controllers;
 
+import cz.osu.model.entity.Employee;
+import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.security.account.UserDto;
 import cz.osu.model.entity.User;
 import cz.osu.model.service.UserService;
@@ -50,7 +52,7 @@ public class UserController {
             Pageable pageable){
         return userService.loadPage(userSpec, pageable);
     }
-
+    
     @Secured("ROLE_ADMIN")
     @GetMapping("/user")
     public User accountById(@RequestParam(value = "id", defaultValue = "1") Long id) {
@@ -65,5 +67,18 @@ public class UserController {
            throw new RuntimeException();
        }
        return new ResponseEntity<>("User successfully added!", HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
+    @PutMapping(path = "/user/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> editUserPerms(@RequestBody UserDto updateUser, @PathVariable("id") Long id) {
+        User updatedUser;
+        try {
+            updatedUser = userService.updateUser(updateUser, id);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(updatedUser, HttpStatus.CREATED);
     }
 }

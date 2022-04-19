@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7cfbdcc2-c4a9-48ce-afbd-346545276382" name="Changes" comment="" />
+    <list default="true" id="7cfbdcc2-c4a9-48ce-afbd-346545276382" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Code/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/client/src/components/adminRole/PermTableData.js" beforeDir="false" afterPath="$PROJECT_DIR$/Code/client/src/components/adminRole/PermTableData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Code/server/src/main/java/cz/osu/model/service/TimedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Code/server/src/main/java/cz/osu/model/service/TimedService.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +50,8 @@
       <workItem from="1647964284548" duration="6374000" />
       <workItem from="1648232124724" duration="61000" />
       <workItem from="1648486395716" duration="2166000" />
+      <workItem from="1649787551478" duration="556000" />
+      <workItem from="1650135596762" duration="93000" />
     </task>
     <servers />
   </component>
