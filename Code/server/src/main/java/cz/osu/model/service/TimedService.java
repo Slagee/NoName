@@ -19,8 +19,8 @@ public class TimedService {
         this.documentService = documentService;
     }
 
-    @Scheduled(cron = "0 */5 * * * *")
-    public void deleteTest() {
+    //@Scheduled(cron = "0 */5 * * * *")
+    /*public void deleteTest() {
         System.out.println("Bezim kazdych 5 minut");
         List<Document> documents = documentService.list();
 
@@ -46,7 +46,7 @@ public class TimedService {
                 System.out.println("Povedlo se smazat dokument");
             }
         }
-    }
+    }*/
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void deleteDocuments() {
