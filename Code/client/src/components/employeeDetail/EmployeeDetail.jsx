@@ -7,6 +7,7 @@ import "./EmployeeDetail.css";
 import { GetEmployeeById } from "../home/GetEmployeeById";
 import { LoadingOutlined } from "@ant-design/icons/lib/icons";
 import documents from "../../services/documents/documents";
+import { format } from "date-fns";
 
 export default function EmployeeDetail() {
   const params = useParams();
@@ -60,10 +61,11 @@ export default function EmployeeDetail() {
           <Col span={4}>Uložené soubory:</Col>
           <Col className="files" span={20}>
             {(employeeById.documentsForEmployee || []).map(
-              ({ originalName, type, id }) => (
+              ({ originalName, type, id, releaseDate }) => (
                 <Row key={id}>
-                  <Col span={10}>{type.name}</Col>
-                  <Col span={10}>{originalName}</Col>
+                  <Col span={6}>{type.name}</Col>
+                  <Col span={8}>{originalName}</Col>
+                  <Col span={6}>{format(new Date(releaseDate), "dd. MM. yyyy")}</Col>
                   <Col span={4}>
                     <Button
                       type="primary"

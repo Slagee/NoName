@@ -3,6 +3,9 @@ package cz.osu.controllers;
 import com.sun.istack.NotNull;
 
 import cz.osu.model.entity.Document;
+import cz.osu.model.entity.DocumentUpdateDto;
+import cz.osu.model.entity.Employee;
+import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.service.DocumentService;
 import cz.osu.model.service.EmployeeService;
 import cz.osu.model.service.FileService;
@@ -174,5 +177,18 @@ public class DocumentController {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(employeeId, HttpStatus.OK);
+    }
+
+    @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
+    @PutMapping(path = "/document/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<?> editDocument(@RequestBody DocumentUpdateDto updateDocument, @PathVariable("id") Long id) {
+        Document updatedDocument;
+        try {
+            updatedDocument = documentService.updateDocument(updateDocument, id);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(updatedDocument, HttpStatus.CREATED);
     }
 }

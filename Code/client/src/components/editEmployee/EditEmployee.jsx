@@ -5,7 +5,7 @@ import {
   SaveOutlined,
   InboxOutlined,
 } from "@ant-design/icons/lib/icons";
-import { Select, Form, Input, Button, message, Row, Col, Checkbox } from "antd";
+import { Select, Form, Input, Button, message, Row, Col, DatePicker } from "antd";
 import confirm from "antd/lib/modal/confirm";
 import Dragger from "antd/lib/upload/Dragger";
 import { useEffect } from "react";
@@ -281,7 +281,7 @@ export default function EditEmployee() {
               }
             />
           </Form.Item>
-          <Form.Item label="Uložené soubory:">
+          <Form.Item name="documentsForEmployee" label="Uložené soubory:">
             {employee.documentsForEmployee.map((item) => (
               <Row
                 id="documentItem"
@@ -295,7 +295,7 @@ export default function EditEmployee() {
                   {documentTypeSelect(item)}
                 </Col>
                 <Col span={8}>
-                  <Checkbox>Soubor v rámci projektu</Checkbox>
+                  <DatePicker>{item.releaseDate}</DatePicker>
                 </Col>
                 <Col span={4}>
                   <Button
