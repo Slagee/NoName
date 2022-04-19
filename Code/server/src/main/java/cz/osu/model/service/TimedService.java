@@ -48,8 +48,8 @@ public class TimedService {
         }
     }*/
 
-    //@Scheduled(cron = "0 0 0 * * ?")
-    /*public void deleteDocuments() {
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void deleteDocuments() {
         System.out.println("Bezim kazdou pulnoc");
         List<Document> documents = documentService.list();
         Calendar cal = new GregorianCalendar();
@@ -66,5 +66,5 @@ public class TimedService {
                 }
             }
         }
-    }*/
+    }
 }

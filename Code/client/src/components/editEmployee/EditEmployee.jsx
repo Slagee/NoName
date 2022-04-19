@@ -24,7 +24,7 @@ export default function EditEmployee() {
   const [form] = Form.useForm();
   const params = useParams();
   const [unit, setUnit] = useState(null);
-  const [unitsList, isUnitsLoading] = GetUnitsList();
+  const [unitsList, updateUnits] = GetUnitsList();
   const [documentType, isDocumentTypeLoading] = GetDocumentTypeList();
   const [employee, updateEmployee, isLoading] = GetEmployeeById(params.id);
 
@@ -76,9 +76,7 @@ export default function EditEmployee() {
     });
   };
  
-  if (isUnitsLoading) {
-    unitsSelect = <Select></Select>;
-  } else {
+  
     unitsSelect = (
       <Select
         style={{ width: "35%" }}
@@ -98,7 +96,7 @@ export default function EditEmployee() {
         {unitsOptions}
       </Select>
     );
-  }
+  
 
   const documentTypeSelect = (document) => {
     if (isDocumentTypeLoading)

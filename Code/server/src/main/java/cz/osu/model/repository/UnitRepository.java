@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface UnitRepository extends JpaRepository<Unit, Long> {
-    Unit findByNumber(int number);
+    Optional<Unit> findByNumber(String number);
+    Optional<Unit> findByName(String name);
 }

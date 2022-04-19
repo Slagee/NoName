@@ -70,6 +70,29 @@ class Users {
             });
     }
 
+    async editUser(userInfo, id) {
+        return fetch(process.env.REACT_APP_API_USERS+id,
+        {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.getItem('token')
+            },
+            body: JSON.stringify(userInfo)
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.ok;
+            }
+            else {
+                return res.text();
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+    }
+    
 }
 
 export default new Users();

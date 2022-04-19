@@ -11,14 +11,11 @@ import {
   LogoutOutlined,
   ShopOutlined,
   DownOutlined,
-  ExclamationCircleOutlined
+  ExclamationCircleOutlined,
 } from "@ant-design/icons/lib/icons";
-import { GetNotifDocs } from "../../services/documents/GetNotifDocs";
 import { useNavigate } from "react-router-dom";
 
-export function AppLayout({ token }) {
-  console.log(process.env.REACT_APP_VERSION);
-  const [notifDocs] = GetNotifDocs([]);
+export function AppLayout({ token, notifications }) {
   let button;
   let username;
   let menu;
@@ -69,18 +66,24 @@ export function AppLayout({ token }) {
     );
     dropdown = (
       <Dropdown overlay={menu}>
-        <Button type="link" className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+        <Button
+          type="link"
+          className="ant-dropdown-link"
+          onClick={(e) => e.preventDefault()}
+        >
           <ToolOutlined /> Nástroje <DownOutlined />
         </Button>
       </Dropdown>
     );
-    alert = (
-      <Button type="link" id="notifButton" onClick={routeDocumentNotif}>
-        <Badge count={notifDocs.length}>
-          <ExclamationCircleOutlined style={{ fontSize: "150%" }} />
-        </Badge>
-      </Button>
-    );
+    if (notifications) {
+      alert = (
+        <Button type="link" id="notifButton" onClick={routeDocumentNotif}>
+          <Badge count={notifications.length}>
+            <ExclamationCircleOutlined style={{ fontSize: "150%" }} />
+          </Badge>
+        </Button>
+      );
+    }
   }
 
   function handleLogout() {

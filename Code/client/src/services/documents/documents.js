@@ -92,7 +92,7 @@ class Documents {
                 return true;
             }
             else {
-                return null;
+                return false;
             }
         })
         .catch((err) => {

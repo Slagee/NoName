@@ -5,11 +5,9 @@ import {
 import { Button, Col, Modal, Row, Table } from "antd";
 import { format } from "date-fns";
 import documents from "../../services/documents/documents";
-import { GetNotifDocs } from "../../services/documents/GetNotifDocs";
 import "./DocumentNotification.css";
 
-export default function DocumentNotification() {
-  const [notifDocs, updateData, isLoading] = GetNotifDocs([]);
+export default function DocumentNotification({ notifications, updateNotifications }) {
   const { confirm } = Modal;
 
   function showConfirm(document) {
@@ -35,17 +33,18 @@ export default function DocumentNotification() {
 
   const removeFromNotifs = async (id) => {
     await documents.removeNotification(id);
-    const response = await documents.getNotifDocs();
-    if (response) {
-      updateData(response);
-    }
+    await updateNotifications();
   };
 
   const columns = [
     {
       title: "Název dokumentu",
       dataIndex: "originalName",
-      width: "30%"
+      width: "25%"
+    },
+    {
+      title: "Typ dokumentu",
+      dataIndex: ["type", "name"],
     },
     {
       title: "Datum skartace",
@@ -55,7 +54,6 @@ export default function DocumentNotification() {
     {
       title: "",
       dataIndex: "",
-      width: "25%",
     },
     {
       title: "",
@@ -72,7 +70,7 @@ export default function DocumentNotification() {
       dataIndex: "",
       render: (record) => (
         <Button type="danger" onClick={() => showConfirm(record)}>
-          Odstranit
+          Neupozorňovat
         </Button>
       ),
       align: "center",
@@ -90,12 +88,16 @@ export default function DocumentNotification() {
           />
         </Col>
       </Row>
-      {isLoading ? (
-        <Table />
+      {!notifications ? (
+        <Row justify="center">
+          <Col span={16}>
+            <Table />
+          </Col>
+        </Row>
       ) : (
         <Row justify="center">
           <Col span={16}>
-            <Table columns={columns} dataSource={notifDocs} rowKey="id" />
+            <Table columns={columns} dataSource={notifications} rowKey="id" />
           </Col>
         </Row>
       )}
