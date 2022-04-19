@@ -1,7 +1,9 @@
 package cz.osu.model.service;
 
 import cz.osu.model.entity.Document;
+import cz.osu.model.entity.DocumentUpdateDto;
 import cz.osu.model.entity.Employee;
+import cz.osu.model.entity.EmployeeCreateDto;
 import cz.osu.model.repository.DocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class DocumentService {
@@ -80,5 +79,17 @@ public class DocumentService {
 
     public Page<Document> loadPage(Specification<Document> documentSpec, Pageable pageable) {
         return documentRepository.findAll(documentSpec, pageable);
+    }
+
+    public Document updateDocument(DocumentUpdateDto documentUpdate, Long id) {
+        Optional<Document> documentExists = documentRepository.findById(id);
+        if (documentExists.isEmpty())
+        {
+            throw new IllegalStateException("Vybraný dokument se nepodařilo najít");
+        }
+        Document document = documentExists.get();
+        document.setReleaseDate(documentUpdate.getReleaseDate());
+
+        return documentRepository.save(document);
     }
 }

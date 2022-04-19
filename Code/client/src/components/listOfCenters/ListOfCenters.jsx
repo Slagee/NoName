@@ -1,7 +1,6 @@
-import { message, Table } from "antd";
+import { InputNumber, message, Table } from "antd";
 import { Form, Input, Button, Row, Col, Modal } from "antd";
 import "./ListOfCenters.css";
-import { useEffect, useState } from "react";
 import {
   ArrowLeftOutlined,
   DeleteOutlined,
@@ -13,52 +12,71 @@ import { GetUnitsList } from "../../services/units/GetUnitsList";
 const { Search } = Input;
 
 export default function ListOfCenters() {
-  const [searchCenters, setSearchCenters] = useState(null);
-  const [page, setPage] = useState(1);
-
+  const [formCreate] = Form.useForm();
+  const [formEdit] = Form.useForm();
   const [unitList, updateUnits] = GetUnitsList();
 
   const { confirm } = Modal;
 
-  function showEdit(unit) {
+  function showEdit() {
     confirm({
+      width: "30rem",
       title: "Úprava Střediska",
       okText: "Uložit",
       cancelText: "Zrušit",
       onOk: async () => {
-        var response = await units.editUnit(unit, unit.id);
-        if (response.ok)
-          message.success("Středisko se podařilo upravit");
-        else
-          message.error(await response.text())
-        await updateUnits();
+        if (await formEdit.validateFields()) {
+          formEdit.submit();
+        }
       },
       content: (
         <div>
-          <Row gutter={[8, 12]} align="middle">
-            <Col span={8}>
-              Číslo střediska
-            </Col>
-            <Col span={16}>
-              <Input type="number" defaultValue={unit.number} onChange={e => unit.number = e.target.value} />
-            </Col>
-            <Col span={8}>
-              Název střediska
-            </Col>
-            <Col span={16}>
-              <Input defaultValue={unit.name} onChange={e => unit.name = e.target.value} />
-            </Col>
-          </Row>
+          <Form
+            form={formEdit}
+            onFinish={handleEdit}
+            autoComplete="off"
+            labelCol={{ span: 8 }}
+          >
+            <Form.Item name="id" style={{display: "none"}} />
+            <Form.Item
+              label="Číslo střediska"
+              name="number"
+              rules={[
+                {
+                  required: true,
+                  message: "Číslo střediska je potřeba vyplnit",
+                },
+              ]}
+            >
+              <InputNumber min={1} />
+            </Form.Item>
+            <Form.Item
+              label="Název střediska"
+              name="name"
+              rules={[{ required: true, message: "Jméno je potřeba vyplnit" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Form>
         </div>
       ),
     });
   }
 
+  const handleEdit = async (values) => {
+    var unit = {number: values.number, name: values.name}
+    var response = await units.editUnit(unit, values.id);
+    if (response.ok) {
+      message.success("Středisko se podařilo upravit");
+    } else message.error(await response.text());
+    await updateUnits();
+  };
+
   const columns = [
     {
       title: "Číslo",
       dataIndex: "number",
-      width: '10%',
+      width: "10%",
       align: "center",
     },
     {
@@ -72,12 +90,15 @@ export default function ListOfCenters() {
         <Button
           type="primary"
           icon={<EditOutlined />}
-          onClick={() => showEdit(record)}
+          onClick={() => {
+            formEdit.setFieldsValue(record);
+            showEdit(record.id);
+          }}
         >
           Upravit
         </Button>
       ),
-      width: '20%',
+      width: "20%",
       align: "center",
     },
     {
@@ -92,54 +113,72 @@ export default function ListOfCenters() {
           Odstranit
         </Button>
       ),
-      width: '20%',
+      width: "20%",
       align: "center",
     },
   ];
 
+  const handleCreate = async (unit) => {
+    var response = await units.createUnit(unit);
+    if (response.ok) {
+      message.success("Středisko se podařilo vytvořit");
+      formCreate.resetFields();
+    } else message.error(await response.text());
+    await updateUnits();
+  };
+
   const onAddCenter = () => {
-    var unit = {number: "0", name: ""};
     confirm({
+      width: "30rem",
       title: "Přidat Středisko",
       okText: "Uložit",
       cancelText: "Zrušit",
       onOk: async () => {
-        var response = await units.createUnit(unit);
-        if (response.ok)
-          message.success("Středisko se podařilo vytvořit");
-        else
-          message.error(await response.text())
-        await updateUnits();
+        if (await formCreate.validateFields()) formCreate.submit();
       },
       content: (
         <div>
-          <Row gutter={[8, 12]} align="middle">
-            <Col span={8}>
-              Číslo střediska
-            </Col>
-            <Col span={16}>
-              <Input type="number" onChange={e => unit.number = e.target.value} />
-            </Col>
-            <Col span={8}>
-              Název střediska
-            </Col>
-            <Col span={16}>
-              <Input onChange={e => unit.name = e.target.value} />
-            </Col>
-          </Row>
+          <Form
+            form={formCreate}
+            onFinish={handleCreate}
+            autoComplete="off"
+            labelCol={{ span: 8 }}
+          >
+            <Form.Item
+              label="Číslo střediska"
+              name="number"
+              rules={[
+                {
+                  required: true,
+                  message: "Číslo střediska je potřeba vyplnit",
+                },
+              ]}
+            >
+              <InputNumber min={1} />
+            </Form.Item>
+            <Form.Item
+              label="Název střediska"
+              name="name"
+              rules={[{ required: true, message: "Jméno je potřeba vyplnit" }]}
+            >
+              <Input />
+            </Form.Item>
+          </Form>
         </div>
       ),
     });
   };
 
   const onDeleteCenter = (record) => {
+    var title = (<div>Opravdu chcete středisko <span style={{fontWeight: "bold"}}>{record.name}</span> smazat?</div>)
     confirm({
-      title: "Opravdu chcete středisko "+record.name+" smazat?",
+      width: "30rem",
+      title: title,
       okText: "ANO",
       okType: "danger",
       cancelText: "NE",
       onOk: async () => {
-        var response = await units.deleteUnit(record.id)
+        var response = await units.deleteUnit(record.id);
         message.success(response);
         await updateUnits();
       },
@@ -159,7 +198,6 @@ export default function ListOfCenters() {
         <Col span={8}>
           <Search
             placeholder="Vyhledej středisko"
-            onChange={(e) => setSearchCenters(e.target.value)}
             enterButton
             style={{ width: 300, float: "right", paddingBottom: "25px" }}
           />
