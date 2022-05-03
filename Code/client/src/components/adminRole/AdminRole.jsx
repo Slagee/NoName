@@ -6,19 +6,19 @@ import {columns} from "./PermTableData";
 import {GetUserList} from "./GetUserList";
 import {Navigate} from "react-router-dom";
 import {ArrowLeftOutlined} from "@ant-design/icons/lib/icons";
+import {GetUserAdminStatus} from "./GetUserAdminStatus";
 
 const { Search } = Input;
 
 export default function AdminRole() {
     const [searchMail, setSearchMail] = useState(null);
-  var [page, setPage] = useState(1);
-  const [userList, isLoading, totalPages] = GetUserList(searchMail, page);
-
+    var [page, setPage] = useState(1);
+    const [userList, isLoading, totalPages] = GetUserList(searchMail, page);
     let user = localStorage.getItem("username");
+    let isAdmin = GetUserAdminStatus();
 
-    if (!user) {
-        return <Navigate to="/login"/>
-    }
+    if (!user) return <Navigate to="/login"/>
+    if (!isAdmin) return <Navigate to="/home"/>
 
   return (
       <div>

@@ -41,6 +41,13 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElse(null);
     }
 
+    public User getByUsername(String username){
+        Optional<User> userExists = userRepository.findByUserName(username);
+        if (userExists.isEmpty()) {
+            throw new IllegalStateException("Vybraného uživatele se nepodařilo najít");
+        }
+        else return userExists.get();
+    }
 
     public User registerNewUserAccount(UserDto userDto) {
 

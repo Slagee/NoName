@@ -10,14 +10,15 @@ import {
 } from "@ant-design/icons/lib/icons";
 import { useForm } from "antd/lib/form/Form";
 import { ArrowLeftOutlined } from "@ant-design/icons/lib/icons";
+import {GetUserAdminStatus} from "../adminRole/GetUserAdminStatus";
 
 export default function UserRegistration() {
   const [form] = useForm();
 
   let user = localStorage.getItem("username");
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+  let isAdmin = GetUserAdminStatus();
+  if (!user) return <Navigate to="/login"/>
+  if (!isAdmin) return <Navigate to="/home"/>
 
   const onFinish = async (values) => {
     await authenticationService

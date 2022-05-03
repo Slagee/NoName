@@ -59,6 +59,11 @@ public class UserController {
         return userService.getById(id);
     }
 
+    @GetMapping("/user/mail")
+    public User accountById(@RequestParam(value = "email") String username) {
+        return userService.getByUsername(username);
+    }
+
     @Secured("ROLE_ADMIN")
     @PostMapping(path = "/user/registration", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> registerUserAccount(@RequestBody UserDto userDto) {

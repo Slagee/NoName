@@ -15,7 +15,7 @@ import {
 } from "@ant-design/icons/lib/icons";
 import { useNavigate } from "react-router-dom";
 
-export function AppLayout({ token, notifications }) {
+export function AppLayout({ token, notifications, isAdmin }) {
   let button;
   let username;
   let menu;
@@ -35,6 +35,7 @@ export function AppLayout({ token, notifications }) {
     dropdown = null;
     alert = null;
   } else {
+    console.log(isAdmin + "hahahaaa")
     button = (
       <Button type="submit" onClick={handleLogout} icon={<LogoutOutlined />}>
         Odhlásit se
@@ -48,12 +49,13 @@ export function AppLayout({ token, notifications }) {
             type="link"
             onClick={goUserRegistration}
             icon={<UserAddOutlined />}
+            disabled={!isAdmin}
           >
             Registrace uživatele
           </Button>
         </Menu.Item>
         <Menu.Item>
-          <Button type="link" onClick={goAdminRole} icon={<SettingOutlined />}>
+          <Button disabled={!isAdmin} type="link" onClick={goAdminRole} icon={<SettingOutlined />}>
             Editace rolí
           </Button>
         </Menu.Item>

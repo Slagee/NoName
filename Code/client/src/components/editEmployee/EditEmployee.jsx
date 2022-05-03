@@ -18,6 +18,7 @@ import { GetUnitsList } from "../../services/units/GetUnitsList";
 import units from "../../services/units/units";
 import { GetEmployeeById } from "../home/GetEmployeeById";
 import "./EditEmployee.css";
+import {GetUserAdminStatus} from "../adminRole/GetUserAdminStatus";
 
 const { Option } = Select;
 
@@ -28,6 +29,8 @@ export default function EditEmployee() {
   const [unitsList, updateUnits] = GetUnitsList();
   const [documentType, isDocumentTypeLoading] = GetDocumentTypeList();
   const [employee, updateEmployee, isLoading] = GetEmployeeById(params.id);
+
+
 
   useEffect(() => {
     (async () => {
@@ -42,9 +45,9 @@ export default function EditEmployee() {
 
   let unitsSelect;
   let user = localStorage.getItem("username");
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
+  let isAdmin = GetUserAdminStatus();
+  if (!user) return <Navigate to="/login"/>
+  if (!isAdmin) return <Navigate to="/home"/>
 
   const onUnitChange = async (value) => {
     const response = await units.getUnitById(value[0]);

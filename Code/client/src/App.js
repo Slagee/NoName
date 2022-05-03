@@ -15,15 +15,17 @@ import ListOfCenters from './components/listOfCenters/ListOfCenters';
 import AdminRole from './components/adminRole/AdminRole';
 import DocumentNotification from "./components/documentNotification/DocumentNotification";
 import { useGetNotifDocs } from './services/documents/useGetNotifDocs';
+import {GetUserAdminStatus} from "./components/adminRole/GetUserAdminStatus";
 
 function App() {
   const { token, setToken } = useToken();
+  const isAdmin = GetUserAdminStatus();
   const [ notifications, updateNotifications] = useGetNotifDocs();
 
   return (
     <div className="App">
       <Layout>
-        <AppLayout token={token} notifications={notifications} />
+        <AppLayout isAdmin={isAdmin} token={token} notifications={notifications} />
         <Content className="Content">
           <Routes>
             <Route path="/login" element={<Login setToken={setToken} />} />
