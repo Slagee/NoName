@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, Long> {
     List<Permission> findByNameIn(List<String> permissions);
+
+    Permission findFirstById(Long permissionId);
 }

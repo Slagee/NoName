@@ -63,17 +63,26 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User updateUser(UserDto userUpdate, Long id) {
+    public User updateUser(Long permissionId, Long id) {
         Optional<User> userExists = userRepository.findById(id);
-        if (userExists.isEmpty())
-        {
+        if (userExists.isEmpty()) {
             throw new IllegalStateException("Vybraného uživatele se nepodařilo najít");
         }
         User user = userExists.get();
-        List<String> permissionsNames = userUpdate.getPermissionNames();
-        List<Permission> permissionsFound = permissionRepository.findByNameIn(permissionsNames);
-        user.setUserPermissions(permissionsFound);
+        Permission permissionsFound = permissionRepository.findFirstById(permissionId);
+        System.out.println(permissionsFound.getName());
+        List<Permission> userPermissions = user.getUserPermissions();
 
+        for (Permission userPermission : userPermissions) {
+            if (userPermission.getId().equals(permissionId)) {
+                user.removeUserPermission(permissionsFound);
+                System.out.println("odebrano");
+                return userRepository.save(user);
+            }
+        }
+
+        user.addUserPermission(permissionsFound);
+        System.out.println("pridano");
         return userRepository.save(user);
     }
 

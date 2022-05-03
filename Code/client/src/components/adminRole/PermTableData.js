@@ -19,10 +19,8 @@ const checkForRole = (record, roleId) => {
     return false;
 }
 
-const onChange = (roleName, record) => {
-    let updatedUser = {"permissionNames":[]}
-    
-    for(var i = 0; i < 3; i++){
+const onChange = (roleId, record) => {
+    /*for(var i = 0; i < 3; i++){
         if(record.userPermissions[i]  && record.userPermissions[i].id <= 3){
             updatedUser.permissionNames.push(record.userPermissions[i].name)
         }
@@ -31,13 +29,13 @@ const onChange = (roleName, record) => {
         let index = updatedUser.permissionNames.indexOf(roleName);
         updatedUser.permissionNames.splice(index, 5);
     }
-    else updatedUser.permissionNames.push(roleName);
+    else updatedUser.permissionNames.push(roleName);*/
 
-    console.log(updatedUser.permissionNames)
-    users.editUser(updatedUser, record.id).then( (res) => {
+    console.log(roleId)
+    users.editUser(roleId, record.id).then( (res) => {
         if (res === true) {
             console.log("true", res);
-            window.location.reload();
+            //window.location.reload();
 
         } else {
           message.error(res);
@@ -56,7 +54,7 @@ const columns = [
         align: "center",
         render: (text, record) => {
             return <>
-                <Switch disabled={disableOption(record.email)} onClick={() => onChange("ROLE_ADMIN", record)} defaultChecked={checkForRole(record, 1)}></Switch>
+                <Switch size={"small"} disabled={disableOption(record.email)} onClick={() => onChange(1, record)} defaultChecked={checkForRole(record, 1)}/>
             </>
         }
     },
@@ -65,7 +63,7 @@ const columns = [
         align: "center",
         render: (text, record) => {
             return <>
-                <Switch onClick={() => onChange("ROLE_ACCOUNTANT", record)} defaultChecked={checkForRole(record, 2)}></Switch>
+                <Switch size={"small"} onClick={() => onChange(2, record)} defaultChecked={checkForRole(record, 2)}/>
             </>
         }
     },
@@ -74,7 +72,7 @@ const columns = [
         align: "center",
         render: (text, record) => {
             return <>
-                <Switch onClick={() => onChange("ROLE_HR", record)} defaultChecked={checkForRole(record, 3)}></Switch>
+                <Switch size={"small"} onClick={() => onChange(3, record)} defaultChecked={checkForRole(record, 3)}/>
             </>
         }
     }

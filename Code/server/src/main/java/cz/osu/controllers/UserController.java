@@ -71,10 +71,10 @@ public class UserController {
 
     @Secured({"ROLE_ADMIN", "ROLE_ACCOUNTANT"})
     @PutMapping(path = "/user/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<?> editUserPerms(@RequestBody UserDto updateUser, @PathVariable("id") Long id) {
+    public ResponseEntity<?> editUserPerms(@RequestBody Long permissionId, @PathVariable("id") Long id) {
         User updatedUser;
         try {
-            updatedUser = userService.updateUser(updateUser, id);
+            updatedUser = userService.updateUser(permissionId, id);
         } catch (IllegalStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

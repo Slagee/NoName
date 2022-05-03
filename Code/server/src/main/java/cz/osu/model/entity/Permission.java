@@ -17,7 +17,7 @@ public class Permission {
     @Column(length = 64)
     private String name;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(name="user_permission", joinColumns = @JoinColumn(name="permission_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
             uniqueConstraints = {@UniqueConstraint(columnNames ={"permission_id","user_id"})})

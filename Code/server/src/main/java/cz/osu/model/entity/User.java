@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class User {
     @Column(length = 255)
     private String email;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name="user_permission", joinColumns = @JoinColumn(name="user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name="permission_id", referencedColumnName = "id"),
             uniqueConstraints = {@UniqueConstraint(columnNames={"user_id","permission_id"})})
@@ -72,4 +73,9 @@ public class User {
         this.userPermissions = permissions;
     }
 
+    public void addUserPermission(Permission permission) {
+        this.userPermissions.add(permission);
+    }
+
+    public void removeUserPermission(Permission permission) { this.userPermissions.remove(permission); }
 }
