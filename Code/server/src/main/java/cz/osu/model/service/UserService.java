@@ -75,7 +75,8 @@ public class UserService implements UserDetailsService {
 
         for (Permission userPermission : userPermissions) {
             if (userPermission.getId().equals(permissionId)) {
-                user.removeUserPermission(permissionsFound);
+                userPermissions.remove(userPermission);
+                user.setUserPermissions(userPermissions);
                 System.out.println("odebrano");
                 return userRepository.save(user);
             }
