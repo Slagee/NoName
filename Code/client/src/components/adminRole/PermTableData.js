@@ -38,7 +38,7 @@ const onChange = (roleId, record) => {
             //window.location.reload();
 
         } else {
-          message.error(res);
+          message.error("Nepodařilo se upravit roli, pravděpodobně nejste připojeni k databázi", [3])
         }
       });
     }

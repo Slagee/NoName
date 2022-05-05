@@ -42,30 +42,43 @@ export function AppLayout({ token, notifications, isAdmin }) {
       </Button>
     );
     username = localStorage.getItem("username");
-    menu = (
-      <Menu>
-        <Menu.Item>
-          <Button
-            type="link"
-            onClick={goUserRegistration}
-            icon={<UserAddOutlined />}
-            disabled={!isAdmin}
-          >
-            Registrace uživatele
-          </Button>
-        </Menu.Item>
-        <Menu.Item>
-          <Button disabled={!isAdmin} type="link" onClick={goAdminRole} icon={<SettingOutlined />}>
-            Editace rolí
-          </Button>
-        </Menu.Item>
-        <Menu.Item>
-          <Button type="link" onClick={goListOfCentres} icon={<ShopOutlined />}>
-            Seznam středisek
-          </Button>
-        </Menu.Item>
-      </Menu>
-    );
+    if(isAdmin == true) {
+      menu = (
+          <Menu>
+            <Menu.Item>
+              <Button
+                  type="link"
+                  onClick={goUserRegistration}
+                  icon={<UserAddOutlined/>}
+                  disabled={!isAdmin}
+              >
+                Registrace uživatele
+              </Button>
+            </Menu.Item>
+            <Menu.Item>
+              <Button disabled={!isAdmin} type="link" onClick={goAdminRole} icon={<SettingOutlined/>}>
+                Editace rolí
+              </Button>
+            </Menu.Item>
+            <Menu.Item>
+              <Button type="link" onClick={goListOfCentres} icon={<ShopOutlined/>}>
+                Seznam středisek
+              </Button>
+            </Menu.Item>
+          </Menu>
+      );
+    }
+    else{
+      menu = (
+          <Menu>
+            <Menu.Item>
+              <Button type="link" onClick={goListOfCentres} icon={<ShopOutlined/>}>
+                Seznam středisek
+              </Button>
+            </Menu.Item>
+          </Menu>
+      );
+    }
     dropdown = (
       <Dropdown overlay={menu}>
         <Button
